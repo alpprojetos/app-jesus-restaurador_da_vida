@@ -1,0 +1,1970 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jornada Bíblica Kids - Jesus, o Restaurador da Vida!</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Fredoka para um visual super infantil, amigável e legível -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tone.js para efeitos sonoros lúdicos sem depender de arquivos externos -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <!-- Phosphor Icons para ícones lúdicos -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #fef3c7 50%, #fce7f3 100%);
+            min-height: 100vh;
+            user-select: none;
+            overflow-x: hidden;
+        }
+
+        /* Botões Super Destacados Estilo 3D Cartoon */
+        .btn-3d {
+            transition: all 0.15s ease;
+            position: relative;
+            top: 0;
+        }
+        .btn-3d:active:not(:disabled) {
+            top: 6px;
+            box-shadow: 0 2px 0 0 var(--shadow-color) !important;
+        }
+
+        .btn-yellow {
+            --shadow-color: #b45309;
+            background: linear-gradient(to bottom, #fde047, #f59e0b);
+            box-shadow: 0 8px 0 0 #b45309, 0 12px 20px rgba(0,0,0,0.15);
+            border: 3px solid #fff;
+        }
+
+        .btn-green {
+            --shadow-color: #15803d;
+            background: linear-gradient(to bottom, #4ade80, #16a34a);
+            box-shadow: 0 8px 0 0 #15803d, 0 12px 20px rgba(0,0,0,0.15);
+            border: 3px solid #fff;
+        }
+
+        .btn-blue {
+            --shadow-color: #1d4ed8;
+            background: linear-gradient(to bottom, #60a5fa, #2563eb);
+            box-shadow: 0 8px 0 0 #1d4ed8, 0 12px 20px rgba(0,0,0,0.15);
+            border: 3px solid #fff;
+        }
+
+        .btn-purple {
+            --shadow-color: #6d28d9;
+            background: linear-gradient(to bottom, #c084fc, #7c3aed);
+            box-shadow: 0 8px 0 0 #6d28d9, 0 12px 20px rgba(0,0,0,0.15);
+            border: 3px solid #fff;
+        }
+
+        .btn-orange {
+            --shadow-color: #c2410c;
+            background: linear-gradient(to bottom, #fb923c, #ea580c);
+            box-shadow: 0 8px 0 0 #c2410c, 0 12px 20px rgba(0,0,0,0.15);
+            border: 3px solid #fff;
+        }
+
+        .btn-option {
+            --shadow-color: #cbd5e1;
+            background: #ffffff;
+            box-shadow: 0 8px 0 0 #94a3b8, 0 10px 15px rgba(0,0,0,0.08);
+            border: 4px solid #3b82f6;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .btn-option:hover:not(:disabled) {
+            transform: scale(1.02);
+            background: #eff6ff;
+            border-color: #2563eb;
+        }
+        .btn-option:active:not(:disabled) {
+            top: 6px;
+            box-shadow: 0 2px 0 0 #94a3b8 !important;
+        }
+
+        /* Animação de pulso para destacar onde clicar */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7), 0 8px 0 0 #b45309; }
+            70% { transform: scale(1.03); box-shadow: 0 0 0 15px rgba(245, 158, 11, 0), 0 8px 0 0 #b45309; }
+            100% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0), 0 8px 0 0 #b45309; }
+        }
+        .highlight-action {
+            animation: pulse-ring 2s infinite;
+        }
+
+        /* Animação da Gema voando para o cofre */
+        @keyframes float-gem {
+            0% { transform: scale(0) rotate(0deg); opacity: 0; }
+            50% { transform: scale(1.3) rotate(180deg); opacity: 1; }
+            100% { transform: scale(1) rotate(360deg); opacity: 1; }
+        }
+        .gem-pop {
+            animation: float-gem 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes shake-vault {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            20% { transform: rotate(-10deg) scale(1.1); }
+            40% { transform: rotate(10deg) scale(1.1); }
+            60% { transform: rotate(-8deg) scale(1.05); }
+            80% { transform: rotate(8deg) scale(1.05); }
+        }
+        .vault-shake {
+            animation: shake-vault 0.6s ease-in-out;
+        }
+
+        /* Indicador de falando */
+        @keyframes sound-wave {
+            0%, 100% { height: 8px; }
+            50% { height: 24px; }
+        }
+        .wave-bar {
+            width: 5px;
+            background-color: #fff;
+            border-radius: 9999px;
+            display: inline-block;
+            margin: 0 2px;
+            animation: sound-wave 0.8s infinite ease-in-out;
+        }
+        .wave-bar:nth-child(2) { animation-delay: 0.2s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body class="text-slate-800 pb-16">
+
+    <!-- BARRA DE TOPO: COFRE SECRETO E STATUS DE VOZ -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b-4 border-amber-300 shadow-md px-4 py-3">
+        <div class="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <!-- Logo / Título -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="goHome()">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white text-2xl shadow-md border-2 border-white">
+                    📖
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-bold text-indigo-950 leading-none">Exploradores da Bíblia</h1>
+                    <p id="headerStudentBadge" class="text-xs sm:text-sm font-medium text-amber-600">Jesus, o Restaurador da Vida 🌟</p>
+                </div>
+            </div>
+
+            <!-- Status de Narração + Cofre Secreto -->
+            <div class="flex items-center gap-3">
+                <!-- Botão Parar/Ouvir Voz -->
+                <div id="speakingIndicator" class="hidden items-center gap-2 bg-indigo-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow">
+                    <div class="flex items-center h-6">
+                        <span class="wave-bar"></span>
+                        <span class="wave-bar"></span>
+                        <span class="wave-bar"></span>
+                    </div>
+                    <span>Narrando...</span>
+                </div>
+
+                <!-- Cofre Secreto de Gemas (Quantidade Oculta até o fim do Difícil!) -->
+                <button onclick="inspectVault()" id="vaultHeaderBtn" class="btn-3d bg-gradient-to-r from-slate-800 to-indigo-950 text-white px-4 py-2 rounded-2xl border-2 border-amber-400 shadow-lg flex items-center gap-2.5 hover:scale-105 transition">
+                    <div id="vaultIconHeader" class="text-2xl">🔒</div>
+                    <div class="text-left">
+                        <div class="text-[11px] uppercase tracking-wider text-amber-300 font-bold leading-none">Cofre Secreto</div>
+                        <div id="vaultStatusText" class="text-sm font-extrabold text-white flex items-center gap-1">
+                            <span>💎 ??? Gemas</span>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTAINER PRINCIPAL -->
+    <main class="max-w-4xl mx-auto px-4 pt-6">
+
+        <!-- ==========================================
+             TELA 0: CADASTRO DO NOME DO ESTUDANTE
+             ========================================== -->
+        <section id="screenOnboarding" class="max-w-xl mx-auto mt-4">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-amber-400 text-center space-y-6">
+                <div class="w-24 h-24 mx-auto rounded-3xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-5xl shadow-lg border-4 border-white">
+                    🌟
+                </div>
+
+                <div class="space-y-2">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs font-extrabold px-3 py-1 rounded-full uppercase">
+                        Estudo Base: Jesus, o Restaurador da Vida
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-indigo-950">
+                        Qual é o seu nome?
+                    </h2>
+                    <p class="text-slate-600 text-sm sm:text-base font-medium">
+                        Digite seu nome abaixo para que toda a aventura e a voz neural conversem diretamente com você!
+                    </p>
+                </div>
+
+                <!-- Escolha Menino / Menina para concordância natural nos elogios -->
+                <div class="space-y-2">
+                    <label class="text-xs font-extrabold uppercase text-slate-500 block">Você é:</label>
+                    <div class="grid grid-cols-2 gap-3 max-w-xs mx-auto">
+                        <button type="button" id="genderBtnM" onclick="selectGender('M')" class="btn-3d bg-blue-100 border-4 border-blue-500 text-blue-950 font-extrabold py-3 px-4 rounded-2xl flex items-center justify-center gap-2 text-base">
+                            <span class="text-2xl">👦</span> <span>Um Explorador</span>
+                        </button>
+                        <button type="button" id="genderBtnF" onclick="selectGender('F')" class="btn-3d bg-pink-50 border-4 border-slate-200 text-slate-600 font-extrabold py-3 px-4 rounded-2xl flex items-center justify-center gap-2 text-base">
+                            <span class="text-2xl">👧</span> <span>Uma Exploradora</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Campo de Nome -->
+                <div class="space-y-2 text-left">
+                    <label for="studentNameInput" class="text-sm font-extrabold text-indigo-950 block pl-1">
+                        ✏️ Digite seu primeiro nome aqui:
+                    </label>
+                    <input
+                        id="studentNameInput"
+                        type="text"
+                        maxlength="25"
+                        placeholder="Ex: Lucas, Sofia, Davi..."
+                        onkeydown="if(event.key === 'Enter') startWithStudentName()"
+                        class="w-full text-center text-xl sm:text-2xl font-extrabold text-indigo-950 bg-amber-50 border-4 border-amber-300 focus:border-indigo-500 focus:bg-white rounded-2xl py-4 px-4 outline-none transition shadow-inner"
+                    />
+                    <p id="nameErrorMsg" class="hidden text-center text-rose-600 text-sm font-extrabold">
+                        ⚠️ Por favor, digite o seu nome antes de começar!
+                    </p>
+                </div>
+
+                <button onclick="startWithStudentName()" class="btn-3d btn-green text-white font-extrabold py-4 px-8 rounded-2xl text-xl w-full flex items-center justify-center gap-3 highlight-action">
+                    <span>Começar Minha Aventura!</span>
+                    <i class="ph-bold ph-arrow-right text-2xl"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             TELA 1: PAINEL INICIAL (HOME)
+             ========================================== -->
+        <section id="screenHome" class="hidden space-y-8">
+
+            <!-- Banner de Boas-Vindas -->
+            <div class="bg-gradient-to-r from-indigo-600 via-blue-600 to-sky-500 rounded-3xl p-6 sm:p-8 text-white shadow-xl border-4 border-white relative overflow-hidden">
+                <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="space-y-2 text-center md:text-left">
+                        <div class="flex flex-wrap items-center justify-center md:justify-start gap-2">
+                            <span class="inline-block bg-amber-400 text-indigo-950 font-extrabold px-3 py-1 rounded-full text-xs uppercase tracking-wider shadow">
+                                ✨ Aventura Pedagógica Narrada
+                            </span>
+                            <button onclick="changeStudentName()" class="bg-white/20 hover:bg-white/30 text-white text-xs font-bold px-3 py-1 rounded-full transition">
+                                ✏️ Trocar Nome
+                            </button>
+                        </div>
+                        <h2 id="welcomeBannerTitle" class="text-2xl sm:text-4xl font-extrabold leading-tight">
+                            Olá, Pequeno Explorador! 🌟
+                        </h2>
+                        <p id="welcomeBannerSubtitle" class="text-sky-100 text-base sm:text-lg max-w-xl">
+                            Aprenda sobre <strong>Deus, o Criador</strong> e sobre <strong>Jesus, o Restaurador da Vida</strong>, ache versículos super rápido e guarde gemas no seu <strong>Cofre Secreto</strong> até se tornar um <strong>Explorador da Bíblia Expert</strong>!
+                        </p>
+                    </div>
+                    <button onclick="narrateWelcome()" class="btn-3d btn-yellow text-indigo-950 font-extrabold px-6 py-4 rounded-2xl flex items-center gap-3 text-lg shrink-0 highlight-action">
+                        <i class="ph-fill ph-speaker-high text-2xl"></i>
+                        <span>Ouvir Boas-Vindas</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- CARTÃO ESPECIAL: PRÉ-ESTUDO (DETETIVE DA BÍBLIA - 9 ANOS) -->
+            <div class="bg-gradient-to-br from-amber-100 via-yellow-50 to-orange-100 rounded-3xl p-6 border-4 border-amber-400 shadow-xl relative">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="flex items-start gap-4">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-amber-400 border-4 border-white shadow-md flex items-center justify-center text-4xl shrink-0">
+                            🕵️‍♂️
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="bg-orange-600 text-white text-xs font-extrabold px-3 py-1 rounded-full uppercase">
+                                    Passo Zero • Treinamento Especial
+                                </span>
+                                <span id="preStudyBadge" class="bg-amber-200 text-amber-900 text-xs font-bold px-2.5 py-1 rounded-full">
+                                    Recomendado antes de começar!
+                                </span>
+                            </div>
+                            <h3 class="text-2xl font-extrabold text-amber-950">
+                                Pré-Estudo: Super Agilidade Bíblica! ⚡
+                            </h3>
+                            <p class="text-amber-900/90 text-sm sm:text-base">
+                                Aprenda o segredo dos <strong>3 Passos Mágicos</strong>: achar o Livro no <strong>Índice</strong>, ver o número da <strong>Página</strong>, achar o <strong>Capítulo</strong> grandão e o <strong>Versículo</strong> pequenininho!
+                            </p>
+                        </div>
+                    </div>
+
+                    <button onclick="openPreStudy()" class="btn-3d btn-orange text-white font-extrabold px-7 py-4 rounded-2xl text-lg flex items-center gap-3 shrink-0 w-full md:w-auto justify-center">
+                        <i class="ph-fill ph-compass text-2xl"></i>
+                        <span>Treinar Agilidade!</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- SELETOR DE NÍVEIS (FÁCIL, NORMAL, DIFÍCIL) -->
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl sm:text-2xl font-extrabold text-indigo-950 flex items-center gap-2">
+                        <span>🎯</span> 1. Escolha o seu Nível de Desafio:
+                    </h3>
+                    <span class="text-xs sm:text-sm font-bold text-slate-600 bg-white px-3 py-1 rounded-full border">
+                        Conclua um nível para liberar o próximo!
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="difficultyContainer">
+                    <!-- Renderizado via JS -->
+                </div>
+            </div>
+
+            <!-- TRILHA DE ESTUDOS PROGRESSIVOS (1, 2, 3, 4) -->
+            <div class="space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <h3 class="text-xl sm:text-2xl font-extrabold text-indigo-950 flex items-center gap-2">
+                        <span>🗺️</span> 2. Trilha de Estudos (<span id="currentLevelLabel" class="text-blue-600">Nível Fácil</span>):
+                    </h3>
+                    <p class="text-sm text-slate-600 font-medium">
+                        Complete o Estudo 1 para destravar o 2, depois o 3 e o 4!
+                    </p>
+                </div>
+
+                <div id="studiesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- Renderizado via JS -->
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ==========================================
+             TELA 2: PRÉ-ESTUDO LÚDICO (AGILIDADE BÍBLICA)
+             ========================================== -->
+        <section id="screenPreStudy" class="hidden space-y-6">
+            <!-- Topo com botão voltar -->
+            <div class="flex items-center justify-between bg-white p-4 rounded-2xl shadow border-2 border-amber-200">
+                <button onclick="goHome()" class="btn-3d bg-slate-200 text-slate-800 font-bold px-4 py-2 rounded-xl flex items-center gap-2">
+                    <i class="ph-bold ph-arrow-left"></i> Voltar ao Mapa
+                </button>
+                <div class="text-center">
+                    <span class="text-xs font-extrabold uppercase text-orange-600 block">Treinamento para Crianças (9+ anos)</span>
+                    <h2 class="text-lg sm:text-xl font-extrabold text-indigo-950">🕵️‍♂️ Detetive da Bíblia: Super Agilidade</h2>
+                </div>
+                <button onclick="repeatCurrentAudio()" class="btn-3d btn-yellow text-indigo-950 font-bold px-4 py-2 rounded-xl flex items-center gap-2">
+                    <i class="ph-fill ph-speaker-high text-xl"></i> Ouvir Dica
+                </button>
+            </div>
+
+            <!-- Indicador das 3 Etapas do Treino + Mini Jogo -->
+            <div class="grid grid-cols-4 gap-2 text-center text-xs sm:text-sm font-bold">
+                <div id="stepTab1" class="p-3 rounded-xl bg-amber-500 text-white shadow">1. O Índice e Página</div>
+                <div id="stepTab2" class="p-3 rounded-xl bg-white text-slate-500 border">2. O Capítulo Grande</div>
+                <div id="stepTab3" class="p-3 rounded-xl bg-white text-slate-500 border">3. O Versículo Pequeno</div>
+                <div id="stepTab4" class="p-3 rounded-xl bg-white text-slate-500 border">4. Desafio Relâmpago!</div>
+            </div>
+
+            <!-- Conteúdo Dinâmico do Pré-Estudo -->
+            <div id="preStudyContent" class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-4 border-amber-400">
+                <!-- Preenchido via JS -->
+            </div>
+        </section>
+
+        <!-- ==========================================
+             TELA 3: PREFÁCIO EM ÁUDIO + PERGUNTAS (A, B, C)
+             ========================================== -->
+        <section id="screenStudy" class="hidden space-y-6">
+            <!-- Barra superior do estudo -->
+            <div class="flex items-center justify-between bg-white p-4 rounded-2xl shadow border-2 border-blue-200">
+                <button onclick="goHome()" class="btn-3d bg-slate-200 text-slate-800 font-bold px-4 py-2 rounded-xl flex items-center gap-2">
+                    <i class="ph-bold ph-arrow-left"></i> Sair do Estudo
+                </button>
+                <div class="text-center">
+                    <span id="studyHeaderBadge" class="text-xs font-extrabold uppercase text-blue-600 block">Nível Fácil • Estudo 1</span>
+                    <h2 id="studyHeaderTitle" class="text-lg sm:text-xl font-extrabold text-indigo-950">Título do Estudo</h2>
+                </div>
+                <button onclick="repeatCurrentAudio()" class="btn-3d btn-yellow text-indigo-950 font-bold px-4 py-2 rounded-xl flex items-center gap-2">
+                    <i class="ph-fill ph-speaker-high text-xl"></i> Repetir Áudio
+                </button>
+            </div>
+
+            <!-- SUB-TELA 3A: PREFÁCIO EXPLICATIVO NARRADO -->
+            <div id="prefaceBox" class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-4 border-indigo-400 space-y-6">
+                <div class="flex flex-col sm:flex-row items-center gap-5 bg-indigo-50 p-5 rounded-2xl border-2 border-indigo-200">
+                    <div id="prefaceEmoji" class="text-6xl bg-white w-24 h-24 rounded-3xl flex items-center justify-center shadow border-2 border-indigo-300 shrink-0">
+                        🌱
+                    </div>
+                    <div class="space-y-2 text-center sm:text-left">
+                        <span class="inline-flex items-center gap-1.5 bg-indigo-600 text-white text-xs font-extrabold px-3 py-1 rounded-full uppercase">
+                            <i class="ph-fill ph-headphones"></i> Prefácio Explicativo em Áudio
+                        </span>
+                        <h3 id="prefaceTitle" class="text-2xl sm:text-3xl font-extrabold text-indigo-950">
+                            Ouça a Explicação antes das Perguntas!
+                        </h3>
+                        <p class="text-sm text-indigo-700 font-medium">
+                            Preste bastante atenção na história abaixo. Todas as respostas das perguntas estão aqui!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Texto do Prefácio -->
+                <div id="prefaceText" class="text-lg sm:text-xl leading-relaxed text-slate-800 bg-amber-50/70 p-6 rounded-2xl border-2 border-amber-200 font-medium space-y-3">
+                    <!-- Inserido via JS -->
+                </div>
+
+                <!-- Botões de Ação Super Destacados -->
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+                    <button onclick="narratePreface()" class="btn-3d btn-blue text-white font-extrabold px-6 py-4 rounded-2xl text-lg flex items-center justify-center gap-3 w-full sm:w-auto">
+                        <i class="ph-fill ph-speaker-high text-2xl"></i>
+                        <span>Ouvir Explicação Novamente</span>
+                    </button>
+
+                    <button onclick="startQuestions()" class="btn-3d btn-green text-white font-extrabold px-8 py-5 rounded-2xl text-xl flex items-center justify-center gap-3 w-full sm:w-auto highlight-action">
+                        <span>Já Entendi! Ir para as Perguntas</span>
+                        <i class="ph-bold ph-arrow-right text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- SUB-TELA 3B: PERGUNTA E ALTERNATIVAS A, B e C ABAIXO -->
+            <div id="questionBox" class="hidden bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-4 border-blue-400 space-y-6">
+                <!-- Progresso das Perguntas -->
+                <div class="flex items-center justify-between border-b-2 border-slate-100 pb-4">
+                    <span id="questionCounter" class="bg-blue-100 text-blue-800 font-extrabold px-4 py-1.5 rounded-full text-sm">
+                        Pergunta 1 de 2
+                    </span>
+                    <button onclick="narrateCurrentQuestion()" class="btn-3d btn-yellow text-indigo-950 font-extrabold px-4 py-2 rounded-xl text-sm flex items-center gap-2">
+                        <i class="ph-fill ph-speaker-high text-lg"></i> Ouvir Pergunta e Opções A, B, C
+                    </button>
+                </div>
+
+                <!-- Enunciado da Pergunta -->
+                <div class="bg-gradient-to-r from-indigo-50 to-blue-50 p-6 rounded-2xl border-2 border-indigo-200">
+                    <p class="text-xs font-extrabold uppercase text-indigo-600 mb-1">Pergunta Narrada:</p>
+                    <h3 id="questionText" class="text-xl sm:text-2xl font-extrabold text-indigo-950 leading-snug">
+                        Qual é a pergunta?
+                    </h3>
+                </div>
+
+                <!-- Instrução clara de onde clicar -->
+                <div class="flex items-center gap-2 text-amber-700 bg-amber-100 px-4 py-2 rounded-xl text-sm font-bold">
+                    <i class="ph-fill ph-hand-pointing text-xl"></i>
+                    <span>Clique em um dos botões grandes abaixo (A, B ou C) para responder:</span>
+                </div>
+
+                <!-- Alternativas A, B e C empilhadas abaixo da pergunta e super destacadas -->
+                <div id="optionsContainer" class="space-y-4">
+                    <!-- Botões A, B, C gerados via JS -->
+                </div>
+
+                <!-- Feedback da Resposta -->
+                <div id="questionFeedback" class="hidden p-5 rounded-2xl border-4 text-center space-y-3">
+                    <!-- Preenchido via JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==========================================
+         MODAL DE RECOMPENSA / CELEBRAÇÃO / COFRE
+         ========================================== -->
+    <div id="modalOverlay" class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 text-center shadow-2xl border-4 border-amber-400 space-y-5 relative animate-bounce-once">
+            <div id="modalEmoji" class="text-7xl mx-auto gem-pop">💎</div>
+            <span id="modalSubtitle" class="inline-block bg-amber-100 text-amber-900 font-extrabold px-4 py-1 rounded-full text-xs uppercase tracking-wider">
+                Estudo Concluído!
+            </span>
+            <h3 id="modalTitle" class="text-2xl sm:text-3xl font-extrabold text-indigo-950">
+                Parabéns!
+            </h3>
+            <p id="modalMessage" class="text-base sm:text-lg text-slate-700 font-medium leading-relaxed">
+                Mensagem narrada aqui.
+            </p>
+
+            <!-- Caixa visual do Cofre -->
+            <div id="modalVaultBox" class="bg-slate-900 text-white p-5 rounded-2xl border-2 border-amber-400 flex items-center justify-center gap-4">
+                <div class="text-4xl">🔒</div>
+                <div class="text-left">
+                    <div class="text-xs uppercase text-amber-300 font-bold">Cofre Secreto Atualizado</div>
+                    <div id="modalVaultText" class="text-base font-extrabold">+1 Gema guardada em segredo! (Total: ???)</div>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                <button onclick="repeatModalAudio()" class="btn-3d btn-blue text-white font-bold px-5 py-3.5 rounded-2xl flex items-center justify-center gap-2 sm:w-1/3">
+                    <i class="ph-fill ph-speaker-high text-xl"></i> Ouvir
+                </button>
+                <button id="modalPrimaryBtn" onclick="closeModal()" class="btn-3d btn-green text-white font-extrabold px-6 py-4 rounded-2xl text-lg flex-1 highlight-action">
+                    Continuar Jornada! 🚀
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* =====================================================================
+           BANCO DE DADOS PEDAGÓGICO (ESTUDOS 1 AO 4 EM 3 NÍVEIS: FÁCIL, NORMAL, DIFÍCIL)
+           Congruente com o Estudo Base: Jesus, o Restaurador da Vida.
+           Utiliza sempre "Deus" ou "Deus, o Criador" (com D maiúsculo).
+           ===================================================================== */
+        const STUDIES_DATA = [
+            {
+                id: 1,
+                title: "Estudo 1: O Dom da Vida e Deus, o Criador",
+                theme: "A Vida",
+                emoji: "🌱",
+                color: "from-emerald-400 to-green-600",
+                levels: {
+                    facil: {
+                        preface: "Bem-vindo ao primeiro estudo sobre A Vida! A Bíblia nos ensina no Salmo trinta e seis que Deus, o Criador, é a Fonte da vida. Deus fez o Sol quentinho, a natureza e o ser humano com muito amor. E por meio de Jesus, o Restaurador da Vida, Deus cuida de nós todos os dias. Como a vida é um presente precioso de Deus, nós agradecemos a Ele cuidando bem da nossa saúde, dos nossos amigos e da natureza.",
+                        questions: [
+                            {
+                                q: "De acordo com a explicação que acabamos de ouvir, quem é a Fonte da vida e o Criador de todas as coisas?",
+                                a: "Deus, o Criador, que fez o Sol, a natureza e o ser humano.",
+                                b: "Os próprios seres humanos construíram o Sol e a natureza.",
+                                c: "A vida surgiu sozinha sem ninguém cuidar dela.",
+                                correct: "A"
+                            },
+                            {
+                                q: "Como podemos mostrar que agradecemos a Deus pelo presente da vida?",
+                                a: "Desperdiçando água e brigando com os colegas.",
+                                b: "Cuidando bem da nossa saúde, da natureza e tratando todos com bondade.",
+                                c: "Esquecendo de agradecer pela criação.",
+                                correct: "B"
+                            }
+                        ]
+                    },
+                    normal: {
+                        preface: "Que bom ver você no Nível Normal do Estudo sobre A Vida! No Salmo trinta e seis, versículo nove, a Bíblia diz claramente sobre Deus, o Criador: 'Pois contigo está a fonte da vida'. Além disso, no livro de Atos capítulo dezessete, aprendemos que Deus dá a todas as pessoas 'vida, fôlego e todas as coisas'. Para valorizar esse presente sagrado, Deus nos ensina a cuidar do nosso corpo e a ter um coração cheio de paz, seguindo o exemplo de Jesus, o Restaurador da Vida.",
+                        questions: [
+                            {
+                                q: "Qual livro e capítulo da Bíblia nos ensina que com Deus, o Criador, está a fonte da vida?",
+                                a: "O livro de Jonas, capítulo um.",
+                                b: "O Salmo trinta e seis, versículo nove.",
+                                c: "O índice final do dicionário.",
+                                correct: "B"
+                            },
+                            {
+                                q: "Segundo o livro de Atos capítulo dezessete que ouvimos na explicação, o que Deus dá a todas as pessoas?",
+                                a: "Apenas brinquedos e doces.",
+                                b: "Permissão para fazer coisas perigosas.",
+                                c: "Vida, fôlego e todas as coisas.",
+                                correct: "C"
+                            }
+                        ]
+                    },
+                    dificil: {
+                        preface: "Parabéns por chegar ao Nível Difícil sobre A Vida! Vamos aprofundar? Quando Deus, o Criador, fez a Terra, Ele planejou que os seres humanos vivessem felizes e em harmonia. Mesmo quando enfrentamos desafios hoje, Jesus, o Restaurador da Vida, veio ao mundo para restaurar a nossa amizade com Deus. Em João capítulo dez, versículo dez, Jesus disse que veio para que tenhamos vida em abundância, e em João capítulo três, versículo dezesseis, prometeu a vida eterna a todos os que creem!",
+                        questions: [
+                            {
+                                q: "Qual é a missão especial de Jesus apresentada no nosso estudo sobre A Vida?",
+                                a: "Afastar as pessoas da natureza.",
+                                b: "Ser Jesus, o Restaurador da Vida, restaurando nossa amizade com Deus, o Criador, e trazendo vida plena.",
+                                c: "Ensinar que a vida não tem importância.",
+                                correct: "B"
+                            },
+                            {
+                                q: "De acordo com João capítulo três, versículo dezesseis explicado no prefácio, o que precisamos fazer para receber a promessa da vida eterna?",
+                                a: "Crer e ter fé em Jesus, o Restaurador da Vida, e dedicar tempo para aprender sobre Deus.",
+                                b: "Guardar segredo sobre a Bíblia e não contar a ninguém.",
+                                c: "Apenas decorar números sem entender o significado.",
+                                correct: "A"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                id: 2,
+                title: "Estudo 2: O Amor que Restaura a Vida",
+                theme: "O Amor",
+                emoji: "❤️",
+                color: "from-rose-400 to-pink-600",
+                levels: {
+                    facil: {
+                        preface: "Agora vamos ouvir a explicação sobre O Amor! Na Primeira Carta de João, capítulo quatro, versículo oito, a Bíblia revela uma verdade linda: 'Deus é amor'. O verdadeiro amor não fica só nas palavras bonitas; ele aparece nas nossas atitudes do dia a dia! Quando dividimos nosso lanche, ajudamos nossos pais em casa e perdoamos um amigo, estamos imitando o amor de Deus, o Criador, e de Jesus, o Restaurador da Vida.",
+                        questions: [
+                            {
+                                q: "O que a Primeira Carta de João, capítulo quatro, versículo oito nos ensina sobre Deus?",
+                                a: "Que Deus está sempre bravo com as crianças.",
+                                b: "Que Deus é amor.",
+                                c: "Que o amor não é importante.",
+                                correct: "B"
+                            },
+                            {
+                                q: "Como nós mostramos o verdadeiro amor no nosso dia a dia, segundo a explicação?",
+                                a: "Ajudando nossos pais, dividindo o que temos e perdoando os amigos.",
+                                b: "Apenas falando palavras bonitas, mas sem ajudar ninguém.",
+                                c: "Ficando emburrado quando alguém pede desculpas.",
+                                correct: "A"
+                            }
+                        ]
+                    },
+                    normal: {
+                        preface: "Bem-vindo ao Nível Normal sobre O Amor! Jesus, o Restaurador da Vida, ensinou em Mateus capítulo vinte e dois quais são os dois maiores mandamentos de toda a Bíblia. O primeiro mandamento é amar a Deus de todo o coração, de toda a alma e de toda a mente. E o segundo mandamento é amar o nosso próximo como a nós mesmos. Além disso, em Primeira aos Coríntios capítulo treze, aprendemos que o amor é paciente, é bondoso e não sente inveja.",
+                        questions: [
+                            {
+                                q: "Quais são os dois maiores mandamentos ensinados por Jesus em Mateus capítulo vinte e dois?",
+                                a: "Amar apenas os nossos brinquedos e ganhar todos os jogos.",
+                                b: "Amar só quem mora na mesma rua que a gente.",
+                                c: "Amar a Deus de todo o coração e amar o nosso próximo como a nós mesmos.",
+                                correct: "C"
+                            },
+                            {
+                                q: "De acordo com Primeira aos Coríntios capítulo treze citado no prefácio, quais são as qualidades do verdadeiro amor?",
+                                a: "O amor é paciente, é bondoso e não sente inveja.",
+                                b: "O amor é impaciente e gosta de discutir.",
+                                c: "O amor sente inveja quando o amigo ganha um presente.",
+                                correct: "A"
+                            }
+                        ]
+                    },
+                    dificil: {
+                        preface: "Excelente! Você chegou ao Nível Difícil sobre O Amor! Em João capítulo treze, versículo trinta e cinco, Jesus disse que todos reconheceriam os Seus verdadeiros discípulos se eles tivessem amor uns pelos outros. Sendo Jesus o Restaurador da Vida, Ele demonstrou o amor de Deus, o Criador, acolhendo, perdoando e entregando sua vida por nós. Na Primeira Carta de João, capítulo três, versículo dezoito, a Bíblia nos ensina a amar 'não em palavras nem com a língua, mas em ações e em verdade'.",
+                        questions: [
+                            {
+                                q: "Em João capítulo treze, versículo trinta e cinco, qual é o sinal que identifica os discípulos de Jesus?",
+                                a: "Usar roupas douradas e coroas brilhantes.",
+                                b: "Ter amor verdadeiro uns pelos outros.",
+                                c: "Saber correr mais rápido que os colegas.",
+                                correct: "B"
+                            },
+                            {
+                                q: "O que significa amar 'em ações e em verdade', conforme Primeira João capítulo três, versículo dezoito?",
+                                a: "Ser bondoso de verdade nas atitudes e imitar o amor de Jesus, o Restaurador da Vida.",
+                                b: "Fazer elogios da boca para fora sem ajudar quem precisa.",
+                                c: "Amar somente quando estamos sendo filmados.",
+                                correct: "A"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                id: 3,
+                title: "Estudo 3: A Esperança Viva em Jesus",
+                theme: "A Esperança",
+                emoji: "⚓",
+                color: "from-sky-400 to-blue-600",
+                levels: {
+                    facil: {
+                        preface: "Vamos aprender sobre A Esperança! Você já viu a âncora de um barco? Quando o mar está agitado, a âncora segura o barco firme para ele não ser levado pelo vento. A Bíblia explica que a esperança nas promessas de Deus, o Criador, é como uma âncora para a nossa vida! Mesmo quando ficamos tristes, a nossa esperança nos lembra que Deus e Jesus, o Restaurador da Vida, preparam um futuro cheio de paz, restauração e alegria.",
+                        questions: [
+                            {
+                                q: "Na explicação que ouvimos, com qual objeto de um barco a Bíblia compara a nossa esperança?",
+                                a: "Com uma âncora que segura o barco firme quando o mar está agitado.",
+                                b: "Com um chapéu de papel que voa com o vento.",
+                                c: "Com uma pedra que quebra o barco.",
+                                correct: "A"
+                            },
+                            {
+                                q: "O que a nossa esperança bíblica nos lembra quando passamos por momentos tristes?",
+                                a: "Que os problemas nunca vão acabar.",
+                                b: "Que Deus, o Criador, e Jesus, o Restaurador da Vida, garantem um futuro cheio de paz e alegria.",
+                                c: "Que devemos desistir de estudar.",
+                                correct: "B"
+                            }
+                        ]
+                    },
+                    normal: {
+                        preface: "Agora estamos no Nível Normal sobre A Esperança! No livro de Hebreus, capítulo onze, versículo um, a Bíblia explica que a fé é a certeza das coisas que esperamos. E no livro de Apocalipse, capítulo vinte e um, versículo quatro, temos uma promessa maravilhosa: Deus enxugará dos nossos olhos toda lágrima, e não haverá mais morte, nem tristeza, nem choro, nem dor! Como Deus, o Criador, sempre cumpre a Sua Palavra, podemos confiar de todo o coração.",
+                        questions: [
+                            {
+                                q: "Em qual texto bíblico encontramos a promessa de que Deus enxugará toda lágrima e não haverá mais dor nem tristeza?",
+                                a: "Apocalipse, capítulo vinte e um, versículo quatro.",
+                                b: "Gênesis, capítulo um, versículo um.",
+                                c: "Êxodo, capítulo dois, versículo dez.",
+                                correct: "A"
+                            },
+                            {
+                                q: "Por que podemos ter certeza de que as promessas de Deus vão se cumprir, segundo Hebreus capítulo onze?",
+                                a: "Porque foi um palpite de sorte.",
+                                b: "Porque a fé se baseia no fato de que Deus, o Criador, é fiel e sempre cumpre a Sua Palavra.",
+                                c: "Porque depende apenas da vontade das pessoas.",
+                                correct: "B"
+                            }
+                        ]
+                    },
+                    dificil: {
+                        preface: "Incrível! Você está no Nível Difícil sobre A Esperança! Em Hebreus capítulo seis, versículo dezenove, lemos que a nossa esperança é uma 'âncora para a alma, tanto segura como firme'. Jesus, o Restaurador da Vida, garantiu que toda a criação será restaurada. No livro do profeta Isaías, capítulo onze, a Bíblia descreve essa paz dizendo que o lobo e o cordeiro viverão em harmonia. Compartilhar essa esperança fortalece a nossa fé!",
+                        questions: [
+                            {
+                                q: "Como o livro do profeta Isaías, capítulo onze, descreve a paz prometida por Deus?",
+                                a: "Haverá muros altos separando todas as cidades.",
+                                b: "Os animais continuarão assustando todo mundo.",
+                                c: "O lobo e o cordeiro viverão em paz, e uma criancinha estará segura perto dos animais.",
+                                correct: "C"
+                            },
+                            {
+                                q: "O que acontece quando nós compartilhamos a esperança de Jesus, o Restaurador da Vida, com outras pessoas?",
+                                a: "A nossa esperança diminui e desaparece.",
+                                b: "Nós fortalecemos ainda mais a nossa própria fé e alegramos a Deus, o Criador.",
+                                c: "As promessas deixam de ser importantes.",
+                                correct: "B"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                id: 4,
+                title: "Estudo 4: Jesus, o Restaurador da Vida",
+                theme: "Jesus, o Restaurador da Vida",
+                emoji: "🕊️",
+                color: "from-purple-500 to-indigo-600",
+                levels: {
+                    facil: {
+                        preface: "Chegamos ao quarto estudo, que é o coração de toda a nossa jornada: Jesus, o Restaurador da Vida! Quando lemos a Bíblia todos os dias, conhecemos mais a Deus, o Criador, e aprendemos como Jesus vivia e restaurava as pessoas. Jesus acolhia os que sofriam, curava os doentes, perdoava e trazia alegria ao coração. Cada vez que você aprende uma lição bíblica, você está indo muito bem e se tornando um Explorador da Bíblia Expert!",
+                        questions: [
+                            {
+                                q: "Qual é o tema central do nosso estudo base e o título deste quarto estudo especial?",
+                                a: "Jesus, o Restaurador da Vida.",
+                                b: "A história das estrelas cadentes.",
+                                c: "Como construir uma casa de madeira.",
+                                correct: "A"
+                            },
+                            {
+                                q: "O que acontece cada vez que você estuda a Bíblia e aprende sobre Deus, o Criador, e sobre Jesus?",
+                                a: "Você conhece mais a Deus e vai se tornando um Explorador da Bíblia Expert.",
+                                b: "Você esquece como ajudar os amigos.",
+                                c: "Você nunca mais precisa ler nenhum livro.",
+                                correct: "A"
+                            }
+                        ]
+                    },
+                    normal: {
+                        preface: "Muito bem! Nível Normal sobre Jesus, o Restaurador da Vida! Na Primeira Carta de Pedro, capítulo dois, versículo vinte e um, a Bíblia diz que Cristo nos deixou um exemplo para seguirmos fielmente os seus passos. Sendo Jesus o Restaurador da Vida, Ele nos ensinou a perdoar, a ser bondosos e a fazer o bem. Um verdadeiro Explorador da Bíblia conversa com Deus em oração e imita o exemplo de Jesus na escola, em casa e com os amigos!",
+                        questions: [
+                            {
+                                q: "Segundo Primeira Pedro capítulo dois, versículo vinte e um, o que Jesus Cristo deixou para nós?",
+                                a: "Um mapa de tesouro escondido no fundo do mar.",
+                                b: "Um exemplo perfeito para seguirmos fielmente os seus passos.",
+                                c: "Uma lista de regras impossíveis de cumprir.",
+                                correct: "B"
+                            },
+                            {
+                                q: "Além de conhecer a Bíblia, o que um Explorador da Bíblia faz no seu dia a dia?",
+                                a: "Conversa com Deus, o Criador, em oração e imita o exemplo de Jesus, o Restaurador da Vida.",
+                                b: "Pede para não precisar mais estudar a Bíblia.",
+                                c: "Pratica a bondade apenas uma vez por ano.",
+                                correct: "A"
+                            }
+                        ]
+                    },
+                    dificil: {
+                        preface: "Você chegou ao último estudo do Nível Difícil! Em João capítulo quatorze, versículo seis, Jesus declarou: 'Eu sou o caminho, a verdade e a vida'. E em João capítulo dezessete, versículo três, Jesus ensinou a importância de conhecer a Deus, o Criador, e a Jesus Cristo, aquele que Deus enviou. Ao estudar sobre A Vida, O Amor, A Esperança e sobre Jesus, o Restaurador da Vida, você mostra que está indo muito bem e se torna um verdadeiro Explorador da Bíblia Expert!",
+                        questions: [
+                            {
+                                q: "O que Jesus, o Restaurador da Vida, declarou em João capítulo quatorze, versículo seis?",
+                                a: "Que ninguém consegue aprender a Bíblia.",
+                                b: "Eu sou o caminho, a verdade e a vida.",
+                                c: "Que as crianças não precisam orar a Deus.",
+                                correct: "B"
+                            },
+                            {
+                                q: "O que um Explorador da Bíblia Expert continua fazendo todos os dias da sua vida?",
+                                a: "Continua conhecendo mais a Deus, o Criador, e seguindo os ensinos de Jesus, o Restaurador da Vida.",
+                                b: "Fecha a Bíblia para sempre porque já terminou os estudos.",
+                                c: "Esquece os estudos sobre a vida, o amor e a esperança.",
+                                correct: "A"
+                            }
+                        ]
+                    }
+                }
+            }
+        ];
+
+        /* =====================================================================
+           ESTADO DO APLICATIVO (PROGRESSÃO E COFRE SECRETO)
+           ===================================================================== */
+        const state = {
+            studentName: '',
+            studentGender: 'M', // 'M' (Explorador) | 'F' (Exploradora)
+            currentDifficulty: 'facil', // 'facil' | 'normal' | 'dificil'
+            unlockedDifficulty: {
+                facil: true,
+                normal: false,
+                dificil: false
+            },
+            // Controle de quais estudos (1 a 4) foram concluídos em cada nível
+            completedStudies: {
+                facil: [false, false, false, false],
+                normal: [false, false, false, false],
+                dificil: [false, false, false, false]
+            },
+            preStudyDone: false,
+            secretGems: 0, // Guardadas em segredo no cofre!
+            vaultUnlocked: false, // Só abre ao concluir todo o nível Difícil
+
+            // Estado da tela de estudo ativa
+            activeStudyIndex: 0,
+            activeQuestionIndex: 0,
+            lastSpokenText: "",
+            modalSpokenText: "",
+
+            // Estado do Pré-Estudo (Agilidade Bíblica)
+            preStudyStep: 1,
+            miniGameStage: 0 // 0: achar no índice, 1: achar capítulo, 2: achar versículo
+        };
+
+        // Funções auxiliares de personalização pelo nome e gênero da criança
+        function getStudentName() {
+            return state.studentName || 'Explorador';
+        }
+
+        function adj(masc, fem) {
+            return state.studentGender === 'F' ? fem : masc;
+        }
+
+        function selectGender(g) {
+            playSound('click');
+            state.studentGender = g;
+            const btnM = document.getElementById('genderBtnM');
+            const btnF = document.getElementById('genderBtnF');
+            if (g === 'M') {
+                btnM.className = "btn-3d bg-blue-100 border-4 border-blue-500 text-blue-950 font-extrabold py-3 px-4 rounded-2xl flex items-center justify-center gap-2 text-base scale-105";
+                btnF.className = "btn-3d bg-pink-50 border-4 border-slate-200 text-slate-600 font-extrabold py-3 px-4 rounded-2xl flex items-center justify-center gap-2 text-base opacity-80";
+            } else {
+                btnF.className = "btn-3d bg-pink-100 border-4 border-pink-500 text-pink-950 font-extrabold py-3 px-4 rounded-2xl flex items-center justify-center gap-2 text-base scale-105";
+                btnM.className = "btn-3d bg-blue-50 border-4 border-slate-200 text-slate-600 font-extrabold py-3 px-4 rounded-2xl flex items-center justify-center gap-2 text-base opacity-80";
+            }
+        }
+
+        function startWithStudentName() {
+            const input = document.getElementById('studentNameInput');
+            const err = document.getElementById('nameErrorMsg');
+            const rawName = (input.value || '').trim();
+
+            if (!rawName) {
+                playSound('error');
+                err.classList.remove('hidden');
+                input.focus();
+                return;
+            }
+
+            err.classList.add('hidden');
+            // Formata primeira letra maiúscula
+            state.studentName = rawName.charAt(0).toUpperCase() + rawName.slice(1);
+
+            playSound('fanfare');
+            document.getElementById('screenOnboarding').classList.add('hidden');
+            document.getElementById('screenHome').classList.remove('hidden');
+
+            renderHome();
+            narrateWelcome();
+        }
+
+        function changeStudentName() {
+            playSound('click');
+            stopAllAudio();
+            document.getElementById('screenHome').classList.add('hidden');
+            document.getElementById('screenPreStudy').classList.add('hidden');
+            document.getElementById('screenStudy').classList.add('hidden');
+            document.getElementById('screenOnboarding').classList.remove('hidden');
+            const input = document.getElementById('studentNameInput');
+            input.value = state.studentName;
+            input.focus();
+        }
+
+        /* =====================================================================
+           SISTEMA DE NARRAÇÃO HUMANA E NATURAL (GEMINI TTS NEURAL + CACHE + FALLBACK SUAVE)
+           Usa a voz "Aoede" / "Leda" do Gemini 2.5 Flash TTS para uma entonação
+           super carinhosa, expressiva e natural para crianças, com fallback
+           inteligente para vozes neurais do navegador.
+           ===================================================================== */
+        let currentUtterance = null;
+        let currentHtmlAudio = null;
+        let activeSpeechRequestId = 0;
+        const ttsAudioCache = new Map();
+
+        function stopAllAudio() {
+            activeSpeechRequestId++;
+            if (currentHtmlAudio) {
+                currentHtmlAudio.pause();
+                currentHtmlAudio.currentTime = 0;
+                currentHtmlAudio = null;
+            }
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+            setSpeakingUI(false);
+        }
+
+        function setSpeakingUI(isSpeaking, labelText = "Narrando...") {
+            const indicator = document.getElementById('speakingIndicator');
+            if (!indicator) return;
+            const span = indicator.querySelector('span:last-child');
+            if (span) span.textContent = labelText;
+
+            if (isSpeaking) {
+                indicator.classList.remove('hidden');
+                indicator.classList.add('flex');
+            } else {
+                indicator.classList.add('hidden');
+                indicator.classList.remove('flex');
+            }
+        }
+
+        // Converte base64 para ArrayBuffer (para o áudio PCM16 do Gemini TTS)
+        function base64ToArrayBuffer(base64) {
+            const binaryString = window.atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        // Empacota PCM16 assinado em um arquivo WAV reproduzível no navegador
+        function pcmToWav(pcm16, sampleRate = 24000) {
+            const buffer = new ArrayBuffer(44 + pcm16.length * 2);
+            const view = new DataView(buffer);
+
+            const writeString = (offset, str) => {
+                for (let i = 0; i < str.length; i++) {
+                    view.setUint8(offset + i, str.charCodeAt(i));
+                }
+            };
+
+            writeString(0, 'RIFF');
+            view.setUint32(4, 36 + pcm16.length * 2, true);
+            writeString(8, 'WAVE');
+            writeString(12, 'fmt ');
+            view.setUint32(16, 16, true); // Subchunk1Size (16 para PCM)
+            view.setUint16(20, 1, true);  // AudioFormat (1 = PCM)
+            view.setUint16(22, 1, true);  // NumChannels (1 = mono)
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, sampleRate * 2, true); // ByteRate
+            view.setUint16(32, 2, true);  // BlockAlign
+            view.setUint16(34, 16, true); // BitsPerSample
+            writeString(36, 'data');
+            view.setUint32(40, pcm16.length * 2, true);
+
+            let offset = 44;
+            for (let i = 0; i < pcm16.length; i++, offset += 2) {
+                view.setInt16(offset, pcm16[i], true);
+            }
+
+            return new Blob([view], { type: 'audio/wav' });
+        }
+
+        // Busca áudio neural super natural na API Gemini TTS com backoff exponencial
+        async function fetchNaturalGeminiTTS(text) {
+            if (ttsAudioCache.has(text)) {
+                return ttsAudioCache.get(text);
+            }
+
+            const apiKey = ""; // Fornecido automaticamente pelo ambiente em tempo de execução
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{
+                    parts: [{
+                        text: `Say in a warm, natural, cheerful, and friendly Brazilian Portuguese storytelling voice: ${text}`
+                    }]
+                }],
+                generationConfig: {
+                    responseModalities: ["AUDIO"],
+                    speechConfig: {
+                        voiceConfig: {
+                            prebuiltVoiceConfig: { voiceName: "Aoede" }
+                        }
+                    }
+                },
+                model: "gemini-2.5-flash-preview-tts"
+            };
+
+            let delay = 800;
+            for (let attempt = 0; attempt < 2; attempt++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        const part = result?.candidates?.[0]?.content?.parts?.[0];
+                        const audioData = part?.inlineData?.data;
+                        const mimeType = part?.inlineData?.mimeType || "audio/L16;rate=24000";
+
+                        if (audioData) {
+                            const rateMatch = mimeType.match(/rate=(\d+)/);
+                            const sampleRate = rateMatch ? parseInt(rateMatch[1], 10) : 24000;
+                            const pcmBuffer = base64ToArrayBuffer(audioData);
+                            const pcm16 = new Int16Array(pcmBuffer);
+                            const wavBlob = pcmToWav(pcm16, sampleRate);
+                            const audioUrl = URL.createObjectURL(wavBlob);
+                            ttsAudioCache.set(text, audioUrl);
+                            return audioUrl;
+                        }
+                    }
+                } catch (err) {
+                    // Tenta novamente ou usa o fallback de voz neural do sistema
+                }
+                await new Promise(r => setTimeout(r, delay));
+                delay *= 2;
+            }
+            return null;
+        }
+
+        // Seleciona a melhor voz neural/natural disponível no dispositivo caso esteja offline
+        function pickBestBrowserPortugueseVoice() {
+            if (!('speechSynthesis' in window)) return null;
+            const voices = window.speechSynthesis.getVoices();
+            const ptVoices = voices.filter(v =>
+                v.lang.toLowerCase().includes('pt-br') ||
+                v.lang.toLowerCase().includes('pt_br') ||
+                v.lang.toLowerCase().startsWith('pt')
+            );
+            if (!ptVoices.length) return null;
+
+            // Prioriza vozes Neurais / Naturais (Francisca, Thalita, Antonio, Google Português, Luciana)
+            const preferredKeywords = ['natural', 'neural', 'francisca', 'thalita', 'leila', 'google português do brasil', 'luciana', 'online', 'premium'];
+            for (const keyword of preferredKeywords) {
+                const match = ptVoices.find(v => v.name.toLowerCase().includes(keyword));
+                if (match) return match;
+            }
+            return ptVoices[0];
+        }
+
+        async function speakText(text, onEndCallback = null) {
+            state.lastSpokenText = text;
+            stopAllAudio();
+            const requestId = activeSpeechRequestId;
+
+            setSpeakingUI(true, "Preparando voz...");
+
+            // 1. Tenta primeiro a voz humana neural (Gemini TTS)
+            const naturalAudioUrl = await fetchNaturalGeminiTTS(text);
+            if (requestId !== activeSpeechRequestId) return;
+
+            if (naturalAudioUrl) {
+                try {
+                    const audio = new Audio(naturalAudioUrl);
+                    currentHtmlAudio = audio;
+                    setSpeakingUI(true, "Narrando...");
+
+                    audio.onended = () => {
+                        if (requestId === activeSpeechRequestId) {
+                            setSpeakingUI(false);
+                            if (onEndCallback) onEndCallback();
+                        }
+                    };
+                    audio.onerror = () => {
+                        if (requestId === activeSpeechRequestId) {
+                            speakWithBrowserFallback(text, requestId, onEndCallback);
+                        }
+                    };
+
+                    await audio.play();
+                    return;
+                } catch (e) {
+                    // Se o navegador bloquear ou falhar, cai no fallback suave abaixo
+                }
+            }
+
+            // 2. Fallback: usa a voz mais natural disponível no sistema com cadência humanizada
+            speakWithBrowserFallback(text, requestId, onEndCallback);
+        }
+
+        function speakWithBrowserFallback(text, requestId, onEndCallback) {
+            if (!('speechSynthesis' in window)) {
+                setSpeakingUI(false);
+                if (onEndCallback) onEndCallback();
+                return;
+            }
+
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'pt-BR';
+            utterance.rate = 1.0;
+            utterance.pitch = 1.05;
+
+            const bestVoice = pickBestBrowserPortugueseVoice();
+            if (bestVoice) utterance.voice = bestVoice;
+
+            utterance.onstart = () => {
+                if (requestId === activeSpeechRequestId) {
+                    setSpeakingUI(true, "Narrando...");
+                }
+            };
+            utterance.onend = () => {
+                if (requestId === activeSpeechRequestId) {
+                    setSpeakingUI(false);
+                    if (onEndCallback) onEndCallback();
+                }
+            };
+            utterance.onerror = () => {
+                if (requestId === activeSpeechRequestId) {
+                    setSpeakingUI(false);
+                }
+            };
+
+            currentUtterance = utterance;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function repeatCurrentAudio() {
+            if (state.lastSpokenText) {
+                playSound('click');
+                speakText(state.lastSpokenText);
+            }
+        }
+
+        function repeatModalAudio() {
+            if (state.modalSpokenText) {
+                playSound('click');
+                speakText(state.modalSpokenText);
+            }
+        }
+
+        // Efeitos sonoros divertidos com Tone.js
+        async function playSound(type) {
+            try {
+                if (Tone.context.state !== 'running') {
+                    await Tone.start();
+                }
+                const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+                synth.volume.value = -8;
+
+                if (type === 'click') {
+                    synth.triggerAttackRelease(["C5"], "16n");
+                } else if (type === 'success') {
+                    const now = Tone.now();
+                    synth.triggerAttackRelease("C5", "16n", now);
+                    synth.triggerAttackRelease("E5", "16n", now + 0.1);
+                    synth.triggerAttackRelease("G5", "16n", now + 0.2);
+                    synth.triggerAttackRelease("C6", "8n", now + 0.3);
+                } else if (type === 'error') {
+                    const now = Tone.now();
+                    synth.triggerAttackRelease("E3", "8n", now);
+                    synth.triggerAttackRelease("C3", "4n", now + 0.15);
+                } else if (type === 'fanfare') {
+                    const now = Tone.now();
+                    synth.triggerAttackRelease(["C4", "E4", "G4"], "8n", now);
+                    synth.triggerAttackRelease(["F4", "A4", "C5"], "8n", now + 0.2);
+                    synth.triggerAttackRelease(["G4", "B4", "D5"], "8n", now + 0.4);
+                    synth.triggerAttackRelease(["C5", "E5", "G5", "C6"], "2n", now + 0.6);
+                }
+            } catch (e) {
+                // Ignora se o áudio ainda não foi interagido
+            }
+        }
+
+        /* =====================================================================
+           RENDERIZAÇÃO DO PAINEL PRINCIPAL (NÍVEIS E ESTUDOS 1 -> 2 -> 3 -> 4)
+           ===================================================================== */
+        function renderHome() {
+            updateVaultHeaderUI();
+
+            const nome = getStudentName();
+            const tituloExplorador = adj('Pequeno Explorador', 'Pequena Exploradora');
+            const expertBiblia = adj('um Explorador da Bíblia Expert', 'uma Exploradora da Bíblia Expert');
+
+            const headerBadge = document.getElementById('headerStudentBadge');
+            if (headerBadge) {
+                headerBadge.textContent = state.studentName
+                    ? `${ adj('Explorador da Bíblia', 'Exploradora da Bíblia') }: ${nome} 🌟`
+                    : 'Jesus, o Restaurador da Vida 🌟';
+            }
+
+            const welcomeTitle = document.getElementById('welcomeBannerTitle');
+            if (welcomeTitle) {
+                welcomeTitle.textContent = `Olá, ${nome}! 🌟`;
+            }
+
+            const welcomeSubtitle = document.getElementById('welcomeBannerSubtitle');
+            if (welcomeSubtitle) {
+                welcomeSubtitle.innerHTML = `${tituloExplorador} <strong>${nome}</strong>, ouça as explicações sobre <strong>Deus, o Criador</strong> e <strong>Jesus, o Restaurador da Vida</strong>, ache versículos super rápido e guarde gemas no seu <strong>Cofre Secreto</strong> até se tornar ${expertBiblia}!`;
+            }
+
+            // Atualiza badge do Pré-Estudo
+            const preBadge = document.getElementById('preStudyBadge');
+            if (state.preStudyDone) {
+                preBadge.className = "bg-emerald-600 text-white text-xs font-extrabold px-3 py-1 rounded-full";
+                preBadge.innerHTML = `✅ Parabéns, ${nome}! Treinamento Concluído!`;
+            }
+
+            // 1. Renderiza botões de Nível (Fácil, Normal, Difícil)
+            const diffMeta = [
+                {
+                    key: 'facil',
+                    name: 'Nível 1: Fácil',
+                    desc: 'Comece aqui! Perguntas iniciais',
+                    icon: '🌱',
+                    btnClass: 'btn-green'
+                },
+                {
+                    key: 'normal',
+                    name: 'Nível 2: Normal',
+                    desc: 'Perguntas um pouco mais difíceis',
+                    icon: '⚡',
+                    btnClass: 'btn-blue'
+                },
+                {
+                    key: 'dificil',
+                    name: 'Nível 3: Difícil',
+                    desc: 'Nível Expert! Abre o Cofre no final',
+                    icon: '👑',
+                    btnClass: 'btn-purple'
+                }
+            ];
+
+            const diffContainer = document.getElementById('difficultyContainer');
+            diffContainer.innerHTML = diffMeta.map(d => {
+                const isUnlocked = state.unlockedDifficulty[d.key];
+                const isSelected = state.currentDifficulty === d.key;
+                const completedCount = state.completedStudies[d.key].filter(Boolean).length;
+                const allDone = completedCount === 4;
+
+                if (!isUnlocked) {
+                    return `
+                        <button onclick="lockedLevelWarning('${d.name}')" class="bg-slate-200 border-4 border-slate-300 rounded-3xl p-5 text-left opacity-75 flex items-center justify-between cursor-not-allowed">
+                            <div>
+                                <div class="text-xs font-extrabold uppercase text-slate-500 flex items-center gap-1">
+                                    <i class="ph-fill ph-lock-key"></i> Bloqueado
+                                </div>
+                                <div class="text-lg font-extrabold text-slate-600">${d.name}</div>
+                                <div class="text-xs text-slate-500 mt-1">Conclua o nível anterior primeiro!</div>
+                            </div>
+                            <div class="text-3xl grayscale">🔒</div>
+                        </button>
+                    `;
+                }
+
+                return `
+                    <button onclick="selectDifficulty('${d.key}')" class="btn-3d ${d.btnClass} text-white rounded-3xl p-5 text-left flex items-center justify-between ${isSelected ? 'ring-4 ring-amber-400 scale-[1.02]' : 'opacity-90'}">
+                        <div>
+                            <div class="text-xs font-extrabold uppercase bg-black/20 px-2.5 py-0.5 rounded-full inline-block mb-1">
+                                ${allDone ? '✅ Completo (4/4)' : `Progresso: ${completedCount}/4`}
+                            </div>
+                            <div class="text-xl font-extrabold">${d.name}</div>
+                            <div class="text-xs text-white/90 mt-0.5">${d.desc}</div>
+                        </div>
+                        <div class="text-4xl">${d.icon}</div>
+                    </button>
+                `;
+            }).join('');
+
+            // Label do nível atual
+            const levelNames = { facil: 'Nível Fácil 🌱', normal: 'Nível Normal ⚡', dificil: 'Nível Difícil 👑' };
+            document.getElementById('currentLevelLabel').textContent = levelNames[state.currentDifficulty];
+
+            // 2. Renderiza os 4 Estudos de forma progressiva (1 -> 2 -> 3 -> 4)
+            const studiesGrid = document.getElementById('studiesGrid');
+            const progressArr = state.completedStudies[state.currentDifficulty];
+
+            studiesGrid.innerHTML = STUDIES_DATA.map((study, idx) => {
+                const isCompleted = progressArr[idx];
+                // O estudo 1 (idx 0) está sempre desbloqueado no nível atual; os seguintes exigem que o anterior esteja concluído
+                const isUnlocked = idx === 0 || progressArr[idx - 1] === true;
+                // Destaca o próximo estudo que a criança precisa clicar!
+                const isNextToPlay = isUnlocked && !isCompleted;
+
+                if (!isUnlocked) {
+                    return `
+                        <div onclick="lockedStudyWarning(${idx + 1})" class="bg-white/70 border-4 border-dashed border-slate-300 rounded-3xl p-6 flex items-center justify-between cursor-pointer hover:bg-slate-100 transition">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 rounded-2xl bg-slate-200 flex items-center justify-center text-3xl text-slate-400">
+                                    🔒
+                                </div>
+                                <div>
+                                    <span class="text-xs font-extrabold uppercase text-slate-400">Estudo Bloqueado</span>
+                                    <h4 class="text-lg font-extrabold text-slate-500">${study.title}</h4>
+                                    <p class="text-xs font-bold text-amber-700 mt-1">
+                                        👉 Conclua o Estudo ${idx} primeiro para abrir este!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div class="bg-white border-4 ${isNextToPlay ? 'border-amber-400' : 'border-emerald-400'} rounded-3xl p-6 shadow-xl flex flex-col justify-between gap-4 relative">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br ${study.color} text-white flex items-center justify-center text-3xl shadow-md border-2 border-white shrink-0">
+                                    ${study.emoji}
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs font-extrabold uppercase px-2.5 py-0.5 rounded-full ${isCompleted ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-900'}">
+                                            ${isCompleted ? '✅ Concluído' : '⭐ Disponível Agora'}
+                                        </span>
+                                    </div>
+                                    <h4 class="text-xl font-extrabold text-indigo-950 mt-1">${study.title}</h4>
+                                    <p class="text-xs text-slate-500 font-medium">Tema: ${study.theme} • Prefácio Narrado + Perguntas A, B, C</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="openStudy(${idx})" class="btn-3d ${isNextToPlay ? 'btn-yellow text-indigo-950 highlight-action' : 'btn-green text-white'} font-extrabold py-4 px-6 rounded-2xl text-lg flex items-center justify-center gap-2 w-full">
+                            <i class="ph-fill ${isCompleted ? 'ph-arrows-clockwise' : 'ph-play-circle'} text-2xl"></i>
+                            <span>${isCompleted ? 'Estudar Novamente' : `CLIQUE AQUI: Iniciar Estudo ${idx + 1}`}</span>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateVaultHeaderUI() {
+            const vaultIcon = document.getElementById('vaultIconHeader');
+            const vaultText = document.getElementById('vaultStatusText');
+
+            if (state.vaultUnlocked) {
+                vaultIcon.textContent = '🔓';
+                vaultText.innerHTML = `<span class="text-amber-300">💎 ${state.secretGems} Gemas!</span>`;
+            } else {
+                vaultIcon.textContent = '🔒';
+                vaultText.innerHTML = `<span>💎 ??? Gemas</span>`;
+            }
+        }
+
+        function selectDifficulty(diffKey) {
+            playSound('click');
+            state.currentDifficulty = diffKey;
+            renderHome();
+            const names = { facil: "Nível Fácil", normal: "Nível Normal", dificil: "Nível Difícil" };
+            speakText(`${getStudentName()}, você selecionou o ${names[diffKey]}. Escolha o estudo destacado para começar!`);
+        }
+
+        function lockedLevelWarning(levelName) {
+            playSound('error');
+            speakText(`${getStudentName()}, o ${levelName} ainda está trancado! Primeiro conclua todos os quatro estudos do nível anterior para desbloquear.`);
+        }
+
+        function lockedStudyWarning(studyNum) {
+            playSound('error');
+            speakText(`${getStudentName()}, o Estudo ${studyNum} ainda está bloqueado! Você precisa concluir o Estudo ${studyNum - 1} primeiro para seguir na ordem certinha.`);
+        }
+
+        function narrateWelcome() {
+            playSound('click');
+            const nome = getStudentName();
+            const expertBiblia = adj('um Explorador da Bíblia Expert', 'uma Exploradora da Bíblia Expert');
+            speakText(`Olá, ${nome}! Que alegria ter você aqui no estudo Jesus, o Restaurador da Vida! Antes de começar as lições, ${nome}, clique no botão laranja para fazer o Pré-Estudo de Super Agilidade e aprender a encontrar livros no índice, ver a página, o capítulo e o versículo! Depois, comece pelo Nível Fácil no Estudo número 1. A cada estudo concluído, você conhece mais a Deus, o Criador, ganha uma gema preciosa que vai para o seu Cofre Secreto e fica a um passo de se tornar ${expertBiblia}!`);
+        }
+
+        function inspectVault() {
+            playSound('click');
+            const nome = getStudentName();
+            const expertBiblia = adj('um Explorador da Bíblia Expert', 'uma Exploradora da Bíblia Expert');
+            const btn = document.getElementById('vaultHeaderBtn');
+            btn.classList.add('vault-shake');
+            setTimeout(() => btn.classList.remove('vault-shake'), 650);
+
+            if (state.vaultUnlocked) {
+                showModal({
+                    emoji: "🏆💎",
+                    subtitle: `Cofre Secreto de ${nome} Aberto!`,
+                    title: `${nome}, você conquistou ${state.secretGems} Gemas Preciosas!`,
+                    message: `Parabéns, ${nome}! Você está indo muito bem e se tornou ${expertBiblia}! Você conhece mais a Deus, o Criador, e aprendeu sobre Jesus, o Restaurador da Vida! Seu Cofre Secreto guarda ${state.secretGems} gemas brilhantes!`,
+                    vaultText: `Cofre Aberto: ${state.secretGems} Gemas Reveladas! 🎉`,
+                    audio: `${nome}, o seu Cofre Secreto está aberto! Você acumulou um total incrível de ${state.secretGems} gemas preciosas! Parabéns, ${nome}, você está indo muito bem e agora é ${expertBiblia}!`
+                });
+            } else {
+                showModal({
+                    emoji: "🔒💎",
+                    subtitle: "Segredo Muito Bem Guardado!",
+                    title: `Cofre de ${nome} Trancado!`,
+                    message: `${nome}, suas gemas estão sendo guardadas em segredo aqui dentro! Continue completando os estudos do Fácil, Normal e Difícil sobre Jesus, o Restaurador da Vida, para se tornar ${expertBiblia}. Só no final do último nível o cofre será aberto!`,
+                    vaultText: "Quantidade Secreta: ??? Gemas Guardadas",
+                    audio: `Shhh! É segredo, ${nome}! Suas gemas estão bem guardadinhas aqui no cofre! Você está indo muito bem! Continue avançando nos estudos para se tornar ${expertBiblia}, porque o cofre só poderá ser aberto quando você concluir o final do nível Difícil!`
+                });
+            }
+        }
+
+        /* =====================================================================
+           PRÉ-ESTUDO LÚDICO E PEDAGÓGICO (CRIANÇA DE 9 ANOS)
+           Como encontrar Livros no Índice -> Página -> Capítulo -> Versículo
+           ===================================================================== */
+        function openPreStudy() {
+            playSound('click');
+            document.getElementById('screenHome').classList.add('hidden');
+            document.getElementById('screenStudy').classList.add('hidden');
+            document.getElementById('screenPreStudy').classList.remove('hidden');
+
+            state.preStudyStep = 1;
+            state.miniGameStage = 0;
+            renderPreStudyStep();
+        }
+
+        function setPreStudyStep(step) {
+            playSound('click');
+            state.preStudyStep = step;
+            renderPreStudyStep();
+        }
+
+        function renderPreStudyStep() {
+            // Atualiza abas visuais
+            for (let i = 1; i <= 4; i++) {
+                const tab = document.getElementById(`stepTab${i}`);
+                if (i === state.preStudyStep) {
+                    tab.className = "p-3 rounded-xl bg-amber-500 text-white shadow font-extrabold scale-105 transition";
+                } else if (i < state.preStudyStep) {
+                    tab.className = "p-3 rounded-xl bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold cursor-pointer";
+                } else {
+                    tab.className = "p-3 rounded-xl bg-white text-slate-500 border font-bold cursor-pointer";
+                }
+            }
+
+            const container = document.getElementById('preStudyContent');
+            const nome = getStudentName();
+
+            if (state.preStudyStep === 1) {
+                const audioText = `${nome}, vamos para o Passo número 1: O Mapa do Tesouro no Índice! Imagine que você quer achar Salmos capítulo vinte e três, versículo um. Não precisa folhear a Bíblia no escuro! Abra logo nas primeiras páginas da Bíblia, onde fica o Índice ou Sumário. Lá você procura o nome do livro, por exemplo, Salmos, e olha o número da página bem ao lado! Sabendo o número da página, ${nome}, você abre direto lá super rápido!`;
+                container.innerHTML = `
+                    <div class="space-y-6">
+                        <div class="flex flex-col md:flex-row items-center gap-6 bg-amber-50 p-6 rounded-2xl border-2 border-amber-300">
+                            <div class="text-6xl bg-white p-5 rounded-3xl shadow border-2 border-amber-400">📑</div>
+                            <div class="space-y-2">
+                                <span class="bg-amber-500 text-white text-xs font-extrabold px-3 py-1 rounded-full uppercase">Segredo #1 para ${nome}</span>
+                                <h3 class="text-2xl sm:text-3xl font-extrabold text-indigo-950">1. O Índice e o Número da Página!</h3>
+                                <p class="text-slate-700 text-base sm:text-lg leading-relaxed">
+                                    <strong>${nome}</strong>, a Bíblia é como uma biblioteca com <strong>66 livros</strong>! Para ser super ${adj('rápido', 'rápida')}, comece abrindo no <strong>ÍNDICE</strong> (bem no comecinho da Bíblia).
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Ilustração Interativa de um Índice Bíblico -->
+                        <div class="bg-slate-50 p-5 rounded-2xl border-2 border-slate-200 max-w-lg mx-auto space-y-3">
+                            <div class="text-center font-extrabold text-indigo-950 border-b pb-2">📖 Exemplo de Índice da Bíblia</div>
+                            <div class="flex justify-between items-center p-2 rounded-lg bg-white border text-slate-600">
+                                <span>Gênesis</span> <span class="font-mono font-bold">Página 5</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 rounded-xl bg-amber-200 border-2 border-amber-500 text-indigo-950 font-extrabold shadow-sm">
+                                <span>👉 Salmos (Achou o Livro!)</span> <span class="bg-indigo-950 text-amber-300 px-3 py-1 rounded-lg">Página 740</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 rounded-lg bg-white border text-slate-600">
+                                <span>Provérbios</span> <span class="font-mono font-bold">Página 835</span>
+                            </div>
+                            <p class="text-xs text-center text-amber-800 font-bold pt-1">
+                                💡 Viu só? Você olha o nome do Livro no Índice e vai direto para a Página 740!
+                            </p>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button onclick="setPreStudyStep(2)" class="btn-3d btn-green text-white font-extrabold px-8 py-4 rounded-2xl text-xl flex items-center gap-3 highlight-action">
+                                <span>Próximo: O que é o Capítulo?</span>
+                                <i class="ph-bold ph-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                speakText(audioText);
+
+            } else if (state.preStudyStep === 2) {
+                const audioText = `Muito bem, ${nome}! Agora o Passo número 2: O Número do Capítulo! Depois de abrir na página certa, você precisa achar o Capítulo. Pense no Capítulo como o número da rua! Na Bíblia, os números dos capítulos são sempre GRANDES e destacados no começo de cada bloco. Se estamos procurando Salmos vinte e três, nossos olhos procuram o número vinte e três bem grandão!`;
+                container.innerHTML = `
+                    <div class="space-y-6">
+                        <div class="flex flex-col md:flex-row items-center gap-6 bg-blue-50 p-6 rounded-2xl border-2 border-blue-300">
+                            <div class="text-6xl bg-white p-5 rounded-3xl shadow border-2 border-blue-400">🔢</div>
+                            <div class="space-y-2">
+                                <span class="bg-blue-600 text-white text-xs font-extrabold px-3 py-1 rounded-full uppercase">Segredo #2 para ${nome}</span>
+                                <h3 class="text-2xl sm:text-3xl font-extrabold text-indigo-950">2. O Capítulo é o Número GRANDÃO!</h3>
+                                <p class="text-slate-700 text-base sm:text-lg leading-relaxed">
+                                    Já abriu na página 740, <strong>${nome}</strong>? Agora procure o <strong>Capítulo</strong>. Ele sempre vem antes dos dois-pontos (em <strong>Salmos 23:1</strong>, o capítulo é o <strong>23</strong>) e aparece com um número bem <strong>GRANDE</strong>!
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Ilustração visual do Capítulo Grande -->
+                        <div class="bg-amber-50/60 p-6 rounded-2xl border-2 border-amber-200 max-w-lg mx-auto space-y-3">
+                            <div class="text-xs font-bold text-slate-400 flex justify-between">
+                                <span>LIVRO DE SALMOS</span>
+                                <span>PÁGINA 740</span>
+                            </div>
+                            <div class="p-4 bg-white rounded-xl border shadow-sm">
+                                <span class="text-4xl font-extrabold text-blue-600 bg-blue-100 px-3 py-1 rounded-xl border-2 border-blue-400 float-left mr-3">23</span>
+                                <p class="text-slate-700 leading-relaxed">
+                                    <sup class="font-bold text-rose-600">1</sup> Deus é o meu Pastor, nada me faltará através de Jesus, o Restaurador de Vidas.
+                                    <sup class="font-bold text-slate-400">2</sup> Em verdes pastos ele me faz descansar...
+                                </p>
+                            </div>
+                            <p class="text-sm text-center text-blue-900 font-bold">
+                                👀 Olhe como o número <span class="text-blue-600 font-extrabold">23</span> é grandão! Esse é o Capítulo!
+                            </p>
+                        </div>
+
+                        <div class="flex justify-between">
+                            <button onclick="setPreStudyStep(1)" class="btn-3d bg-slate-200 text-slate-700 font-bold px-5 py-3 rounded-xl">
+                                ⬅ Voltar
+                            </button>
+                            <button onclick="setPreStudyStep(3)" class="btn-3d btn-green text-white font-extrabold px-8 py-4 rounded-2xl text-xl flex items-center gap-3 highlight-action">
+                                <span>Próximo: E o Versículo?</span>
+                                <i class="ph-bold ph-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                speakText(audioText);
+
+            } else if (state.preStudyStep === 3) {
+                const audioText = `Agora o Passo número 3, ${nome}: O Número do Versículo! Você já achou a página no Índice e já achou o Capítulo grandão! Agora falta o Versículo, que é como o número da casa dentro da rua! Os versículos são aqueles números pequenininhos que ficam grudadinhos nas frases. Em Salmos vinte e três, versículo quatro, você desliza o dedinho pelos números pequenos um, dois, três, até achar o quatro!`;
+                container.innerHTML = `
+                    <div class="space-y-6">
+                        <div class="flex flex-col md:flex-row items-center gap-6 bg-rose-50 p-6 rounded-2xl border-2 border-rose-300">
+                            <div class="text-6xl bg-white p-5 rounded-3xl shadow border-2 border-rose-400">🔍</div>
+                            <div class="space-y-2">
+                                <span class="bg-rose-600 text-white text-xs font-extrabold px-3 py-1 rounded-full uppercase">Segredo #3 para ${nome}</span>
+                                <h3 class="text-2xl sm:text-3xl font-extrabold text-indigo-950">3. O Versículo é o Número PEQUENININHO!</h3>
+                                <p class="text-slate-700 text-base sm:text-lg leading-relaxed">
+                                    <strong>${nome}</strong>, dentro do Capítulo grandão, cada frase tem um <strong>númerozinho pequeno</strong>. Esse é o <strong>Versículo</strong>! Basta deslizar o dedo até achar o número pedido.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Comparação Resumida -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                            <div class="bg-amber-100 p-4 rounded-2xl border-2 border-amber-300">
+                                <div class="text-2xl mb-1">1️⃣ Índice</div>
+                                <div class="font-extrabold text-amber-950">Acha o Livro e a Página</div>
+                                <div class="text-xs text-amber-800">Ex: Salmos ➔ Pág. 740</div>
+                            </div>
+                            <div class="bg-blue-100 p-4 rounded-2xl border-2 border-blue-300">
+                                <div class="text-2xl mb-1">2️⃣ Capítulo</div>
+                                <div class="font-extrabold text-blue-950">Número GRANDÃO</div>
+                                <div class="text-xs text-blue-800">Ex: Capítulo <strong>23</strong></div>
+                            </div>
+                            <div class="bg-rose-100 p-4 rounded-2xl border-2 border-rose-300">
+                                <div class="text-2xl mb-1">3️⃣ Versículo</div>
+                                <div class="font-extrabold text-rose-950">Número Pequenininho</div>
+                                <div class="text-xs text-rose-800">Ex: Versículo <sup>1</sup> ou <sup>4</sup></div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between">
+                            <button onclick="setPreStudyStep(2)" class="btn-3d bg-slate-200 text-slate-700 font-bold px-5 py-3 rounded-xl">
+                                ⬅ Voltar
+                            </button>
+                            <button onclick="setPreStudyStep(4)" class="btn-3d btn-orange text-white font-extrabold px-8 py-4 rounded-2xl text-xl flex items-center gap-3 highlight-action">
+                                <span>Jogar Desafio Relâmpago! ⚡</span>
+                                <i class="ph-bold ph-game-controller text-2xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                speakText(audioText);
+
+            } else if (state.preStudyStep === 4) {
+                renderMiniGame();
+            }
+        }
+
+        // Mini-Jogo Prático de Agilidade Bíblica (Missão: Encontrar Salmos 23:1)
+        function renderMiniGame() {
+            const container = document.getElementById('preStudyContent');
+            const nome = getStudentName();
+
+            if (state.miniGameStage === 0) {
+                const audio = `Desafio Relâmpago para você, ${nome}! Sua missão é encontrar Salmos capítulo vinte e três, versículo um! Passo 1: Olhe no Índice abaixo e clique no botão do livro de Salmos para ver o número da página!`;
+                container.innerHTML = `
+                    <div class="space-y-5 text-center">
+                        <span class="bg-orange-600 text-white text-xs font-extrabold px-4 py-1.5 rounded-full uppercase">
+                            ⚡ Missão Prática de ${nome}: Encontrar Salmos 23:1
+                        </span>
+                        <h3 class="text-2xl font-extrabold text-indigo-950">
+                            ${nome}, Passo 1 de 3: Encontre o livro de <span class="text-orange-600 underline">Salmos</span> no Índice e veja a página!
+                        </h3>
+                        <p class="text-sm font-bold text-slate-600">Clique no botão certo abaixo:</p>
+
+                        <div class="max-w-md mx-auto space-y-3 text-left">
+                            <button onclick="miniGameWrong('Quase, ' + getStudentName() + '! Esse é o livro de Êxodo. Procure o livro de Salmos!')" class="btn-3d btn-option w-full p-4 rounded-2xl flex justify-between items-center font-extrabold text-lg">
+                                <span>📘 Êxodo</span>
+                                <span class="bg-slate-200 px-3 py-1 rounded-lg text-sm">Página 72</span>
+                            </button>
+                            <button onclick="miniGameAdvance(1)" class="btn-3d btn-yellow w-full p-5 rounded-2xl flex justify-between items-center font-extrabold text-xl text-indigo-950 highlight-action">
+                                <span>📗 Salmos (Clique Aqui!)</span>
+                                <span class="bg-indigo-950 text-amber-300 px-3 py-1 rounded-lg text-base">Página 740</span>
+                            </button>
+                            <button onclick="miniGameWrong('Esse é o livro de Jonas, ' + getStudentName() + '. Clique em Salmos na página 740!')" class="btn-3d btn-option w-full p-4 rounded-2xl flex justify-between items-center font-extrabold text-lg">
+                                <span>📙 Jonas</span>
+                                <span class="bg-slate-200 px-3 py-1 rounded-lg text-sm">Página 1120</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                speakText(audio);
+
+            } else if (state.miniGameStage === 1) {
+                const audio = `Boa, ${nome}! Você abriu na Página setecentos e quarenta! Agora é o Passo 2: precisamos achar o Capítulo vinte e três de Salmos! Clique no número GRANDÃO do Capítulo vinte e três!`;
+                container.innerHTML = `
+                    <div class="space-y-5 text-center">
+                        <span class="bg-blue-600 text-white text-xs font-extrabold px-4 py-1.5 rounded-full uppercase">
+                            📖 ${nome} abriu na Página 740 (Livro de Salmos)
+                        </span>
+                        <h3 class="text-2xl font-extrabold text-indigo-950">
+                            Passo 2 de 3: Agora clique no número GRANDÃO do <span class="text-blue-600 underline">Capítulo 23</span>!
+                        </h3>
+
+                        <div class="grid grid-cols-3 gap-4 max-w-md mx-auto pt-2">
+                            <button onclick="miniGameWrong('Esse é o capítulo 22, ' + getStudentName() + '. Clique no número 23!')" class="btn-3d btn-option p-6 rounded-2xl text-3xl font-extrabold text-slate-700">
+                                Cap. 22
+                            </button>
+                            <button onclick="miniGameAdvance(2)" class="btn-3d btn-blue p-6 rounded-2xl text-4xl font-extrabold text-white highlight-action">
+                                23
+                            </button>
+                            <button onclick="miniGameWrong('Esse é o capítulo 24, ' + getStudentName() + '. Clique no número 23!')" class="btn-3d btn-option p-6 rounded-2xl text-3xl font-extrabold text-slate-700">
+                                Cap. 24
+                            </button>
+                        </div>
+                    </div>
+                `;
+                speakText(audio);
+
+            } else if (state.miniGameStage === 2) {
+                const audio = `Muito rápido, ${nome}! Você já está no Capítulo vinte e três! Agora o último passo: clique no versículo pequenininho número um para ler o texto!`;
+                container.innerHTML = `
+                    <div class="space-y-5 text-center">
+                        <span class="bg-emerald-600 text-white text-xs font-extrabold px-4 py-1.5 rounded-full uppercase">
+                            📖 Salmos • Página 740 • Capítulo 23
+                        </span>
+                        <h3 class="text-2xl font-extrabold text-indigo-950">
+                            ${nome}, Passo 3 de 3: Clique no <span class="text-rose-600 underline">Versículo 1</span> (o númerozinho pequeno)!
+                        </h3>
+
+                        <div class="max-w-lg mx-auto space-y-3 text-left">
+                            <button onclick="finishPreStudy()" class="btn-3d btn-green w-full p-5 rounded-2xl text-white font-bold text-lg flex items-center gap-3 highlight-action">
+                                <span class="bg-white text-emerald-800 font-extrabold px-3 py-1 rounded-lg text-sm">Versículo 1</span>
+                                <span>"Deus é o meu Pastor, e com Jesus, o Restaurador da Vida, nada me faltará."</span>
+                            </button>
+                            <button onclick="miniGameWrong('Esse é o versículo 2, ' + getStudentName() + '! Clique no versículo 1!')" class="btn-3d btn-option w-full p-4 rounded-2xl text-slate-700 font-bold flex items-center gap-3">
+                                <span class="bg-slate-200 px-3 py-1 rounded-lg text-sm">Versículo 2</span>
+                                <span>"Em verdes pastos ele me faz descansar."</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                speakText(audio);
+            }
+        }
+
+        function miniGameWrong(msg) {
+            playSound('error');
+            speakText(msg);
+        }
+
+        function miniGameAdvance(nextStage) {
+            playSound('success');
+            state.miniGameStage = nextStage;
+            renderMiniGame();
+        }
+
+        function finishPreStudy() {
+            playSound('fanfare');
+            const nome = getStudentName();
+            state.preStudyDone = true;
+            showModal({
+                emoji: "🕵️‍♂️⚡",
+                subtitle: "Treinamento de Agilidade Concluído!",
+                title: `Parabéns, ${nome}! Você é ${adj('um Detetive', 'uma Detetive')} da Bíblia!`,
+                message: `${nome}, agora você já sabe os 3 passos mágicos: 1) Olhar o Livro e a Página no Índice, 2) Achar o Capítulo grandão e 3) Achar o Versículo pequenininho! Vamos começar o Estudo 1?`,
+                vaultText: `Tudo pronto para ${nome} ganhar Gemas no Estudo 1!`,
+                audio: `Parabéns, ${nome}! Você encontrou Salmos vinte e três, versículo um em tempo recorde! Agora você já sabe usar o Índice, ver a página, achar o capítulo e o versículo! Vamos para o Estudo número 1, ${nome}!`
+            });
+            goHome();
+        }
+
+        /* =====================================================================
+           FLUXO DE ESTUDO: PREFÁCIO EXPLICATIVO EM ÁUDIO -> PERGUNTAS A, B, C
+           ===================================================================== */
+        function openStudy(studyIdx) {
+            playSound('click');
+            state.activeStudyIndex = studyIdx;
+            state.activeQuestionIndex = 0;
+
+            const nome = getStudentName();
+            const study = STUDIES_DATA[studyIdx];
+            const levelData = study.levels[state.currentDifficulty];
+            const levelNames = { facil: 'Nível Fácil', normal: 'Nível Normal', dificil: 'Nível Difícil' };
+
+            document.getElementById('screenHome').classList.add('hidden');
+            document.getElementById('screenPreStudy').classList.add('hidden');
+            document.getElementById('screenStudy').classList.remove('hidden');
+
+            // Mostra primeiro o Prefácio Explicativo e esconde a caixa de perguntas
+            document.getElementById('prefaceBox').classList.remove('hidden');
+            document.getElementById('questionBox').classList.add('hidden');
+
+            document.getElementById('studyHeaderBadge').textContent = `${levelNames[state.currentDifficulty]} • Estudo ${study.id} de 4 (${nome})`;
+            document.getElementById('studyHeaderTitle').textContent = study.title;
+            document.getElementById('prefaceEmoji').textContent = study.emoji;
+            document.getElementById('prefaceTitle').textContent = `${nome}, ouça o Prefácio: ${study.theme}`;
+            document.getElementById('prefaceText').innerHTML = `<p><strong>Olá, ${nome}!</strong> ${levelData.preface}</p>`;
+
+            narratePreface();
+        }
+
+        function narratePreface() {
+            const nome = getStudentName();
+            const study = STUDIES_DATA[state.activeStudyIndex];
+            const levelData = study.levels[state.currentDifficulty];
+            speakText(`${nome}, vamos ouvir o prefácio explicativo do ${study.title}. Preste bastante atenção para responder às perguntas depois: ${levelData.preface}. Quando estiver ${adj('pronto', 'pronta')}, ${nome}, clique no botão verde destacado para ir para as perguntas!`);
+        }
+
+        function startQuestions() {
+            playSound('click');
+            document.getElementById('prefaceBox').classList.add('hidden');
+            document.getElementById('questionBox').classList.remove('hidden');
+            state.activeQuestionIndex = 0;
+            renderCurrentQuestion();
+        }
+
+        function renderCurrentQuestion() {
+            const nome = getStudentName();
+            const study = STUDIES_DATA[state.activeStudyIndex];
+            const questions = study.levels[state.currentDifficulty].questions;
+            const qObj = questions[state.activeQuestionIndex];
+
+            document.getElementById('questionCounter').textContent = `Pergunta ${state.activeQuestionIndex + 1} de ${questions.length} • Vamos lá, ${nome}!`;
+            document.getElementById('questionText').textContent = `${nome}, ${qObj.q.charAt(0).toLowerCase() + qObj.q.slice(1)}`;
+
+            const feedbackBox = document.getElementById('questionFeedback');
+            feedbackBox.classList.add('hidden');
+
+            // Renderiza opções A, B e C empilhadas abaixo da pergunta com botões super destacados
+            const optionsContainer = document.getElementById('optionsContainer');
+            const letters = [
+                { letter: 'A', text: qObj.a, badgeBg: 'bg-blue-600' },
+                { letter: 'B', text: qObj.b, badgeBg: 'bg-indigo-600' },
+                { letter: 'C', text: qObj.c, badgeBg: 'bg-purple-600' }
+            ];
+
+            optionsContainer.innerHTML = letters.map(opt => `
+                <button onclick="selectAnswer('${opt.letter}')" id="btnOpt${opt.letter}" class="btn-3d btn-option w-full p-4 sm:p-5 rounded-2xl text-left flex items-center gap-4 group">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl ${opt.badgeBg} text-white font-extrabold text-2xl flex items-center justify-center shrink-0 shadow-md group-hover:scale-110 transition">
+                        ${opt.letter}
+                    </div>
+                    <div class="text-base sm:text-xl font-bold text-slate-800 leading-snug">
+                        ${opt.text}
+                    </div>
+                </button>
+            `).join('');
+
+            narrateCurrentQuestion();
+        }
+
+        function narrateCurrentQuestion() {
+            const nome = getStudentName();
+            const study = STUDIES_DATA[state.activeStudyIndex];
+            const questions = study.levels[state.currentDifficulty].questions;
+            const qObj = questions[state.activeQuestionIndex];
+
+            const fullAudio = `${nome}, Pergunta ${state.activeQuestionIndex + 1}: ${qObj.q}. Alternativa A: ${qObj.a}. Alternativa B: ${qObj.b}. Alternativa C: ${qObj.c}. ${nome}, clique na letra A, B ou C abaixo da pergunta!`;
+            speakText(fullAudio);
+        }
+
+        function selectAnswer(chosenLetter) {
+            const nome = getStudentName();
+            const study = STUDIES_DATA[state.activeStudyIndex];
+            const questions = study.levels[state.currentDifficulty].questions;
+            const qObj = questions[state.activeQuestionIndex];
+            const feedbackBox = document.getElementById('questionFeedback');
+
+            if (chosenLetter === qObj.correct) {
+                playSound('success');
+                const btn = document.getElementById(`btnOpt${chosenLetter}`);
+                btn.className = "btn-3d btn-green w-full p-4 sm:p-5 rounded-2xl text-left flex items-center gap-4 text-white";
+
+                // Desabilita botões para evitar duplo clique
+                ['A', 'B', 'C'].forEach(l => {
+                    const b = document.getElementById(`btnOpt${l}`);
+                    if (b) b.disabled = true;
+                });
+
+                const isLastQuestion = state.activeQuestionIndex === questions.length - 1;
+
+                feedbackBox.className = "p-5 rounded-2xl border-4 border-emerald-400 bg-emerald-50 text-center space-y-3 block";
+                feedbackBox.innerHTML = `
+                    <div class="text-2xl font-extrabold text-emerald-800">🎉 Muito bem, ${nome}! Resposta Certa (Letra ${chosenLetter})!</div>
+                    <button onclick="${isLastQuestion ? 'completeCurrentStudy()' : 'nextQuestion()'}" class="btn-3d btn-green text-white font-extrabold px-8 py-4 rounded-2xl text-xl inline-flex items-center gap-2 highlight-action">
+                        <span>${isLastQuestion ? 'Concluir Estudo e Guardar Gema! 💎' : 'Próxima Pergunta ➔'}</span>
+                    </button>
+                `;
+
+                if (isLastQuestion) {
+                    speakText(`Parabéns, ${nome}! Você acertou a alternativa ${chosenLetter}! Clique no botão verde para concluir este estudo e guardar sua gema no cofre secreto!`);
+                } else {
+                    speakText(`Muito bem, ${nome}! A alternativa ${chosenLetter} está certinha! Clique no botão verde para ir para a próxima pergunta.`);
+                }
+            } else {
+                playSound('error');
+                const btn = document.getElementById(`btnOpt${chosenLetter}`);
+                btn.classList.add('border-rose-500', 'bg-rose-50');
+
+                feedbackBox.className = "p-4 rounded-2xl border-4 border-amber-400 bg-amber-50 text-center space-y-2 block";
+                feedbackBox.innerHTML = `
+                    <div class="text-lg font-extrabold text-amber-900">🤔 Quase lá, ${nome}! Lembre-se do que ouvimos no Prefácio e tente outra alternativa!</div>
+                    <button onclick="backToPrefaceReview()" class="text-sm font-extrabold text-indigo-600 underline">
+                        Quer ouvir a explicação do Prefácio de novo? Clique aqui!
+                    </button>
+                `;
+                speakText(`Ops, ${nome}! Não é a alternativa ${chosenLetter}. Lembre-se da explicação do prefácio e escolha outra opção!`);
+            }
+        }
+
+        function backToPrefaceReview() {
+            playSound('click');
+            document.getElementById('questionBox').classList.add('hidden');
+            document.getElementById('prefaceBox').classList.remove('hidden');
+            narratePreface();
+        }
+
+        function nextQuestion() {
+            playSound('click');
+            state.activeQuestionIndex++;
+            renderCurrentQuestion();
+        }
+
+        /* =====================================================================
+           CONCLUSÃO DE ESTUDO, ACÚMULO SECRETO DE GEMAS E ELOGIOS PROGRESSIVOS
+           ===================================================================== */
+        function completeCurrentStudy() {
+            playSound('fanfare');
+
+            const nome = getStudentName();
+            const muitoBom = adj('muito bom', 'muito boa');
+            const grandeExp = adj('um Grande Explorador da Bíblia', 'uma Grande Exploradora da Bíblia');
+            const expertBiblia = adj('um Explorador da Bíblia Expert', 'uma Exploradora da Bíblia Expert');
+            const diff = state.currentDifficulty;
+            const idx = state.activeStudyIndex;
+
+            // Adiciona 1 gema secreta ao cofre!
+            state.secretGems += 1;
+            state.completedStudies[diff][idx] = true;
+
+            // Anima o cofre no topo
+            const vaultBtn = document.getElementById('vaultHeaderBtn');
+            vaultBtn.classList.add('vault-shake');
+            setTimeout(() => vaultBtn.classList.remove('vault-shake'), 650);
+
+            const allInLevelDone = state.completedStudies[diff].every(Boolean);
+
+            // Verifica qual mensagem de elogio narrada exibir conforme o progresso
+            if (diff === 'facil') {
+                if (allInLevelDone) {
+                    state.unlockedDifficulty.normal = true;
+                    state.currentDifficulty = 'normal';
+                    showModal({
+                        emoji: "🌟💎",
+                        subtitle: "Nível Fácil 100% Concluído!",
+                        title: `${nome}, você está indo muito bem!`,
+                        message: `Parabéns, ${nome}! Você concluiu o Nível Fácil! Você está ficando ${muitoBom} e melhorando cada vez mais como ${grandeExp}! Agora você vai passar para uma etapa mais difícil: o Nível Normal!`,
+                        vaultText: `🔒 +1 Gema de ${nome} guardada no Cofre Secreto! (Total: ???)`,
+                        audio: `Parabéns, ${nome}! Você concluiu todo o Nível Fácil! Você está indo muito bem, está ficando ${muitoBom} e conhecendo mais a Deus, o Criador! Agora você vai passar para uma etapa mais difícil: o Nível Normal! Mais uma gema foi guardada no seu cofre secreto!`
+                    });
+                } else {
+                    const nextStudyNum = idx + 2;
+                    showModal({
+                        emoji: "💎✨",
+                        subtitle: `Estudo ${idx + 1} Concluído (Nível Fácil)`,
+                        title: `Muito bem, ${nome}! Estudo ${nextStudyNum} Desbloqueado!`,
+                        message: `Excelente trabalho, ${nome}! Você está indo muito bem e aprendendo sobre Jesus, o Restaurador da Vida! Sua gema foi guardada em segredo no cofre e o Estudo ${nextStudyNum} já está liberado!`,
+                        vaultText: `🔒 +1 Gema de ${nome} guardada no Cofre Secreto! (Total: ???)`,
+                        audio: `Parabéns por concluir o Estudo ${idx + 1}, ${nome}! Você está indo muito bem e melhorando como ${grandeExp}! Sua gema foi guardada em segredo no cofre e o Estudo ${nextStudyNum} já está desbloqueado!`
+                    });
+                }
+            } else if (diff === 'normal') {
+                if (allInLevelDone) {
+                    state.unlockedDifficulty.dificil = true;
+                    state.currentDifficulty = 'dificil';
+                    showModal({
+                        emoji: "🚀💎",
+                        subtitle: "Nível Normal 100% Concluído!",
+                        title: `${nome}, você está a um passo de ser Expert!`,
+                        message: `Uau, ${nome}! Você concluiu o Nível Normal! Você está indo muito bem e está a um passo de se tornar ${expertBiblia}! Prepare-se para a última etapa: o Nível Difícil!`,
+                        vaultText: `🔒 +1 Gema de ${nome} guardada no Cofre Secreto! (Total: ???)`,
+                        audio: `Parabéns, ${nome}! Você concluiu o Nível Normal! Você está indo muito bem, ficando ${muitoBom} e já está a um passo de se tornar ${expertBiblia}! Agora você vai passar para a etapa mais difícil. Complete o Nível Difícil para abrir o seu Cofre Secreto, ${nome}!`
+                    });
+                } else {
+                    const nextStudyNum = idx + 2;
+                    showModal({
+                        emoji: "⚡💎",
+                        subtitle: `Estudo ${idx + 1} Concluído (Nível Normal)`,
+                        title: `${nome}, você está ficando ${muitoBom}!`,
+                        message: `Parabéns, ${nome}! Você está indo muito bem e ficando cada vez mais perto de se tornar ${expertBiblia}! Mais uma gema secreta entrou no cofre e o Estudo ${nextStudyNum} foi liberado!`,
+                        vaultText: `🔒 +1 Gema de ${nome} guardada no Cofre Secreto! (Total: ???)`,
+                        audio: `Parabéns, ${nome}! Você está indo muito bem, ficando ${muitoBom} e está a um passo de se tornar ${expertBiblia}! Mais uma gema entrou no cofre secreto e você já pode avançar para o Estudo ${nextStudyNum}!`
+                    });
+                }
+            } else if (diff === 'dificil') {
+                if (allInLevelDone) {
+                    // GRANDE FINAL! Abre o Cofre Secreto e faz a narração especial de Explorador da Bíblia Expert!
+                    state.vaultUnlocked = true;
+                    showModal({
+                        emoji: "🔓💎👑",
+                        subtitle: "Jornada Completa • Cofre Secreto Aberto!",
+                        title: `Parabéns, ${nome}! Você é ${expertBiblia}!`,
+                        message: `Que conquista incrível, ${nome}! Você concluiu os níveis Fácil, Normal e Difícil do estudo Jesus, o Restaurador da Vida! Você foi muito bem em todas as etapas e agora se tornou oficialmente ${expertBiblia}! O seu Cofre Secreto se abriu com ${state.secretGems} GEMAS PRECIOSAS!`,
+                        vaultText: `🔓 COFRE DE ${nome.toUpperCase()} ABERTO: ${state.secretGems} Gemas Preciosas! 💎🎉`,
+                        audio: `Parabéns, ${nome}! Você concluiu os níveis Fácil, Normal e Difícil! Você foi muito bem em toda a jornada, aprendeu sobre Deus, o Criador, e sobre Jesus, o Restaurador da Vida, e agora você se tornou oficialmente ${expertBiblia}! O seu Cofre Secreto finalmente se abriu com ${state.secretGems} gemas preciosas! Que orgulho de você, ${nome}!`
+                    });
+                } else {
+                    const nextStudyNum = idx + 2;
+                    showModal({
+                        emoji: "👑💎",
+                        subtitle: `Estudo ${idx + 1} Concluído (Nível Difícil)`,
+                        title: `${nome}, a um passo de ser ${expertBiblia}!`,
+                        message: `Incrível, ${nome}! Você está indo muito bem e está a um passo de se tornar ${expertBiblia}! Mais uma gema foi para o cofre secreto. Avance para o Estudo ${nextStudyNum}!`,
+                        vaultText: `🔒 +1 Gema de ${nome} guardada no Cofre Secreto! (Total: ???)`,
+                        audio: `Parabéns, ${nome}! Você está indo muito bem e já está a um passo de se tornar ${expertBiblia}! Mais uma gema foi guardada no cofre secreto. Agora avance para o Estudo ${nextStudyNum}!`
+                    });
+                }
+            }
+
+            goHome();
+        }
+
+        /* =====================================================================
+           NAVEGAÇÃO E MODAL
+           ===================================================================== */
+        function goHome() {
+            if (!state.studentName) {
+                document.getElementById('screenPreStudy').classList.add('hidden');
+                document.getElementById('screenStudy').classList.add('hidden');
+                document.getElementById('screenHome').classList.add('hidden');
+                document.getElementById('screenOnboarding').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('screenOnboarding').classList.add('hidden');
+            document.getElementById('screenPreStudy').classList.add('hidden');
+            document.getElementById('screenStudy').classList.add('hidden');
+            document.getElementById('screenHome').classList.remove('hidden');
+            renderHome();
+        }
+
+        function showModal({ emoji, subtitle, title, message, vaultText, audio }) {
+            document.getElementById('modalEmoji').textContent = emoji;
+            document.getElementById('modalSubtitle').textContent = subtitle;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            document.getElementById('modalVaultText').textContent = vaultText;
+
+            const overlay = document.getElementById('modalOverlay');
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+
+            state.modalSpokenText = audio;
+            speakText(audio);
+        }
+
+        function closeModal() {
+            playSound('click');
+            const overlay = document.getElementById('modalOverlay');
+            overlay.classList.add('hidden');
+            overlay.classList.remove('flex');
+            renderHome();
+        }
+
+        // Inicialização ao carregar a página
+        window.onload = () => {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.getVoices();
+            }
+            const input = document.getElementById('studentNameInput');
+            if (input) input.focus();
+        };
+    </script>
+</body>
+</html>
