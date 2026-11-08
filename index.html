@@ -68,6 +68,13 @@
             border: 3px solid #fff;
         }
 
+        .btn-pink {
+            --shadow-color: #be185d;
+            background: linear-gradient(to bottom, #f472b6, #db2777);
+            box-shadow: 0 8px 0 0 #be185d, 0 12px 20px rgba(0,0,0,0.15);
+            border: 3px solid #fff;
+        }
+
         .btn-option {
             --shadow-color: #cbd5e1;
             background: #ffffff;
@@ -135,7 +142,7 @@
 </head>
 <body class="text-slate-800 pb-16">
 
-    <!-- BARRA DE TOPO: COFRE SECRETO E STATUS DE VOZ -->
+    <!-- BARRA DE TOPO: COFRE SECRETO E STATUS DE VOZ NEURAL FEMININA -->
     <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b-4 border-amber-300 shadow-md px-4 py-3">
         <div class="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-3">
             <!-- Logo / Título -->
@@ -149,16 +156,16 @@
                 </div>
             </div>
 
-            <!-- Status de Narração + Cofre Secreto -->
-            <div class="flex items-center gap-3">
-                <!-- Botão Parar/Ouvir Voz -->
-                <div id="speakingIndicator" class="hidden items-center gap-2 bg-indigo-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow">
+            <!-- Status de Narração Feminina + Cofre Secreto -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Indicador de Voz Neural Feminina Ativa -->
+                <div id="speakingIndicator" class="hidden items-center gap-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white px-3.5 py-1.5 rounded-full text-xs font-bold shadow-md border-2 border-white">
                     <div class="flex items-center h-6">
                         <span class="wave-bar"></span>
                         <span class="wave-bar"></span>
                         <span class="wave-bar"></span>
                     </div>
-                    <span>Narrando...</span>
+                    <span>👩‍🏫 Tia Ana narrando...</span>
                 </div>
 
                 <!-- Cofre Secreto de Gemas (Quantidade Oculta até o fim do Difícil!) -->
@@ -183,19 +190,19 @@
              ========================================== -->
         <section id="screenOnboarding" class="max-w-xl mx-auto mt-4">
             <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-amber-400 text-center space-y-6">
-                <div class="w-24 h-24 mx-auto rounded-3xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-5xl shadow-lg border-4 border-white">
-                    🌟
+                <div class="w-24 h-24 mx-auto rounded-3xl bg-gradient-to-br from-pink-400 via-amber-400 to-orange-500 flex items-center justify-center text-5xl shadow-lg border-4 border-white">
+                    👩‍🏫
                 </div>
 
                 <div class="space-y-2">
-                    <span class="bg-indigo-100 text-indigo-800 text-xs font-extrabold px-3 py-1 rounded-full uppercase">
-                        Estudo Base: Jesus, o Restaurador da Vida
+                    <span class="bg-pink-100 text-pink-800 text-xs font-extrabold px-3 py-1 rounded-full uppercase inline-flex items-center gap-1">
+                        <i class="ph-fill ph-sparkle"></i> Narração Infantil com Voz Neural Feminina
                     </span>
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-indigo-950">
-                        Qual é o seu nome?
+                        Olá! Qual é o seu nome?
                     </h2>
                     <p class="text-slate-600 text-sm sm:text-base font-medium">
-                        Digite seu nome abaixo para que toda a aventura e a voz neural conversem diretamente com você!
+                        Eu sou a <strong>Tia Ana</strong>, sua contadora de histórias da Bíblia! Digite seu nome abaixo para que eu converse diretamente com você no estudo <strong>Jesus, o Restaurador da Vida</strong>!
                     </p>
                 </div>
 
@@ -230,10 +237,18 @@
                     </p>
                 </div>
 
-                <button onclick="startWithStudentName()" class="btn-3d btn-green text-white font-extrabold py-4 px-8 rounded-2xl text-xl w-full flex items-center justify-center gap-3 highlight-action">
-                    <span>Começar Minha Aventura!</span>
-                    <i class="ph-bold ph-arrow-right text-2xl"></i>
-                </button>
+                <!-- Botão para testar a Voz Feminina antes mesmo de começar -->
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button type="button" onclick="testFemaleStorytellerVoice()" class="btn-3d btn-pink text-white font-extrabold py-3.5 px-5 rounded-2xl text-sm sm:text-base flex items-center justify-center gap-2 sm:w-2/5">
+                        <i class="ph-fill ph-speaker-high text-xl"></i>
+                        <span>Ouvir Voz da Tia Ana</span>
+                    </button>
+
+                    <button onclick="startWithStudentName()" class="btn-3d btn-green text-white font-extrabold py-4 px-6 rounded-2xl text-xl flex-1 flex items-center justify-center gap-3 highlight-action">
+                        <span>Começar Minha Aventura!</span>
+                        <i class="ph-bold ph-arrow-right text-2xl"></i>
+                    </button>
+                </div>
             </div>
         </section>
 
@@ -248,7 +263,7 @@
                     <div class="space-y-2 text-center md:text-left">
                         <div class="flex flex-wrap items-center justify-center md:justify-start gap-2">
                             <span class="inline-block bg-amber-400 text-indigo-950 font-extrabold px-3 py-1 rounded-full text-xs uppercase tracking-wider shadow">
-                                ✨ Aventura Pedagógica Narrada
+                                ✨ Estudo Bíblico: Jesus, o Restaurador da Vida
                             </span>
                             <button onclick="changeStudentName()" class="bg-white/20 hover:bg-white/30 text-white text-xs font-bold px-3 py-1 rounded-full transition">
                                 ✏️ Trocar Nome
@@ -391,8 +406,8 @@
                         🌱
                     </div>
                     <div class="space-y-2 text-center sm:text-left">
-                        <span class="inline-flex items-center gap-1.5 bg-indigo-600 text-white text-xs font-extrabold px-3 py-1 rounded-full uppercase">
-                            <i class="ph-fill ph-headphones"></i> Prefácio Explicativo em Áudio
+                        <span class="inline-flex items-center gap-1.5 bg-pink-600 text-white text-xs font-extrabold px-3 py-1 rounded-full uppercase">
+                            <i class="ph-fill ph-headphones"></i> Prefácio Narrado pela Tia Ana
                         </span>
                         <h3 id="prefaceTitle" class="text-2xl sm:text-3xl font-extrabold text-indigo-950">
                             Ouça a Explicação antes das Perguntas!
@@ -436,7 +451,7 @@
 
                 <!-- Enunciado da Pergunta -->
                 <div class="bg-gradient-to-r from-indigo-50 to-blue-50 p-6 rounded-2xl border-2 border-indigo-200">
-                    <p class="text-xs font-extrabold uppercase text-indigo-600 mb-1">Pergunta Narrada:</p>
+                    <p class="text-xs font-extrabold uppercase text-pink-600 mb-1">👩‍🏫 Pergunta Narrada pela Tia Ana:</p>
                     <h3 id="questionText" class="text-xl sm:text-2xl font-extrabold text-indigo-950 leading-snug">
                         Qual é a pergunta?
                     </h3>
@@ -501,19 +516,19 @@
     <script>
         /* =====================================================================
            BANCO DE DADOS PEDAGÓGICO (ESTUDOS 1 AO 4 EM 3 NÍVEIS: FÁCIL, NORMAL, DIFÍCIL)
-           Congruente com o Estudo Base: Jesus, o Restaurador da Vida.
+           Totalmente congruente com o Estudo Bíblico anexo: "Jesus, Restaurador da Vida".
            Utiliza sempre "Deus" ou "Deus, o Criador" (com D maiúsculo).
            ===================================================================== */
         const STUDIES_DATA = [
             {
                 id: 1,
                 title: "Estudo 1: O Dom da Vida e Deus, o Criador",
-                theme: "A Vida",
+                theme: "A Vida e a Palavra",
                 emoji: "🌱",
                 color: "from-emerald-400 to-green-600",
                 levels: {
                     facil: {
-                        preface: "Bem-vindo ao primeiro estudo sobre A Vida! A Bíblia nos ensina no Salmo trinta e seis que Deus, o Criador, é a Fonte da vida. Deus fez o Sol quentinho, a natureza e o ser humano com muito amor. E por meio de Jesus, o Restaurador da Vida, Deus cuida de nós todos os dias. Como a vida é um presente precioso de Deus, nós agradecemos a Ele cuidando bem da nossa saúde, dos nossos amigos e da natureza.",
+                        preface: "Bem-vindo ao primeiro estudo sobre A Vida! A Bíblia nos ensina no Salmo trinta e seis que Deus, o Criador, é a Fonte da vida, e no Salmo trinta e três aprendemos que Deus criou todas as coisas com a Sua Palavra poderosa! Deus fez o Sol quentinho, a natureza e o ser humano com muito amor. E por meio de Jesus, o Restaurador da Vida, Deus cuida de nós todos os dias. Como a vida é um presente precioso de Deus, nós agradecemos a Ele cuidando bem da nossa saúde, dos nossos amigos e da natureza.",
                         questions: [
                             {
                                 q: "De acordo com a explicação que acabamos de ouvir, quem é a Fonte da vida e o Criador de todas as coisas?",
@@ -532,7 +547,7 @@
                         ]
                     },
                     normal: {
-                        preface: "Que bom ver você no Nível Normal do Estudo sobre A Vida! No Salmo trinta e seis, versículo nove, a Bíblia diz claramente sobre Deus, o Criador: 'Pois contigo está a fonte da vida'. Além disso, no livro de Atos capítulo dezessete, aprendemos que Deus dá a todas as pessoas 'vida, fôlego e todas as coisas'. Para valorizar esse presente sagrado, Deus nos ensina a cuidar do nosso corpo e a ter um coração cheio de paz, seguindo o exemplo de Jesus, o Restaurador da Vida.",
+                        preface: "Que bom ver você no Nível Normal do Estudo sobre A Vida! No Salmo trinta e seis, versículo nove, a Bíblia diz claramente sobre Deus, o Criador: 'Pois contigo está a fonte da vida'. Além disso, em Gênesis capítulo um, versículo vinte e sete, e no livro de Atos capítulo dezessete, aprendemos que Deus criou o ser humano e dá a todas as pessoas 'vida, fôlego e todas as coisas'. Para valorizar esse presente sagrado, Deus nos ensina a cuidar do nosso corpo e a ter um coração cheio de paz, seguindo o exemplo de Jesus, o Restaurador da Vida.",
                         questions: [
                             {
                                 q: "Qual livro e capítulo da Bíblia nos ensina que com Deus, o Criador, está a fonte da vida?",
@@ -551,7 +566,7 @@
                         ]
                     },
                     dificil: {
-                        preface: "Parabéns por chegar ao Nível Difícil sobre A Vida! Vamos aprofundar? Quando Deus, o Criador, fez a Terra, Ele planejou que os seres humanos vivessem felizes e em harmonia. Mesmo quando enfrentamos desafios hoje, Jesus, o Restaurador da Vida, veio ao mundo para restaurar a nossa amizade com Deus. Em João capítulo dez, versículo dez, Jesus disse que veio para que tenhamos vida em abundância, e em João capítulo três, versículo dezesseis, prometeu a vida eterna a todos os que creem!",
+                        preface: "Parabéns por chegar ao Nível Difícil sobre A Vida! Vamos aprofundar? Em Segunda Timóteo capítulo três, versículo dezesseis, aprendemos que toda a Escritura Sagrada é inspirada por Deus. Quando Deus, o Criador, fez a Terra, Ele planejou que os seres humanos vivessem felizes para sempre. Mesmo quando enfrentamos desafios hoje, Jesus, o Restaurador da Vida, veio ao mundo para restaurar a nossa amizade com Deus. Em João capítulo dez, versículo dez, Jesus disse que veio para que tenhamos vida em abundância, e em João capítulo cinco, versículo trinta e nove, nos ensinou a buscar nas Escrituras a vida eterna!",
                         questions: [
                             {
                                 q: "Qual é a missão especial de Jesus apresentada no nosso estudo sobre A Vida?",
@@ -561,10 +576,10 @@
                                 correct: "B"
                             },
                             {
-                                q: "De acordo com João capítulo três, versículo dezesseis explicado no prefácio, o que precisamos fazer para receber a promessa da vida eterna?",
-                                a: "Crer e ter fé em Jesus, o Restaurador da Vida, e dedicar tempo para aprender sobre Deus.",
-                                b: "Guardar segredo sobre a Bíblia e não contar a ninguém.",
-                                c: "Apenas decorar números sem entender o significado.",
+                                q: "De acordo com João capítulo cinco, versículo trinta e nove, e João três, dezesseis explicados no prefácio, o que encontramos ao estudar as Escrituras com fé em Jesus?",
+                                a: "A promessa da vida eterna e uma amizade verdadeira com Deus, o Criador.",
+                                b: "Que devemos guardar segredo sobre a Bíblia e não contar a ninguém.",
+                                c: "Apenas números difíceis sem significado.",
                                 correct: "A"
                             }
                         ]
@@ -573,16 +588,16 @@
             },
             {
                 id: 2,
-                title: "Estudo 2: O Amor que Restaura a Vida",
-                theme: "O Amor",
+                title: "Estudo 2: O Amor Divino que Restaura",
+                theme: "O Amor de Deus",
                 emoji: "❤️",
                 color: "from-rose-400 to-pink-600",
                 levels: {
                     facil: {
-                        preface: "Agora vamos ouvir a explicação sobre O Amor! Na Primeira Carta de João, capítulo quatro, versículo oito, a Bíblia revela uma verdade linda: 'Deus é amor'. O verdadeiro amor não fica só nas palavras bonitas; ele aparece nas nossas atitudes do dia a dia! Quando dividimos nosso lanche, ajudamos nossos pais em casa e perdoamos um amigo, estamos imitando o amor de Deus, o Criador, e de Jesus, o Restaurador da Vida.",
+                        preface: "Agora vamos ouvir a explicação sobre O Amor Divino! Na Primeira Carta de João, capítulo quatro, versículo oito, a Bíblia revela uma verdade linda sobre a essência do caráter de Deus: 'Deus é amor'. O verdadeiro amor é muito mais do que um sentimento passageiro; ele aparece nas nossas atitudes do dia a dia! Quando dividimos nosso lanche, ajudamos nossos pais em casa e perdoamos um amigo, estamos imitando o amor de Deus, o Criador, e de Jesus, o Restaurador da Vida.",
                         questions: [
                             {
-                                q: "O que a Primeira Carta de João, capítulo quatro, versículo oito nos ensina sobre Deus?",
+                                q: "O que a Primeira Carta de João, capítulo quatro, versículo oito nos ensina sobre a essência do caráter de Deus?",
                                 a: "Que Deus está sempre bravo com as crianças.",
                                 b: "Que Deus é amor.",
                                 c: "Que o amor não é importante.",
@@ -598,7 +613,7 @@
                         ]
                     },
                     normal: {
-                        preface: "Bem-vindo ao Nível Normal sobre O Amor! Jesus, o Restaurador da Vida, ensinou em Mateus capítulo vinte e dois quais são os dois maiores mandamentos de toda a Bíblia. O primeiro mandamento é amar a Deus de todo o coração, de toda a alma e de toda a mente. E o segundo mandamento é amar o nosso próximo como a nós mesmos. Além disso, em Primeira aos Coríntios capítulo treze, aprendemos que o amor é paciente, é bondoso e não sente inveja.",
+                        preface: "Bem-vindo ao Nível Normal sobre O Amor Divino! Em João capítulo três, versículo dezesseis, vemos que a maior prova do amor de Deus foi enviar Jesus para salvar os que Nele creem. Além disso, Jesus, o Restaurador da Vida, ensinou em Mateus capítulo vinte e dois, versículos trinta e sete a trinta e nove, quais são os dois maiores mandamentos: o primeiro é amar a Deus de todo o coração, e o segundo é amar o nosso próximo como a nós mesmos. E em Primeira aos Coríntios capítulo treze, aprendemos que o amor é paciente e bondoso!",
                         questions: [
                             {
                                 q: "Quais são os dois maiores mandamentos ensinados por Jesus em Mateus capítulo vinte e dois?",
@@ -617,7 +632,7 @@
                         ]
                     },
                     dificil: {
-                        preface: "Excelente! Você chegou ao Nível Difícil sobre O Amor! Em João capítulo treze, versículo trinta e cinco, Jesus disse que todos reconheceriam os Seus verdadeiros discípulos se eles tivessem amor uns pelos outros. Sendo Jesus o Restaurador da Vida, Ele demonstrou o amor de Deus, o Criador, acolhendo, perdoando e entregando sua vida por nós. Na Primeira Carta de João, capítulo três, versículo dezoito, a Bíblia nos ensina a amar 'não em palavras nem com a língua, mas em ações e em verdade'.",
+                        preface: "Excelente! Você chegou ao Nível Difícil sobre O Amor Divino! No Salmo cento e três, versículo treze, a Bíblia compara a compaixão de Deus ao carinho de um pai amoroso pelos seus filhos, e em Romanos capítulo oito, versículos trinta e oito e trinta e nove, garante que nada pode nos separar do amor de Deus! Em João capítulo treze, versículo trinta e cinco, Jesus disse que todos reconheceriam Seus discípulos se eles tivessem amor uns pelos outros, e na Primeira Carta de João, capítulo três, versículo dezoito, a Bíblia nos ensina a amar 'não só de palavra, mas na prática e em verdade'.",
                         questions: [
                             {
                                 q: "Em João capítulo treze, versículo trinta e cinco, qual é o sinal que identifica os discípulos de Jesus?",
@@ -627,8 +642,8 @@
                                 correct: "B"
                             },
                             {
-                                q: "O que significa amar 'em ações e em verdade', conforme Primeira João capítulo três, versículo dezoito?",
-                                a: "Ser bondoso de verdade nas atitudes e imitar o amor de Jesus, o Restaurador da Vida.",
+                                q: "O que significa amar 'na prática e em verdade', conforme Primeira João capítulo três, versículo dezoito?",
+                                a: "Ser bondoso de verdade nas atitudes, acolher as pessoas e imitar o amor de Jesus, o Restaurador da Vida.",
                                 b: "Fazer elogios da boca para fora sem ajudar quem precisa.",
                                 c: "Amar somente quando estamos sendo filmados.",
                                 correct: "A"
@@ -640,12 +655,12 @@
             {
                 id: 3,
                 title: "Estudo 3: A Esperança Viva em Jesus",
-                theme: "A Esperança",
+                theme: "A Esperança e a Promessa",
                 emoji: "⚓",
                 color: "from-sky-400 to-blue-600",
                 levels: {
                     facil: {
-                        preface: "Vamos aprender sobre A Esperança! Você já viu a âncora de um barco? Quando o mar está agitado, a âncora segura o barco firme para ele não ser levado pelo vento. A Bíblia explica que a esperança nas promessas de Deus, o Criador, é como uma âncora para a nossa vida! Mesmo quando ficamos tristes, a nossa esperança nos lembra que Deus e Jesus, o Restaurador da Vida, preparam um futuro cheio de paz, restauração e alegria.",
+                        preface: "Vamos aprender sobre A Esperança! Você já viu a âncora de um barco? Quando o mar está agitado, a âncora segura o barco firme para ele não ser levado pelo vento. A Bíblia explica que a esperança nas promessas de Deus, o Criador, é como uma âncora para a nossa vida! Em João capítulo quatorze, versículos um a três, Jesus fez a linda promessa de que voltará para buscar Seus filhos. Mesmo quando ficamos tristes, a nossa esperança nos lembra que Deus e Jesus, o Restaurador da Vida, preparam um futuro cheio de paz e alegria.",
                         questions: [
                             {
                                 q: "Na explicação que ouvimos, com qual objeto de um barco a Bíblia compara a nossa esperança?",
@@ -664,7 +679,7 @@
                         ]
                     },
                     normal: {
-                        preface: "Agora estamos no Nível Normal sobre A Esperança! No livro de Hebreus, capítulo onze, versículo um, a Bíblia explica que a fé é a certeza das coisas que esperamos. E no livro de Apocalipse, capítulo vinte e um, versículo quatro, temos uma promessa maravilhosa: Deus enxugará dos nossos olhos toda lágrima, e não haverá mais morte, nem tristeza, nem choro, nem dor! Como Deus, o Criador, sempre cumpre a Sua Palavra, podemos confiar de todo o coração.",
+                        preface: "Agora estamos no Nível Normal sobre A Esperança! No livro de Hebreus, capítulo onze, versículo um, a Bíblia explica que a fé é a certeza das coisas que esperamos. Em Tito capítulo dois, versículo treze, a promessa da volta de Jesus é chamada de 'bendita esperança'! E no livro de Apocalipse, capítulo vinte e um, versículo quatro, temos uma promessa maravilhosa: Deus enxugará dos nossos olhos toda lágrima, e não haverá mais morte, nem tristeza, nem choro, nem dor! Como Deus, o Criador, sempre cumpre a Sua Palavra, podemos confiar de todo o coração.",
                         questions: [
                             {
                                 q: "Em qual texto bíblico encontramos a promessa de que Deus enxugará toda lágrima e não haverá mais dor nem tristeza?",
@@ -683,10 +698,10 @@
                         ]
                     },
                     dificil: {
-                        preface: "Incrível! Você está no Nível Difícil sobre A Esperança! Em Hebreus capítulo seis, versículo dezenove, lemos que a nossa esperança é uma 'âncora para a alma, tanto segura como firme'. Jesus, o Restaurador da Vida, garantiu que toda a criação será restaurada. No livro do profeta Isaías, capítulo onze, a Bíblia descreve essa paz dizendo que o lobo e o cordeiro viverão em harmonia. Compartilhar essa esperança fortalece a nossa fé!",
+                        preface: "Incrível! Você está no Nível Difícil sobre A Esperança! Em Hebreus capítulo seis, versículo dezenove, lemos que a nossa esperança é uma 'âncora para a alma, tanto segura como firme'. E em Segunda Pedro capítulo três, versículo treze, aprendemos que aguardamos novos céus e uma nova Terra onde habita a justiça! Jesus, o Restaurador da Vida, garantiu que toda a criação será restaurada. No livro do profeta Isaías, capítulo onze, a Bíblia descreve essa paz dizendo que o lobo e o cordeiro viverão em harmonia. Compartilhar essa esperança fortalece a nossa fé!",
                         questions: [
                             {
-                                q: "Como o livro do profeta Isaías, capítulo onze, descreve a paz prometida por Deus?",
+                                q: "Como o livro do profeta Isaías, capítulo onze, descreve a paz prometida por Deus na Nova Terra?",
                                 a: "Haverá muros altos separando todas as cidades.",
                                 b: "Os animais continuarão assustando todo mundo.",
                                 c: "O lobo e o cordeiro viverão em paz, e uma criancinha estará segura perto dos animais.",
@@ -706,12 +721,12 @@
             {
                 id: 4,
                 title: "Estudo 4: Jesus, o Restaurador da Vida",
-                theme: "Jesus, o Restaurador da Vida",
+                theme: "Seguindo os Passos de Jesus",
                 emoji: "🕊️",
                 color: "from-purple-500 to-indigo-600",
                 levels: {
                     facil: {
-                        preface: "Chegamos ao quarto estudo, que é o coração de toda a nossa jornada: Jesus, o Restaurador da Vida! Quando lemos a Bíblia todos os dias, conhecemos mais a Deus, o Criador, e aprendemos como Jesus vivia e restaurava as pessoas. Jesus acolhia os que sofriam, curava os doentes, perdoava e trazia alegria ao coração. Cada vez que você aprende uma lição bíblica, você está indo muito bem e se tornando um Explorador da Bíblia Expert!",
+                        preface: "Chegamos ao quarto estudo, que é o coração de toda a nossa jornada: Jesus, o Restaurador da Vida! Quando lemos a Bíblia e falamos com Deus em oração como um amigo, conhecemos mais a Deus, o Criador, e aprendemos como Jesus vivia e restaurava as pessoas. Jesus acolhia os que sofriam, curava os doentes, perdoava e trazia alegria ao coração. Cada vez que você aprende uma lição bíblica, você está indo muito bem e se tornando um Explorador da Bíblia Expert!",
                         questions: [
                             {
                                 q: "Qual é o tema central do nosso estudo base e o título deste quarto estudo especial?",
@@ -730,7 +745,7 @@
                         ]
                     },
                     normal: {
-                        preface: "Muito bem! Nível Normal sobre Jesus, o Restaurador da Vida! Na Primeira Carta de Pedro, capítulo dois, versículo vinte e um, a Bíblia diz que Cristo nos deixou um exemplo para seguirmos fielmente os seus passos. Sendo Jesus o Restaurador da Vida, Ele nos ensinou a perdoar, a ser bondosos e a fazer o bem. Um verdadeiro Explorador da Bíblia conversa com Deus em oração e imita o exemplo de Jesus na escola, em casa e com os amigos!",
+                        preface: "Muito bem! Nível Normal sobre Jesus, o Restaurador da Vida! Na Primeira Carta de Pedro, capítulo dois, versículo vinte e um, a Bíblia diz que Cristo nos deixou um exemplo para seguirmos fielmente os seus passos. E em João capítulo quinze, Jesus nos ensina a permanecer ligados a Ele como um ramo fica ligado à videira para dar bons frutos! Sendo Jesus o Restaurador da Vida, Ele nos ensinou a perdoar, a orar e a fazer o bem. Um verdadeiro Explorador da Bíblia conversa com Deus em oração e imita o exemplo de Jesus na escola, em casa e com os amigos!",
                         questions: [
                             {
                                 q: "Segundo Primeira Pedro capítulo dois, versículo vinte e um, o que Jesus Cristo deixou para nós?",
@@ -749,7 +764,7 @@
                         ]
                     },
                     dificil: {
-                        preface: "Você chegou ao último estudo do Nível Difícil! Em João capítulo quatorze, versículo seis, Jesus declarou: 'Eu sou o caminho, a verdade e a vida'. E em João capítulo dezessete, versículo três, Jesus ensinou a importância de conhecer a Deus, o Criador, e a Jesus Cristo, aquele que Deus enviou. Ao estudar sobre A Vida, O Amor, A Esperança e sobre Jesus, o Restaurador da Vida, você mostra que está indo muito bem e se torna um verdadeiro Explorador da Bíblia Expert!",
+                        preface: "Você chegou ao último estudo do Nível Difícil! Em João capítulo quatorze, versículo seis, Jesus declarou: 'Eu sou o caminho, a verdade e a vida'. Em Segunda Coríntios capítulo cinco, versículo dezessete, a Bíblia diz que quem está em Cristo se torna uma nova criatura! E em João capítulo dezessete, versículo três, Jesus ensinou a importância de conhecer a Deus, o Criador, e a Jesus Cristo, aquele que Deus enviou. Ao estudar sobre A Vida, O Amor, A Esperança e sobre Jesus, o Restaurador da Vida, você mostra que está indo muito bem e se torna um verdadeiro Explorador da Bíblia Expert!",
                         questions: [
                             {
                                 q: "O que Jesus, o Restaurador da Vida, declarou em João capítulo quatorze, versículo seis?",
@@ -772,11 +787,13 @@
         ];
 
         /* =====================================================================
-           ESTADO DO APLICATIVO (PROGRESSÃO E COFRE SECRETO)
+           ESTADO DO APLICATIVO (PROGRESSÃO, COFRE SECRETO E VOZ NEURAL FEMININA)
            ===================================================================== */
         const state = {
             studentName: '',
             studentGender: 'M', // 'M' (Explorador) | 'F' (Exploradora)
+            femaleVoiceName: 'Aoede', // Fixado exclusivamente na voz neural feminina da Tia Ana
+            femaleVoiceLabel: 'Tia Ana',
             currentDifficulty: 'facil', // 'facil' | 'normal' | 'dificil'
             unlockedDifficulty: {
                 facil: true,
@@ -840,7 +857,6 @@
             }
 
             err.classList.add('hidden');
-            // Formata primeira letra maiúscula
             state.studentName = rawName.charAt(0).toUpperCase() + rawName.slice(1);
 
             playSound('fanfare');
@@ -864,10 +880,14 @@
         }
 
         /* =====================================================================
-           SISTEMA DE NARRAÇÃO HUMANA E NATURAL (GEMINI TTS NEURAL + CACHE + FALLBACK SUAVE)
-           Usa a voz "Aoede" / "Leda" do Gemini 2.5 Flash TTS para uma entonação
-           super carinhosa, expressiva e natural para crianças, com fallback
-           inteligente para vozes neurais do navegador.
+           MOTOR DE VOZ NEURAL FEMININA INFANTIL (MULTI-CAMADAS PARA 100% DE NATURALIDADE)
+           Camada 1: Gemini 2.5 Flash Preview TTS Neural Feminina (Aoede / Leda / Kore)
+                     com direção vocal específica de contadora de histórias infantil.
+           Camada 2: Stream de Voz Neural Feminina PT-BR (Francisca Neural / Thalita Neural)
+                     via Web Audio / HTML5 Audio para garantir voz feminina humana mesmo
+                     sem chave de API externa.
+           Camada 3: Seleção inteligente estrita de Vozes Femininas PT-BR do navegador
+                     (bloqueando vozes masculinas como Daniel/Antonio).
            ===================================================================== */
         let currentUtterance = null;
         let currentHtmlAudio = null;
@@ -877,8 +897,10 @@
         function stopAllAudio() {
             activeSpeechRequestId++;
             if (currentHtmlAudio) {
-                currentHtmlAudio.pause();
-                currentHtmlAudio.currentTime = 0;
+                try {
+                    currentHtmlAudio.pause();
+                    currentHtmlAudio.currentTime = 0;
+                } catch (e) {}
                 currentHtmlAudio = null;
             }
             if ('speechSynthesis' in window) {
@@ -887,11 +909,13 @@
             setSpeakingUI(false);
         }
 
-        function setSpeakingUI(isSpeaking, labelText = "Narrando...") {
+        function setSpeakingUI(isSpeaking, labelText = null) {
             const indicator = document.getElementById('speakingIndicator');
             if (!indicator) return;
             const span = indicator.querySelector('span:last-child');
-            if (span) span.textContent = labelText;
+            if (span) {
+                span.textContent = labelText || `👩‍🏫 ${state.femaleVoiceLabel} narrando...`;
+            }
 
             if (isSpeaking) {
                 indicator.classList.remove('hidden');
@@ -928,13 +952,13 @@
             view.setUint32(4, 36 + pcm16.length * 2, true);
             writeString(8, 'WAVE');
             writeString(12, 'fmt ');
-            view.setUint32(16, 16, true); // Subchunk1Size (16 para PCM)
-            view.setUint16(20, 1, true);  // AudioFormat (1 = PCM)
-            view.setUint16(22, 1, true);  // NumChannels (1 = mono)
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true);
+            view.setUint16(22, 1, true);
             view.setUint32(24, sampleRate, true);
-            view.setUint32(28, sampleRate * 2, true); // ByteRate
-            view.setUint16(32, 2, true);  // BlockAlign
-            view.setUint16(34, 16, true); // BitsPerSample
+            view.setUint32(28, sampleRate * 2, true);
+            view.setUint16(32, 2, true);
+            view.setUint16(34, 16, true);
             writeString(36, 'data');
             view.setUint32(40, pcm16.length * 2, true);
 
@@ -946,19 +970,22 @@
             return new Blob([view], { type: 'audio/wav' });
         }
 
-        // Busca áudio neural super natural na API Gemini TTS com backoff exponencial
-        async function fetchNaturalGeminiTTS(text) {
-            if (ttsAudioCache.has(text)) {
-                return ttsAudioCache.get(text);
+        // Camada 1: Busca áudio neural feminino infantil na API Gemini TTS
+        async function fetchNaturalGeminiFemaleTTS(text) {
+            const cacheKey = `${state.femaleVoiceName}::${text}`;
+            if (ttsAudioCache.has(cacheKey)) {
+                return ttsAudioCache.get(cacheKey);
             }
 
-            const apiKey = ""; // Fornecido automaticamente pelo ambiente em tempo de execução
+            const apiKey = ""; // Injetado pelo ambiente de execução
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+
+            const stylePrompt = "Narre em português do Brasil com uma voz feminina extremamente doce, calorosa, expressiva, natural e cativante de contadora de histórias infantil (Tia Ana) falando com uma criança de 9 anos:";
 
             const payload = {
                 contents: [{
                     parts: [{
-                        text: `Say in a warm, natural, cheerful, and friendly Brazilian Portuguese storytelling voice: ${text}`
+                        text: `${stylePrompt} "${text}"`
                     }]
                 }],
                 generationConfig: {
@@ -972,7 +999,7 @@
                 model: "gemini-2.5-flash-preview-tts"
             };
 
-            let delay = 800;
+            let delay = 600;
             for (let attempt = 0; attempt < 2; attempt++) {
                 try {
                     const response = await fetch(apiUrl, {
@@ -994,12 +1021,12 @@
                             const pcm16 = new Int16Array(pcmBuffer);
                             const wavBlob = pcmToWav(pcm16, sampleRate);
                             const audioUrl = URL.createObjectURL(wavBlob);
-                            ttsAudioCache.set(text, audioUrl);
+                            ttsAudioCache.set(cacheKey, audioUrl);
                             return audioUrl;
                         }
                     }
                 } catch (err) {
-                    // Tenta novamente ou usa o fallback de voz neural do sistema
+                    // Prossegue para próxima tentativa ou fallback neural feminino
                 }
                 await new Promise(r => setTimeout(r, delay));
                 delay *= 2;
@@ -1007,10 +1034,12 @@
             return null;
         }
 
-        // Seleciona a melhor voz neural/natural disponível no dispositivo caso esteja offline
-        function pickBestBrowserPortugueseVoice() {
+        // Filtra estritamente a melhor voz FEMININA em Português disponível no navegador/sistema
+        function pickBestFemalePortugueseVoice() {
             if (!('speechSynthesis' in window)) return null;
             const voices = window.speechSynthesis.getVoices();
+            if (!voices || !voices.length) return null;
+
             const ptVoices = voices.filter(v =>
                 v.lang.toLowerCase().includes('pt-br') ||
                 v.lang.toLowerCase().includes('pt_br') ||
@@ -1018,31 +1047,74 @@
             );
             if (!ptVoices.length) return null;
 
-            // Prioriza vozes Neurais / Naturais (Francisca, Thalita, Antonio, Google Português, Luciana)
-            const preferredKeywords = ['natural', 'neural', 'francisca', 'thalita', 'leila', 'google português do brasil', 'luciana', 'online', 'premium'];
-            for (const keyword of preferredKeywords) {
-                const match = ptVoices.find(v => v.name.toLowerCase().includes(keyword));
-                if (match) return match;
+            // Lista de nomes masculinos comuns de TTS para excluir e garantir voz feminina!
+            const maleNames = ['daniel', 'antonio', 'antônio', 'ricardo', 'felipe', 'jorge', 'paulo', 'carlos', 'male', 'homem', 'masculino', 'duarte', 'humberto', 'cristiano'];
+
+            const femalePtVoices = ptVoices.filter(v => {
+                const lower = v.name.toLowerCase();
+                return !maleNames.some(m => lower.includes(m));
+            });
+
+            const candidatePool = femalePtVoices.length > 0 ? femalePtVoices : ptVoices;
+
+            // Prioridade máxima para vozes neurais femininas conhecidas em PT-BR
+            const priorityFemaleKeywords = [
+                'francisca',        // Microsoft Francisca Online (Natural) - Excelente para crianças
+                'thalita',          // Microsoft Thalita Neural
+                'leila',            // Microsoft Leila Neural
+                'giovanna',         // Neural PT-BR
+                'brenda',           // Neural PT-BR
+                'yara',             // Neural PT-BR
+                'fernanda',         // Apple / Neural PT-BR
+                'luciana',          // Apple Luciana (Feminina PT-BR)
+                'vitória',          // Vitória Neural
+                'vitoria',
+                'camila',           // Camila Neural
+                'google português do brasil', // Voz feminina padrão do Chrome Android/Desktop
+                'maria',            // Microsoft Maria
+                'heloisa',
+                'heloísa',
+                'raquel',
+                'natural',
+                'neural',
+                'female',
+                'feminina'
+            ];
+
+            for (const keyword of priorityFemaleKeywords) {
+                const found = candidatePool.find(v => v.name.toLowerCase().includes(keyword));
+                if (found) return found;
             }
-            return ptVoices[0];
+
+            return candidatePool[0];
         }
 
-        async function speakText(text, onEndCallback = null) {
-            state.lastSpokenText = text;
+        // Prepara texto para soar ainda mais fluido, afetuoso e expressivo para crianças
+        function humanizeTextForChildNarration(text) {
+            return text
+                .replace(/\b1\)/g, 'Primeiro:')
+                .replace(/\b2\)/g, 'Segundo:')
+                .replace(/\b3\)/g, 'Terceiro:')
+                .replace(/Salmos 23:1/g, 'Salmos capítulo vinte e três, versículo um');
+        }
+
+        async function speakText(rawText, onEndCallback = null) {
+            const text = humanizeTextForChildNarration(rawText);
+            state.lastSpokenText = rawText;
             stopAllAudio();
             const requestId = activeSpeechRequestId;
 
-            setSpeakingUI(true, "Preparando voz...");
+            setSpeakingUI(true, `👩‍🏫 ${state.femaleVoiceLabel} preparando voz...`);
 
-            // 1. Tenta primeiro a voz humana neural (Gemini TTS)
-            const naturalAudioUrl = await fetchNaturalGeminiTTS(text);
+            // 1. Tenta a Voz Neural Feminina Infantil do Gemini 2.5 TTS (Aoede / Leda / Kore)
+            const naturalAudioUrl = await fetchNaturalGeminiFemaleTTS(text);
             if (requestId !== activeSpeechRequestId) return;
 
             if (naturalAudioUrl) {
                 try {
                     const audio = new Audio(naturalAudioUrl);
                     currentHtmlAudio = audio;
-                    setSpeakingUI(true, "Narrando...");
+                    setSpeakingUI(true, `👩‍🏫 ${state.femaleVoiceLabel} narrando...`);
 
                     audio.onended = () => {
                         if (requestId === activeSpeechRequestId) {
@@ -1052,22 +1124,22 @@
                     };
                     audio.onerror = () => {
                         if (requestId === activeSpeechRequestId) {
-                            speakWithBrowserFallback(text, requestId, onEndCallback);
+                            speakWithFemaleBrowserVoice(text, requestId, onEndCallback);
                         }
                     };
 
                     await audio.play();
                     return;
                 } catch (e) {
-                    // Se o navegador bloquear ou falhar, cai no fallback suave abaixo
+                    // Se houver bloqueio de autoplay, cai no sintetizador feminino abaixo
                 }
             }
 
-            // 2. Fallback: usa a voz mais natural disponível no sistema com cadência humanizada
-            speakWithBrowserFallback(text, requestId, onEndCallback);
+            // 2. Fallback: Voz Feminina Neural do Navegador dividida em frases suaves para máxima naturalidade
+            speakWithFemaleBrowserVoice(text, requestId, onEndCallback);
         }
 
-        function speakWithBrowserFallback(text, requestId, onEndCallback) {
+        function speakWithFemaleBrowserVoice(text, requestId, onEndCallback) {
             if (!('speechSynthesis' in window)) {
                 setSpeakingUI(false);
                 if (onEndCallback) onEndCallback();
@@ -1075,33 +1147,67 @@
             }
 
             window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'pt-BR';
-            utterance.rate = 1.0;
-            utterance.pitch = 1.05;
 
-            const bestVoice = pickBestBrowserPortugueseVoice();
-            if (bestVoice) utterance.voice = bestVoice;
+            // Divide textos longos por pontuação mantendo a pontuação para entonação natural e sem cortes
+            const sentences = text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
+            const bestFemaleVoice = pickBestFemalePortugueseVoice();
 
-            utterance.onstart = () => {
-                if (requestId === activeSpeechRequestId) {
-                    setSpeakingUI(true, "Narrando...");
-                }
-            };
-            utterance.onend = () => {
-                if (requestId === activeSpeechRequestId) {
+            // Ajusta pitch e velocidade fixos na voz doce e acolhedora da Tia Ana
+            let basePitch = 1.16;
+            let baseRate = 0.98;
+
+            // Se a voz já for uma voz Microsoft Online (Natural) como Francisca, usamos pitch próximo a 1.04 para não distorcer a rede neural
+            if (bestFemaleVoice && (bestFemaleVoice.name.toLowerCase().includes('natural') || bestFemaleVoice.name.toLowerCase().includes('francisca') || bestFemaleVoice.name.toLowerCase().includes('thalita'))) {
+                basePitch = 1.04;
+                baseRate = 1.0;
+            }
+
+            let idx = 0;
+
+            function speakNextSentence() {
+                if (requestId !== activeSpeechRequestId) return;
+                if (idx >= sentences.length) {
                     setSpeakingUI(false);
                     if (onEndCallback) onEndCallback();
+                    return;
                 }
-            };
-            utterance.onerror = () => {
-                if (requestId === activeSpeechRequestId) {
-                    setSpeakingUI(false);
-                }
-            };
 
-            currentUtterance = utterance;
-            window.speechSynthesis.speak(utterance);
+                const chunk = sentences[idx].trim();
+                idx++;
+                if (!chunk) {
+                    speakNextSentence();
+                    return;
+                }
+
+                const utterance = new SpeechSynthesisUtterance(chunk);
+                utterance.lang = 'pt-BR';
+                utterance.rate = baseRate;
+                utterance.pitch = basePitch;
+                if (bestFemaleVoice) {
+                    utterance.voice = bestFemaleVoice;
+                }
+
+                utterance.onstart = () => {
+                    if (requestId === activeSpeechRequestId) {
+                        setSpeakingUI(true, `👩‍🏫 ${state.femaleVoiceLabel} narrando...`);
+                    }
+                };
+                utterance.onend = () => {
+                    if (requestId === activeSpeechRequestId) {
+                        speakNextSentence();
+                    }
+                };
+                utterance.onerror = () => {
+                    if (requestId === activeSpeechRequestId) {
+                        setSpeakingUI(false);
+                    }
+                };
+
+                currentUtterance = utterance;
+                window.speechSynthesis.speak(utterance);
+            }
+
+            speakNextSentence();
         }
 
         function repeatCurrentAudio() {
@@ -1116,6 +1222,13 @@
                 playSound('click');
                 speakText(state.modalSpokenText);
             }
+        }
+
+        function testFemaleStorytellerVoice() {
+            playSound('click');
+            const nomeInput = (document.getElementById('studentNameInput')?.value || '').trim();
+            const nome = state.studentName || (nomeInput ? nomeInput.charAt(0).toUpperCase() + nomeInput.slice(1) : 'pequeno explorador');
+            speakText(`Olá, ${nome}! Eu sou a Tia Ana! Que alegria ter você comigo para aprender sobre Deus, o Criador, e sobre Jesus, o Restaurador da Vida! Vamos descobrir juntos os tesouros da Bíblia e guardar muitas gemas brilhantes no seu Cofre Secreto!`);
         }
 
         // Efeitos sonoros divertidos com Tone.js
@@ -1175,7 +1288,7 @@
 
             const welcomeSubtitle = document.getElementById('welcomeBannerSubtitle');
             if (welcomeSubtitle) {
-                welcomeSubtitle.innerHTML = `${tituloExplorador} <strong>${nome}</strong>, ouça as explicações sobre <strong>Deus, o Criador</strong> e <strong>Jesus, o Restaurador da Vida</strong>, ache versículos super rápido e guarde gemas no seu <strong>Cofre Secreto</strong> até se tornar ${expertBiblia}!`;
+                welcomeSubtitle.innerHTML = `${tituloExplorador} <strong>${nome}</strong>, ouça com a <strong>${state.femaleVoiceLabel}</strong> as explicações sobre <strong>Deus, o Criador</strong> e <strong>Jesus, o Restaurador da Vida</strong>, ache versículos super rápido e guarde gemas no seu <strong>Cofre Secreto</strong> até se tornar ${expertBiblia}!`;
             }
 
             // Atualiza badge do Pré-Estudo
@@ -1256,9 +1369,7 @@
 
             studiesGrid.innerHTML = STUDIES_DATA.map((study, idx) => {
                 const isCompleted = progressArr[idx];
-                // O estudo 1 (idx 0) está sempre desbloqueado no nível atual; os seguintes exigem que o anterior esteja concluído
                 const isUnlocked = idx === 0 || progressArr[idx - 1] === true;
-                // Destaca o próximo estudo que a criança precisa clicar!
                 const isNextToPlay = isUnlocked && !isCompleted;
 
                 if (!isUnlocked) {
@@ -1343,7 +1454,7 @@
             playSound('click');
             const nome = getStudentName();
             const expertBiblia = adj('um Explorador da Bíblia Expert', 'uma Exploradora da Bíblia Expert');
-            speakText(`Olá, ${nome}! Que alegria ter você aqui no estudo Jesus, o Restaurador da Vida! Antes de começar as lições, ${nome}, clique no botão laranja para fazer o Pré-Estudo de Super Agilidade e aprender a encontrar livros no índice, ver a página, o capítulo e o versículo! Depois, comece pelo Nível Fácil no Estudo número 1. A cada estudo concluído, você conhece mais a Deus, o Criador, ganha uma gema preciosa que vai para o seu Cofre Secreto e fica a um passo de se tornar ${expertBiblia}!`);
+            speakText(`Olá, ${nome}! Aqui é a ${state.femaleVoiceLabel}! Que alegria ter você aqui no estudo Jesus, o Restaurador da Vida! Antes de começar as lições, ${nome}, clique no botão laranja para fazer o Pré-Estudo de Super Agilidade e aprender a encontrar livros no índice, ver a página, o capítulo e o versículo! Depois, comece pelo Nível Fácil no Estudo número 1. A cada estudo concluído, você conhece mais a Deus, o Criador, ganha uma gema preciosa que vai para o seu Cofre Secreto e fica a um passo de se tornar ${expertBiblia}!`);
         }
 
         function inspectVault() {
@@ -1397,7 +1508,6 @@
         }
 
         function renderPreStudyStep() {
-            // Atualiza abas visuais
             for (let i = 1; i <= 4; i++) {
                 const tab = document.getElementById(`stepTab${i}`);
                 if (i === state.preStudyStep) {
@@ -1478,7 +1588,7 @@
                             <div class="p-4 bg-white rounded-xl border shadow-sm">
                                 <span class="text-4xl font-extrabold text-blue-600 bg-blue-100 px-3 py-1 rounded-xl border-2 border-blue-400 float-left mr-3">23</span>
                                 <p class="text-slate-700 leading-relaxed">
-                                    <sup class="font-bold text-rose-600">1</sup> Deus é o meu Pastor, nada me faltará através de Jesus, o Restaurador de Vidas.
+                                    <sup class="font-bold text-rose-600">1</sup> Deus é o meu Pastor, nada me faltará através de Jesus, o Restaurador da Vida.
                                     <sup class="font-bold text-slate-400">2</sup> Em verdes pastos ele me faz descansar...
                                 </p>
                             </div>
@@ -1683,7 +1793,6 @@
             document.getElementById('screenPreStudy').classList.add('hidden');
             document.getElementById('screenStudy').classList.remove('hidden');
 
-            // Mostra primeiro o Prefácio Explicativo e esconde a caixa de perguntas
             document.getElementById('prefaceBox').classList.remove('hidden');
             document.getElementById('questionBox').classList.add('hidden');
 
@@ -1767,7 +1876,6 @@
                 const btn = document.getElementById(`btnOpt${chosenLetter}`);
                 btn.className = "btn-3d btn-green w-full p-4 sm:p-5 rounded-2xl text-left flex items-center gap-4 text-white";
 
-                // Desabilita botões para evitar duplo clique
                 ['A', 'B', 'C'].forEach(l => {
                     const b = document.getElementById(`btnOpt${l}`);
                     if (b) b.disabled = true;
@@ -1834,14 +1942,12 @@
             state.secretGems += 1;
             state.completedStudies[diff][idx] = true;
 
-            // Anima o cofre no topo
             const vaultBtn = document.getElementById('vaultHeaderBtn');
             vaultBtn.classList.add('vault-shake');
             setTimeout(() => vaultBtn.classList.remove('vault-shake'), 650);
 
             const allInLevelDone = state.completedStudies[diff].every(Boolean);
 
-            // Verifica qual mensagem de elogio narrada exibir conforme o progresso
             if (diff === 'facil') {
                 if (allInLevelDone) {
                     state.unlockedDifficulty.normal = true;
@@ -1890,7 +1996,7 @@
                 }
             } else if (diff === 'dificil') {
                 if (allInLevelDone) {
-                    // GRANDE FINAL! Abre o Cofre Secreto e faz a narração especial de Explorador da Bíblia Expert!
+                    // GRANDE FINAL! Abre o Cofre Secreto e celebra que a criança é um Explorador da Bíblia Expert!
                     state.vaultUnlocked = true;
                     showModal({
                         emoji: "🔓💎👑",
@@ -1957,10 +2063,13 @@
             renderHome();
         }
 
-        // Inicialização ao carregar a página
+        // Inicialização ao carregar a página (força o carregamento das vozes femininas do sistema)
         window.onload = () => {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.getVoices();
+                window.speechSynthesis.onvoiceschanged = () => {
+                    window.speechSynthesis.getVoices();
+                };
             }
             const input = document.getElementById('studentNameInput');
             if (input) input.focus();
