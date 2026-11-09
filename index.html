@@ -958,7 +958,7 @@
             const payload = {
                 contents: [{
                     parts: [{
-                        text: `Say in a warm, natural, cheerful, and friendly Brazilian Portuguese storytelling voice: ${text}`
+                        text: `Say in an exceptionally warm, gentle, enthusiastic, and delightful female storytelling voice for children in Brazilian Portuguese: ${text}`
                     }]
                 }],
                 generationConfig: {
@@ -1007,7 +1007,7 @@
             return null;
         }
 
-        // Seleciona a melhor voz neural/natural disponível no dispositivo caso esteja offline
+        // Seleciona a melhor voz neural feminina e natural disponível no dispositivo caso esteja offline
         function pickBestBrowserPortugueseVoice() {
             if (!('speechSynthesis' in window)) return null;
             const voices = window.speechSynthesis.getVoices();
@@ -1018,8 +1018,8 @@
             );
             if (!ptVoices.length) return null;
 
-            // Prioriza vozes Neurais / Naturais (Francisca, Thalita, Antonio, Google Português, Luciana)
-            const preferredKeywords = ['natural', 'neural', 'francisca', 'thalita', 'leila', 'google português do brasil', 'luciana', 'online', 'premium'];
+            // Prioriza vozes femininas e neurais / naturais (Francisca, Thalita, Luciana, Google Português)
+            const preferredKeywords = ['francisca', 'thalita', 'luciana', 'leila', 'natural', 'neural', 'google português do brasil', 'online', 'premium'];
             for (const keyword of preferredKeywords) {
                 const match = ptVoices.find(v => v.name.toLowerCase().includes(keyword));
                 if (match) return match;
