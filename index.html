@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Permite carregar o stream de Voz Feminina em Nuvem direto no GitHub Pages sem bloqueio -->
+    <meta name="referrer" content="no-referrer">
     <title>Jornada Bíblica Kids - Jesus, o Restaurador da Vida!</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -498,6 +500,63 @@
         </div>
     </div>
 
+    <!-- ==========================================
+         MODAL DE CONFIGURAÇÃO DE VOZ FIXA (GITHUB)
+         ========================================== -->
+    <div id="voiceSettingsModal" class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border-4 border-indigo-400 space-y-5 text-left">
+            <div class="flex items-center justify-between border-b pb-3">
+                <div class="flex items-center gap-3">
+                    <span class="text-3xl">🎙️</span>
+                    <div>
+                        <h3 class="text-xl font-extrabold text-indigo-950">Voz Neural Feminina Fixa</h3>
+                        <p class="text-xs text-slate-500 font-bold">Funciona no GitHub Pages, Celular e PC</p>
+                    </div>
+                </div>
+                <button onclick="closeVoiceSettingsModal()" class="text-slate-400 hover:text-slate-700 text-2xl font-bold">&times;</button>
+            </div>
+
+            <div class="bg-emerald-50 border-2 border-emerald-300 rounded-2xl p-4 text-xs sm:text-sm text-emerald-950 space-y-1.5">
+                <div class="font-extrabold flex items-center gap-1.5 text-emerald-800">
+                    <i class="ph-fill ph-check-circle text-lg"></i>
+                    <span>Modo Automático para GitHub Ativado!</span>
+                </div>
+                <p>
+                    O aplicativo agora possui <strong>3 camadas de Voz Feminina Neural</strong> para nunca ficar com voz robótica quando hospedado no GitHub:
+                </p>
+                <ol class="list-decimal list-inside space-y-1 font-medium pt-1">
+                    <li><strong>Voz Gemini Aoede (IA):</strong> Usa a chave do Gemini se disponível.</li>
+                    <li><strong>Stream de Áudio Neural Feminino (Nuvem):</strong> Reproduz arquivos de áudio real (MP3) em português do Brasil sem depender da voz robótica do aparelho.</li>
+                    <li><strong>Voz Neural Francisca/Luciana:</strong> Prioriza vozes neurais nativas.</li>
+                </ol>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-xs font-extrabold uppercase text-indigo-950 block">
+                    🔑 Opcional: Chave Gemini API (Para fixar 100% a voz Aoede no GitHub)
+                </label>
+                <input
+                    id="customApiKeyInput"
+                    type="password"
+                    placeholder="Cole aqui sua API Key do Google AI Studio (opcional)"
+                    class="w-full bg-slate-50 border-2 border-slate-300 focus:border-indigo-500 rounded-xl px-4 py-3 text-sm font-mono outline-none"
+                />
+                <p class="text-[11px] text-slate-500 leading-relaxed">
+                    Dica: Você também pode colar sua chave diretamente na constante <code class="bg-slate-200 px-1 rounded font-bold">FIXED_GEMINI_API_KEY</code> dentro do código <code class="bg-slate-200 px-1 rounded">index.html</code> antes de subir para o GitHub.
+                </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                <button onclick="testCurrentVoice()" class="btn-3d btn-yellow text-indigo-950 font-extrabold px-5 py-3 rounded-xl flex items-center justify-center gap-2 sm:w-1/2">
+                    <i class="ph-fill ph-speaker-high text-lg"></i> Testar Voz Agora
+                </button>
+                <button onclick="saveVoiceSettings()" class="btn-3d btn-green text-white font-extrabold px-5 py-3 rounded-xl flex items-center justify-center gap-2 sm:w-1/2">
+                    <i class="ph-bold ph-check text-lg"></i> Salvar Configuração
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         /* =====================================================================
            BANCO DE DADOS PEDAGÓGICO (ESTUDOS 1 AO 4 EM 3 NÍVEIS: FÁCIL, NORMAL, DIFÍCIL)
@@ -864,15 +923,42 @@
         }
 
         /* =====================================================================
-           SISTEMA DE NARRAÇÃO HUMANA E NATURAL (GEMINI TTS NEURAL + CACHE + FALLBACK SUAVE)
-           Usa a voz "Aoede" / "Leda" do Gemini 2.5 Flash TTS para uma entonação
-           super carinhosa, expressiva e natural para crianças, com fallback
-           inteligente para vozes neurais do navegador.
+           SISTEMA DE NARRAÇÃO HUMANA E NATURAL FIXA PARA GITHUB E WEB
+           Camada 1: Voz Neural Gemini 2.5 Flash TTS ("Aoede") - funciona no Canvas
+                     ou no GitHub caso você preencha FIXED_GEMINI_API_KEY.
+           Camada 2: Voz Feminina por Streaming de Áudio em Nuvem (MP3) - funciona
+                     direto no GitHub Pages em qualquer celular/PC sem chave de API,
+                     evitando a voz robótica local do sistema!
+           Camada 3: Voz Neural Feminina do navegador (Francisca / Thalita) com
+                     pré-carregamento assíncrono garantido.
            ===================================================================== */
+
+        const FIXED_GEMINI_API_KEY = "";
+
+        // Detecta automaticamente se está rodando fora do Gemini (ex: GitHub Pages)
+        const IS_EXTERNAL_HOST = window.location.hostname.includes('github.io') ||
+                                 (window.location.hostname !== '' &&
+                                  !window.location.hostname.includes('scf.usercontent.goog') &&
+                                  !window.location.hostname.includes('google'));
+
         let currentUtterance = null;
         let currentHtmlAudio = null;
         let activeSpeechRequestId = 0;
+        let cachedBrowserVoices = [];
         const ttsAudioCache = new Map();
+
+        // Garante o carregamento das vozes neurais do navegador assim que disponíveis
+        if ('speechSynthesis' in window) {
+            const loadVoices = () => {
+                cachedBrowserVoices = window.speechSynthesis.getVoices();
+            };
+            loadVoices();
+            window.speechSynthesis.onvoiceschanged = loadVoices;
+        }
+
+        function getEffectiveGeminiKey() {
+            return FIXED_GEMINI_API_KEY.trim() || "";
+        }
 
         function stopAllAudio() {
             activeSpeechRequestId++;
@@ -946,13 +1032,18 @@
             return new Blob([view], { type: 'audio/wav' });
         }
 
-        // Busca áudio neural super natural na API Gemini TTS com backoff exponencial
+        // CAMADA 1: Busca áudio neural super natural na API Gemini TTS (Voz Aoede)
         async function fetchNaturalGeminiTTS(text) {
+            // Se estiver no GitHub Pages sem chave fixa, vai direto para a Voz Feminina em Nuvem sem esperar erro
+            if (IS_EXTERNAL_HOST && !getEffectiveGeminiKey()) {
+                return null;
+            }
+
             if (ttsAudioCache.has(text)) {
                 return ttsAudioCache.get(text);
             }
 
-            const apiKey = ""; // Fornecido automaticamente pelo ambiente em tempo de execução
+            const apiKey = getEffectiveGeminiKey();
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
 
             const payload = {
@@ -972,7 +1063,7 @@
                 model: "gemini-2.5-flash-preview-tts"
             };
 
-            let delay = 800;
+            let delay = 600;
             for (let attempt = 0; attempt < 2; attempt++) {
                 try {
                     const response = await fetch(apiUrl, {
@@ -997,9 +1088,12 @@
                             ttsAudioCache.set(text, audioUrl);
                             return audioUrl;
                         }
+                    } else if (response.status === 400 || response.status === 403) {
+                        // Se estiver no GitHub sem API key configurada, passa imediatamente para a Camada 2 sem atraso
+                        break;
                     }
                 } catch (err) {
-                    // Tenta novamente ou usa o fallback de voz neural do sistema
+                    break;
                 }
                 await new Promise(r => setTimeout(r, delay));
                 delay *= 2;
@@ -1007,10 +1101,46 @@
             return null;
         }
 
-        // Seleciona a melhor voz neural feminina e natural disponível no dispositivo caso esteja offline
-        function pickBestBrowserPortugueseVoice() {
+        // Divide textos longos em frases menores para o Stream de Voz Feminina em Nuvem (GitHub Pages)
+        function splitTextIntoSentences(text, maxLen = 175) {
+            const rawSentences = text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
+            const chunks = [];
+            let current = "";
+
+            for (const s of rawSentences) {
+                const clean = s.trim();
+                if (!clean) continue;
+                if ((current + " " + clean).trim().length <= maxLen) {
+                    current = (current + " " + clean).trim();
+                } else {
+                    if (current) chunks.push(current);
+                    if (clean.length <= maxLen) {
+                        current = clean;
+                    } else {
+                        // Divide por vírgulas se a frase for muito comprida
+                        const subParts = clean.split(/,\s*/);
+                        let subCurrent = "";
+                        for (const sp of subParts) {
+                            const piece = subCurrent ? `${subCurrent}, ${sp}` : sp;
+                            if (piece.length <= maxLen) {
+                                subCurrent = piece;
+                            } else {
+                                if (subCurrent) chunks.push(subCurrent);
+                                subCurrent = sp.slice(0, maxLen);
+                            }
+                        }
+                        current = subCurrent;
+                    }
+                }
+            }
+            if (current) chunks.push(current);
+            return chunks;
+        }
+
+        // Verifica se o navegador possui uma voz Neural Feminina de altíssima qualidade nativa (ex: Microsoft Francisca Online)
+        function pickHighQualityNeuralVoice() {
             if (!('speechSynthesis' in window)) return null;
-            const voices = window.speechSynthesis.getVoices();
+            const voices = cachedBrowserVoices.length ? cachedBrowserVoices : window.speechSynthesis.getVoices();
             const ptVoices = voices.filter(v =>
                 v.lang.toLowerCase().includes('pt-br') ||
                 v.lang.toLowerCase().includes('pt_br') ||
@@ -1018,13 +1148,67 @@
             );
             if (!ptVoices.length) return null;
 
-            // Prioriza vozes femininas e neurais / naturais (Francisca, Thalita, Luciana, Google Português)
-            const preferredKeywords = ['francisca', 'thalita', 'luciana', 'leila', 'natural', 'neural', 'google português do brasil', 'online', 'premium'];
-            for (const keyword of preferredKeywords) {
-                const match = ptVoices.find(v => v.name.toLowerCase().includes(keyword));
+            // Procura especificamente vozes Neurais Femininas naturais
+            const topNeuralKeywords = ['francisca', 'thalita', 'leila', 'natural', 'neural', 'google português do brasil', 'luciana'];
+            for (const kw of topNeuralKeywords) {
+                const match = ptVoices.find(v => v.name.toLowerCase().includes(kw));
                 if (match) return match;
             }
-            return ptVoices[0];
+            return null;
+        }
+
+        // CAMADA 2: Reproduz Stream de Voz Feminina da Nuvem (MP3) — Funciona direto no GitHub em qualquer aparelho!
+        async function playCloudFemaleVoiceStream(text, requestId, onEndCallback) {
+            const chunks = splitTextIntoSentences(text, 165);
+            if (!chunks.length) {
+                setSpeakingUI(false);
+                if (onEndCallback) onEndCallback();
+                return true;
+            }
+
+            setSpeakingUI(true, "Narrando...");
+
+            for (let i = 0; i < chunks.length; i++) {
+                if (requestId !== activeSpeechRequestId) return true;
+                const chunk = chunks[i];
+                const encoded = encodeURIComponent(chunk);
+
+                // Lista de servidores de voz feminina em nuvem que funcionam sem API Key no GitHub Pages
+                const streamUrls = [
+                    `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=tw-ob&tl=pt-BR&q=${encoded}`,
+                    `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=pt-BR&dt=t&q=${encoded}`
+                ];
+
+                let chunkPlayed = false;
+                for (const url of streamUrls) {
+                    if (requestId !== activeSpeechRequestId) return true;
+                    chunkPlayed = await new Promise((resolve) => {
+                        const audio = new Audio();
+                        // Fundamental para funcionar no GitHub Pages sem bloqueio 403!
+                        audio.referrerPolicy = "no-referrer";
+                        audio.crossOrigin = "anonymous";
+                        audio.src = url;
+                        audio.playbackRate = 1.05; // Ritmo suave, alegre e natural para crianças
+                        currentHtmlAudio = audio;
+
+                        audio.onended = () => resolve(true);
+                        audio.onerror = () => resolve(false);
+
+                        audio.play().catch(() => resolve(false));
+                    });
+                    if (chunkPlayed) break;
+                }
+
+                if (!chunkPlayed) {
+                    return false; // Se estiver sem internet, aciona o fallback local
+                }
+            }
+
+            if (requestId === activeSpeechRequestId) {
+                setSpeakingUI(false);
+                if (onEndCallback) onEndCallback();
+            }
+            return true;
         }
 
         async function speakText(text, onEndCallback = null) {
@@ -1034,7 +1218,7 @@
 
             setSpeakingUI(true, "Preparando voz...");
 
-            // 1. Tenta primeiro a voz humana neural (Gemini TTS)
+            // 1. Tenta primeiro a voz humana neural Aoede (Gemini TTS)
             const naturalAudioUrl = await fetchNaturalGeminiTTS(text);
             if (requestId !== activeSpeechRequestId) return;
 
@@ -1052,22 +1236,43 @@
                     };
                     audio.onerror = () => {
                         if (requestId === activeSpeechRequestId) {
-                            speakWithBrowserFallback(text, requestId, onEndCallback);
+                            speakWithGitHubNeuralFallback(text, requestId, onEndCallback);
                         }
                     };
 
                     await audio.play();
                     return;
                 } catch (e) {
-                    // Se o navegador bloquear ou falhar, cai no fallback suave abaixo
+                    // Continua para o modo GitHub abaixo
                 }
             }
 
-            // 2. Fallback: usa a voz mais natural disponível no sistema com cadência humanizada
-            speakWithBrowserFallback(text, requestId, onEndCallback);
+            // 2. Modo Fixo para GitHub Pages: garante voz feminina fluida sem ficar robótica
+            await speakWithGitHubNeuralFallback(text, requestId, onEndCallback);
         }
 
-        function speakWithBrowserFallback(text, requestId, onEndCallback) {
+        async function speakWithGitHubNeuralFallback(text, requestId, onEndCallback) {
+            // Verifica se o aparelho tem a voz Microsoft Francisca Neural (Edge/Windows) que é ultra humana
+            const neuralVoice = pickHighQualityNeuralVoice();
+            const isMicrosoftNeural = neuralVoice && (
+                neuralVoice.name.toLowerCase().includes('natural') ||
+                neuralVoice.name.toLowerCase().includes('francisca') ||
+                neuralVoice.name.toLowerCase().includes('thalita')
+            );
+
+            if (isMicrosoftNeural) {
+                speakWithBrowserVoice(text, neuralVoice, requestId, onEndCallback);
+                return;
+            }
+
+            // Caso contrário (celulares Android/iPhone ou PCs comuns no GitHub), usa o Stream de Áudio Feminino em Nuvem
+            const cloudSuccess = await playCloudFemaleVoiceStream(text, requestId, onEndCallback);
+            if (!cloudSuccess && requestId === activeSpeechRequestId) {
+                speakWithBrowserVoice(text, neuralVoice, requestId, onEndCallback);
+            }
+        }
+
+        function speakWithBrowserVoice(text, chosenVoice, requestId, onEndCallback) {
             if (!('speechSynthesis' in window)) {
                 setSpeakingUI(false);
                 if (onEndCallback) onEndCallback();
@@ -1077,11 +1282,12 @@
             window.speechSynthesis.cancel();
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'pt-BR';
-            utterance.rate = 1.0;
-            utterance.pitch = 1.05;
+            utterance.rate = 1.02;
+            utterance.pitch = 1.08;
 
-            const bestVoice = pickBestBrowserPortugueseVoice();
-            if (bestVoice) utterance.voice = bestVoice;
+            if (chosenVoice) {
+                utterance.voice = chosenVoice;
+            }
 
             utterance.onstart = () => {
                 if (requestId === activeSpeechRequestId) {
