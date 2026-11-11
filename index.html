@@ -518,8 +518,8 @@
                 <div class="flex items-center gap-3">
                     <span class="text-3xl">🎙️</span>
                     <div>
-                        <h3 class="text-xl font-extrabold text-indigo-950">Voz Neural Feminina Fixa</h3>
-                        <p class="text-xs text-slate-500 font-bold">Funciona no GitHub Pages, Celular e PC</p>
+                        <h3 class="text-xl font-extrabold text-indigo-950">Voz Neural Masculina Fixa</h3>
+                        <p class="text-xs text-slate-500 font-bold">API Groq Fixa Integrada • Celular, PC e GitHub</p>
                     </div>
                 </div>
                 <button onclick="closeVoiceSettingsModal()" class="text-slate-400 hover:text-slate-700 text-2xl font-bold">&times;</button>
@@ -528,20 +528,39 @@
             <div class="bg-emerald-50 border-2 border-emerald-300 rounded-2xl p-4 text-xs sm:text-sm text-emerald-950 space-y-1.5">
                 <div class="font-extrabold flex items-center gap-1.5 text-emerald-800">
                     <i class="ph-fill ph-check-circle text-lg"></i>
-                    <span>Motor Francisca Neural (Desbloqueado p/ GitHub) Ativo!</span>
+                    <span>Chave Groq API Fixa & Voz Masculina Natural Ativa!</span>
                 </div>
                 <p>
-                    O aplicativo já está configurado para baixar o áudio MP3 da voz humana <strong>Microsoft Francisca Neural (pt-BR)</strong> via túnel HTTPS sem cair na voz robótica do Google Tradutor.
+                    Sua chave <strong>Groq API</strong> já está gravada diretamente no código com timbre masculino acolhedor de contador de histórias bíblicas!
                 </p>
+            </div>
+
+            <!-- Seletor de Timbre da Voz Masculina Neural -->
+            <div class="space-y-2 bg-amber-50 p-4 rounded-2xl border-2 border-amber-300">
+                <label class="text-xs font-extrabold uppercase text-amber-950 block">
+                    👨‍🏫 Escolha o Timbre da Voz Masculina Neural:
+                </label>
+                <select id="neuralVoicePresetSelect" class="w-full bg-white border-2 border-amber-400 rounded-xl px-3 py-2.5 text-sm font-bold text-indigo-950 outline-none">
+                    <option value="onyx">🌟 Voz 1: Onyx / Angelo (Voz Masculina Calorosa e Natural - Padrão)</option>
+                    <option value="echo">🎙️ Voz 2: Echo / Atlas (Voz Masculina Suave de Contador de Histórias)</option>
+                    <option value="ash">📖 Voz 3: Ash / Leo (Voz Masculina Expressiva e Amigável)</option>
+                    <option value="antonio">🇧🇷 Voz 4: Antônio Neural (Microsoft Brasil Masculina)</option>
+                </select>
             </div>
 
             <div class="space-y-3 bg-indigo-50/70 p-4 rounded-2xl border-2 border-indigo-200">
                 <label class="text-xs font-extrabold uppercase text-indigo-950 block">
-                    🌟 Opcional: Chaves 100% Gratuitas (Sem Cartão e Sem Google Cloud!)
+                    🌟 Chave Groq API (Já Fixada no Código!)
                 </label>
                 <p class="text-xs text-slate-600 leading-relaxed">
-                    O app já funciona <strong>sem chave</strong>! Mas se quiser colar uma chave 100% gratuita (como <strong>VoiceRSS.org</strong> — 350 áudios grátis/dia — ou o plano grátis da <strong>ElevenLabs</strong>), cole abaixo ou me envie no chat:
+                    A sua chave <code class="bg-white px-1 rounded">gsk_...</code> já está embutida automaticamente no código:
                 </p>
+                <input
+                    id="customGroqKeyInput"
+                    type="password"
+                    placeholder="Chave Grátis Groq API (gsk_... - Servidor de Voz Groq)"
+                    class="w-full bg-white border-2 border-orange-400 focus:border-orange-600 rounded-xl px-4 py-2.5 text-sm font-mono outline-none"
+                />
                 <input
                     id="customVoiceRssKeyInput"
                     type="password"
@@ -605,9 +624,9 @@
 
     <script>
         /* =====================================================================
-           BANCO DE DADOS PEDAGÓGICO (ESTUDOS 1 AO 4 EM 3 NÍVEIS: FÁCIL, NORMAL, DIFÍCIL)
-           Congruente com o Estudo Base: Jesus, o Restaurador da Vida.
-           Utiliza sempre "Deus" ou "Deus, o Criador" (com D maiúsculo).
+           BANCO DE DADOS PEDAGÓGICO: ESTUDO BASE "JESUS, O RESTAURADOR DA VIDA"
+           4 Estudos Progressivos (1 -> 2 -> 3 -> 4) x 3 Níveis (Fácil, Normal, Difícil)
+           Cada estudo tem um Prefácio Explicativo Narrado + Perguntas A, B, C
            ===================================================================== */
         const STUDIES_DATA = [
             {
@@ -618,21 +637,21 @@
                 color: "from-emerald-400 to-green-600",
                 levels: {
                     facil: {
-                        preface: "Bem-vindo ao primeiro estudo sobre A Vida! A Bíblia nos ensina no Salmo trinta e seis que Deus, o Criador, é a Fonte da vida. Deus fez o Sol quentinho, a natureza e o ser humano com muito amor. E por meio de Jesus, o Restaurador da Vida, Deus cuida de nós todos os dias. Como a vida é um presente precioso de Deus, nós agradecemos a Ele cuidando bem da nossa saúde, dos nossos amigos e da natureza.",
+                        preface: "Bem-vindo ao nosso primeiro estudo sobre A Vida! Olhe ao seu redor: as árvores, os pássaros, o sol brilhando e o nosso próprio coração batendo. A Bíblia nos ensina que a vida é um presente maravilhoso criado por Deus, o Criador! E quando o ser humano precisa de renovação, paz e alegria no coração, temos Jesus, o Restaurador da Vida! Nós agradecemos a Deus por esse presente quando cuidamos bem da nossa saúde, respeitamos o próximo e fazemos o bem todos os dias.",
                         questions: [
                             {
-                                q: "De acordo com a explicação que acabamos de ouvir, quem é a Fonte da vida e o Criador de todas as coisas?",
-                                a: "Deus, o Criador, que fez o Sol, a natureza e o ser humano.",
-                                b: "Os próprios seres humanos construíram o Sol e a natureza.",
-                                c: "A vida surgiu sozinha sem ninguém cuidar dela.",
-                                correct: "A"
+                                q: "De acordo com a explicação que acabamos de ouvir, quem criou a vida como um presente maravilhoso para nós?",
+                                a: "O acaso, sem ninguém planejar.",
+                                b: "Deus, o Criador, que fez todas as coisas com amor.",
+                                c: "Os próprios seres humanos.",
+                                correct: "B"
                             },
                             {
-                                q: "Como podemos mostrar que agradecemos a Deus pelo presente da vida?",
-                                a: "Desperdiçando água e brigando com os colegas.",
-                                b: "Cuidando bem da nossa saúde, da natureza e tratando todos com bondade.",
-                                c: "Esquecendo de agradecer pela criação.",
-                                correct: "B"
+                                q: "Como podemos mostrar gratidão a Deus, o Criador, pelo presente da vida todos os dias?",
+                                a: "Cuidando da nossa saúde, respeitando o próximo e fazendo o bem.",
+                                b: "Brincando com coisas perigosas e brigando com os colegas.",
+                                c: "Esquecendo de agradecer pela nossa família.",
+                                correct: "A"
                             }
                         ]
                     },
@@ -1081,26 +1100,33 @@
         }
 
         /* =====================================================================
-           SISTEMA DE VOZ FEMININA HUMANA NEURAL (pt-BR-FranciscaNeural / Aoede / ElevenLabs)
-           100% Humanizada, Doce e Expressiva para Crianças!
-           - NUNCA usa a voz robótica do Google Tradutor!
-           - Usa túneis HTTPS com CORS liberado para baixar o MP3 da voz Francisca Neural
-             mesmo em Guia Anônima e no GitHub Pages!
+           SISTEMA DE VOZ MASCULINA HUMANA NEURAL (Groq API Fixa / AntonioNeural / Onyx / Orus)
+           100% Humanizada, Acolhedora e Expressiva para Crianças!
+           - Chave Groq API embutida diretamente no código!
+           - Timbre Masculino Natural de Contador de Histórias Bíblicas.
            ===================================================================== */
 
         const apiKey = ""; // Ambiente Gemini
-        // CHAVES 100% GRATUITAS QUE VOCÊ PODE DEIXAR FIXAS NO CÓDIGO SE QUISER:
+        // CHAVE GROQ API FIXA DIRETAMENTE NO CÓDIGO:
+        const FIXED_GROQ_API_KEY = "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";
         const FIXED_VOICERSS_API_KEY = "";
         const FIXED_ELEVENLABS_API_KEY = "";
         const FIXED_GEMINI_API_KEY = "";
 
         const sharedAudioPlayer = new Audio();
         sharedAudioPlayer.referrerPolicy = "no-referrer";
-        sharedAudioPlayer.crossOrigin = "anonymous";
         let audioUnlocked = false;
         let activeSpeechRequestId = 0;
         let cachedBrowserVoices = [];
         const ttsAudioCache = new Map();
+
+        function getActiveGroqKey() {
+            try {
+                const custom = (window.localStorage.getItem('jornada_groq_key') || "").trim();
+                if (custom !== "") return custom;
+            } catch (e) {}
+            return FIXED_GROQ_API_KEY.trim();
+        }
 
         function getActiveVoiceRssKey() {
             if (FIXED_VOICERSS_API_KEY && FIXED_VOICERSS_API_KEY.trim() !== "") {
@@ -1138,9 +1164,11 @@
         function openVoiceSettingsModal() {
             playSound('click');
             const modal = document.getElementById('voiceSettingsModal');
+            const groqInput = document.getElementById('customGroqKeyInput');
             const vrssInput = document.getElementById('customVoiceRssKeyInput');
             const elInput = document.getElementById('customElevenLabsKeyInput');
             const gemInput = document.getElementById('customApiKeyInput');
+            if (groqInput) groqInput.value = getActiveGroqKey();
             if (vrssInput) vrssInput.value = getActiveVoiceRssKey();
             if (elInput) elInput.value = getActiveElevenLabsKey();
             if (gemInput) gemInput.value = getActiveGeminiKey();
@@ -1157,10 +1185,12 @@
 
         function saveVoiceSettings() {
             playSound('success');
+            const groqInput = document.getElementById('customGroqKeyInput');
             const vrssInput = document.getElementById('customVoiceRssKeyInput');
             const elInput = document.getElementById('customElevenLabsKeyInput');
             const gemInput = document.getElementById('customApiKeyInput');
             try {
+                if (groqInput) window.localStorage.setItem('jornada_groq_key', groqInput.value.trim());
                 if (vrssInput) window.localStorage.setItem('jornada_voicerss_key', vrssInput.value.trim());
                 if (elInput) window.localStorage.setItem('jornada_elevenlabs_key', elInput.value.trim());
                 if (gemInput) window.localStorage.setItem('jornada_gemini_key', gemInput.value.trim());
@@ -1170,23 +1200,143 @@
         }
 
         function testCurrentVoice() {
+            const groqInput = document.getElementById('customGroqKeyInput');
             const vrssInput = document.getElementById('customVoiceRssKeyInput');
             const elInput = document.getElementById('customElevenLabsKeyInput');
             const gemInput = document.getElementById('customApiKeyInput');
             try {
+                if (groqInput && groqInput.value.trim() !== "") window.localStorage.setItem('jornada_groq_key', groqInput.value.trim());
                 if (vrssInput) window.localStorage.setItem('jornada_voicerss_key', vrssInput.value.trim());
                 if (elInput) window.localStorage.setItem('jornada_elevenlabs_key', elInput.value.trim());
                 if (gemInput) window.localStorage.setItem('jornada_gemini_key', gemInput.value.trim());
             } catch (e) {}
-            speakText(`Olá, ${getStudentName()}! Eu sou a sua contadora de histórias do estudo Jesus, o Restaurador da Vida! Vamos aprender juntos?`);
+            speakText(`Olá, ${getStudentName()}! Eu sou o seu narrador e amigo no estudo Jesus, o Restaurador da Vida! Vamos aprender juntos?`);
+        }
+        // Opção 0: Servidor de Voz Groq API (Rota oficial /openai/v1/audio/speech com chave gsk_... fixa e Voz Masculina Natural)
+        async function fetchGroqVoiceUrl(text) {
+            const groqKey = getActiveGroqKey();
+            if (!groqKey) return null;
+            const cacheKey = "groq_male_tts_" + text;
+            if (ttsAudioCache.has(cacheKey)) return ttsAudioCache.get(cacheKey);
+
+            // Modelos e vozes masculinas naturais disponíveis no Groq (Angelo / Atlas / Leo / Dan)
+            const modelsToTry = [
+                { model: "playai-tts", voice: "Angelo-PlayAI" },
+                { model: "playai-tts", voice: "Atlas-PlayAI" },
+                { model: "canopylabs/orpheus-v1-english", voice: "leo" }
+            ];
+
+            for (const cfg of modelsToTry) {
+                try {
+                    const res = await fetch("https://api.groq.com/openai/v1/audio/speech", {
+                        method: "POST",
+                        headers: {
+                            "Authorization": `Bearer ${groqKey}`,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            model: cfg.model,
+                            input: text,
+                            voice: cfg.voice,
+                            response_format: "mp3"
+                        })
+                    });
+                    if (res.ok) {
+                        const blob = await res.blob();
+                        if (blob.size > 400) {
+                            const url = URL.createObjectURL(blob);
+                            ttsAudioCache.set(cacheKey, url);
+                            return url;
+                        }
+                    }
+                } catch (e) {}
+            }
+            return null;
         }
 
-        if ('speechSynthesis' in window) {
-            const loadVoices = () => {
-                cachedBrowserVoices = window.speechSynthesis.getVoices();
-            };
-            loadVoices();
-            window.speechSynthesis.onvoiceschanged = loadVoices;
+        // Opção 1: ElevenLabs API (Voz Humana Masculina "Brian / Daniel" Multilíngue v2) se o usuário colocar a chave
+        async function fetchElevenLabsVoiceUrl(text) {
+            const elKey = getActiveElevenLabsKey();
+            if (!elKey) return null;
+            const cacheKey = "elevenlabs_male_" + text;
+            if (ttsAudioCache.has(cacheKey)) return ttsAudioCache.get(cacheKey);
+
+            try {
+                // ID da voz masculina acolhedora e natural (Brian - narrador de histórias)
+                const res = await fetch("https://api.elevenlabs.io/v1/text-to-speech/nPczCjzI2devNBz1zQrb", {
+                    method: "POST",
+                    headers: {
+                        "Accept": "audio/mpeg",
+                        "Content-Type": "application/json",
+                        "xi-api-key": elKey
+                    },
+                    body: JSON.stringify({
+                        text: text,
+                        model_id: "eleven_multilingual_v2",
+                        voice_settings: {
+                            stability: 0.60,
+                            similarity_boost: 0.82,
+                            style: 0.30,
+                            use_speaker_boost: true
+                        }
+                    })
+                });
+                if (!res.ok) return null;
+                const blob = await res.blob();
+                if (blob.size > 400) {
+                    const url = URL.createObjectURL(blob);
+                    ttsAudioCache.set(cacheKey, url);
+                    return url;
+                }
+            } catch (e) {}
+            return null;
+        }
+
+        // Opção 2: Busca voz Masculina Natural Gemini 2.5 Flash TTS (Orus / Puck)
+        async function fetchGeminiMaleVoiceUrl(text) {
+            const activeKey = getActiveGeminiKey();
+            const isCanvasPreview = window.location.hostname.includes('scf.usercontent.goog') || window.location.hostname.includes('localhost') || activeKey !== "";
+            if (!isCanvasPreview) return null;
+
+            const cacheKey = "gemini_male_orus_" + text;
+            if (ttsAudioCache.has(cacheKey)) {
+                return ttsAudioCache.get(cacheKey);
+            }
+            try {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${activeKey}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: `Narre em português do Brasil com uma voz masculina calorosa, amigável, expressiva e muito natural de contador de histórias bíblicas para crianças: ${text}`
+                            }]
+                        }],
+                        generationConfig: {
+                            responseModalities: ["AUDIO"],
+                            speechConfig: {
+                                voiceConfig: {
+                                    prebuiltVoiceConfig: { voiceName: "Orus" }
+                                }
+                            }
+                        }
+                    })
+                });
+                if (!res.ok) return null;
+                const data = await res.json();
+                const inlineData = data?.candidates?.[0]?.content?.parts?.[0]?.inlineData;
+                if (inlineData && inlineData.data) {
+                    const wavUrl = pcm16Base64ToWavBlobUrl(inlineData.data, 24000);
+                    ttsAudioCache.set(cacheKey, wavUrl);
+                    return wavUrl;
+                }
+            } catch (e) {}
+            return null;
+        }
+
+        function getSelectedNeuralPreset() {
+            const sel = document.getElementById('neuralVoicePresetSelect');
+            return sel ? sel.value : 'onyx';
         }
 
         // Destrava o reprodutor de áudio no exato momento do clique do botão (Obrigatório em Guia Anônima e Mobile)
@@ -1305,183 +1455,119 @@
             return URL.createObjectURL(blob);
         }
 
-        // Opção 1: ElevenLabs API (Voz Humana Feminina "Charlotte / Matilda" Multilíngue v2) se o usuário colocar a chave
-        async function fetchElevenLabsVoiceUrl(text) {
-            const elKey = getActiveElevenLabsKey();
-            if (!elKey) return null;
-            const cacheKey = "elevenlabs_" + text;
-            if (ttsAudioCache.has(cacheKey)) return ttsAudioCache.get(cacheKey);
-
-            try {
-                // Voice ID: XB0fDUnXU5powFXDhCwa (Charlotte - Voz feminina doce e acolhedora em Português)
-                const res = await fetch("https://api.elevenlabs.io/v1/text-to-speech/XB0fDUnXU5powFXDhCwa", {
-                    method: "POST",
-                    headers: {
-                        "Accept": "audio/mpeg",
-                        "Content-Type": "application/json",
-                        "xi-api-key": elKey
-                    },
-                    body: JSON.stringify({
-                        text: text,
-                        model_id: "eleven_multilingual_v2",
-                        voice_settings: {
-                            stability: 0.55,
-                            similarity_boost: 0.80,
-                            style: 0.35,
-                            use_speaker_boost: true
-                        }
-                    })
-                });
-                if (!res.ok) return null;
-                const blob = await res.blob();
-                if (blob.size > 400) {
-                    const url = URL.createObjectURL(blob);
-                    ttsAudioCache.set(cacheKey, url);
-                    return url;
-                }
-            } catch (e) {}
-            return null;
+        function playUrlOnSharedPlayer(url, rate = 1.0) {
+            return playDirectStreamUrl(url, 8000);
         }
 
-        // Opção 1B: VoiceRSS 100% Gratuita (Voz Feminina Brasileira " Marcia " - 350 req/dia grátis sem cartão)
-        async function fetchVoiceRssUrl(text) {
-            const vrssKey = getActiveVoiceRssKey();
-            if (!vrssKey) return null;
-            const cacheKey = "voicerss_" + text;
-            if (ttsAudioCache.has(cacheKey)) return ttsAudioCache.get(cacheKey);
-
-            try {
-                const url = `https://api.voicerss.org/?key=${encodeURIComponent(vrssKey)}&hl=pt-br&v=Marcia&c=MP3&f=24khz_16bit_mono&src=${encodeURIComponent(text)}`;
-                const res = await fetch(url);
-                if (res.ok) {
-                    const blob = await res.blob();
-                    if (blob.size > 500 && blob.type.includes('audio')) {
-                        const blobUrl = URL.createObjectURL(blob);
-                        ttsAudioCache.set(cacheKey, blobUrl);
-                        return blobUrl;
+        // SEGREDINHO TÉCNICO: Tocar URL diretamente na tag <audio> (sharedAudioPlayer.src = url)
+        // NÃO sofre bloqueio de CORS no GitHub Pages nem em Guia Anônima!
+        function playDirectStreamUrl(url, timeoutMs = 8000) {
+            return new Promise((resolve) => {
+                let settled = false;
+                const done = (ok) => {
+                    if (!settled) {
+                        settled = true;
+                        clearTimeout(timer);
+                        sharedAudioPlayer.onended = null;
+                        sharedAudioPlayer.onerror = null;
+                        sharedAudioPlayer.oncanplay = null;
+                        resolve(ok);
                     }
+                };
+
+                const timer = setTimeout(() => {
+                    // Se ainda não começou a tocar dentro do tempo limite, passa para a próxima rota
+                    if (sharedAudioPlayer.paused || sharedAudioPlayer.currentTime === 0) {
+                        done(false);
+                    }
+                }, timeoutMs);
+
+                try {
+                    sharedAudioPlayer.pause();
+                    sharedAudioPlayer.removeAttribute('crossorigin');
+                    sharedAudioPlayer.referrerPolicy = "no-referrer";
+                    sharedAudioPlayer.src = url;
+                    sharedAudioPlayer.playbackRate = 1.0;
+
+                    sharedAudioPlayer.oncanplay = () => {
+                        clearTimeout(timer);
+                        setSpeakingUI(true, "Narrando...");
+                    };
+                    sharedAudioPlayer.onended = () => done(true);
+                    sharedAudioPlayer.onerror = () => done(false);
+
+                    const p = sharedAudioPlayer.play();
+                    if (p !== undefined) {
+                        p.catch(() => done(false));
+                    }
+                } catch (e) {
+                    done(false);
                 }
-            } catch (e) {}
-            return null;
+            });
         }
 
-        // Opção 2: Busca voz Gemini 2.5 Flash TTS (Aoede)
-        async function fetchGeminiAoedeVoiceUrl(text) {
-            const activeKey = getActiveGeminiKey();
-            const isCanvasPreview = window.location.hostname.includes('scf.usercontent.goog') || window.location.hostname.includes('localhost') || activeKey !== "";
-            if (!isCanvasPreview) return null;
+        // Busca ou toca um trecho usando Vozes Neurais Reais (OpenAI Nova / Shimmer / Coral / Microsoft Francisca Neural)
+        // Busca ou toca um trecho usando Vozes Masculinas Neurais Reais (OpenAI Onyx / Echo / Ash / Microsoft Antonio Neural)
+        async function playNeuralChunkGuaranteed(chunkText, requestId) {
+            if (requestId !== activeSpeechRequestId) return false;
 
-            const cacheKey = "gemini_aoede_" + text;
-            if (ttsAudioCache.has(cacheKey)) {
-                return ttsAudioCache.get(cacheKey);
+            const preset = getSelectedNeuralPreset();
+            const encoded = encodeURIComponent(chunkText);
+            const openAiMaleVoice = (preset === 'echo' || preset === 'ash' || preset === 'onyx') ? preset : 'onyx';
+
+            // 1. Se escolheu Antônio Neural ou como primeira tentativa rápida em PT-BR:
+            if (preset === 'antonio') {
+                const wsUrl = await synthesizeEdgeAntonioDirect(chunkText);
+                if (requestId !== activeSpeechRequestId) return false;
+                if (wsUrl) {
+                    setSpeakingUI(true, "Narrando...");
+                    const ok = await playDirectStreamUrl(wsUrl, 5000);
+                    if (ok) return true;
+                }
             }
+
+            // 2. Rota Microsoft Antônio Neural (Voz Masculina Brasileira Extremamente Natural) via POST JSON
             try {
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${activeKey}`, {
+                const res = await fetch("https://tts.travisvn.com/v1/audio/speech", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        contents: [{
-                            parts: [{
-                                text: `Narre em português do Brasil com uma voz feminina doce, calorosa, sorridente e muito natural de contadora de histórias infantil: ${text}`
-                            }]
-                        }],
-                        generationConfig: {
-                            responseModalities: ["AUDIO"],
-                            speechConfig: {
-                                voiceConfig: {
-                                    prebuiltVoiceConfig: { voiceName: "Aoede" }
-                                }
-                            }
-                        }
+                        model: "tts-1",
+                        input: chunkText,
+                        voice: "pt-BR-AntonioNeural"
                     })
                 });
-                if (!res.ok) return null;
-                const data = await res.json();
-                const inlineData = data?.candidates?.[0]?.content?.parts?.[0]?.inlineData;
-                if (inlineData && inlineData.data) {
-                    const wavUrl = pcm16Base64ToWavBlobUrl(inlineData.data, 24000);
-                    ttsAudioCache.set(cacheKey, wavUrl);
-                    return wavUrl;
+                if (res.ok) {
+                    const blob = await res.blob();
+                    if (blob.size > 400) {
+                        const blobUrl = URL.createObjectURL(blob);
+                        const ok = await playDirectStreamUrl(blobUrl, 5000);
+                        if (ok) return true;
+                    }
                 }
             } catch (e) {}
-            return null;
-        }
 
-        // Opção 3 (SEM CHAVE!): Baixa o MP3 da Voz Humana Microsoft Francisca Neural (pt-BR-FranciscaNeural)
-        // Usa múltiplos endpoints HTTPS com desbloqueio CORS para funcionar em Guia Anônima e no GitHub Pages!
-        async function fetchFranciscaNeuralMp3(chunkText) {
-            const cacheKey = "francisca_neural_mp3_" + chunkText;
-            if (ttsAudioCache.has(cacheKey)) return ttsAudioCache.get(cacheKey);
+            // 3. Stream Direto via Tag <audio> para OpenAI Audio Neural Masculina (Onyx / Echo / Ash)
+            const promptInstruction = encodeURIComponent(`Repita exatamente este texto em português do Brasil com voz masculina acolhedora e natural: "${chunkText}"`);
+            const directOpenAiStreamUrl = `https://text.pollinations.ai/${promptInstruction}?model=openai-audio&voice=${openAiMaleVoice}`;
+            const playedOpenAi = await playDirectStreamUrl(directOpenAiStreamUrl, 7500);
+            if (requestId !== activeSpeechRequestId) return false;
+            if (playedOpenAi) return true;
 
-            // Lista de geradores da voz humana pt-BR-FranciscaNeural e ThalitaNeural em paralelo (Promise.any)
-            // Assim, o servidor que responder primeiro em menos de 1.5s entrega o MP3 humano!
-            const encodedText = encodeURIComponent(chunkText);
-
-            const tryFetchBlob = async (url, options = {}) => {
-                const controller = new AbortController();
-                const timer = setTimeout(() => controller.abort(), 4500);
-                try {
-                    const res = await fetch(url, { ...options, signal: controller.signal });
-                    clearTimeout(timer);
-                    if (!res.ok) throw new Error("Status " + res.status);
-                    const blob = await res.blob();
-                    if (blob.size < 400) throw new Error("Blob pequeno");
-                    return URL.createObjectURL(blob);
-                } catch (err) {
-                    clearTimeout(timer);
-                    throw err;
-                }
-            };
-
-            // Rota A: API Edge TTS Direta (Francisca Neural)
-            const routeA = () => tryFetchBlob("https://tts.travisvn.com/v1/audio/speech", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    model: "tts-1",
-                    input: chunkText,
-                    voice: "pt-BR-FranciscaNeural"
-                })
-            });
-
-            // Rota B: API Edge TTS via CORS Proxy (caso o navegador bloqueie CORS em Guia Anônima)
-            const routeB = () => tryFetchBlob("https://corsproxy.io/?" + encodeURIComponent("https://tts.travisvn.com/v1/audio/speech"), {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    model: "tts-1",
-                    input: chunkText,
-                    voice: "pt-BR-FranciscaNeural"
-                })
-            });
-
-            // Rota C: Pollinations OpenAI Audio (Voz "nova" / "shimmer" feminina neural humana)
-            const routeC = () => tryFetchBlob(
-                `https://text.pollinations.ai/${encodedText}?model=openai-audio&voice=nova`
-            );
-
-            // Rota D: StreamElements Neural Camila via Proxy Desbloqueado
-            const routeD = () => tryFetchBlob(
-                `https://corsproxy.io/?` + encodeURIComponent(`https://api.streamelements.com/kappa/v2/speech?voice=Camila&text=${encodedText}`)
-            );
-
-            try {
-                // Dispara as rotas neurais e pega a primeira que responder com áudio MP3 válido!
-                const winningUrl = await Promise.any([routeA(), routeB(), routeC(), routeD()]);
-                if (winningUrl) {
-                    ttsAudioCache.set(cacheKey, winningUrl);
-                    return winningUrl;
-                }
-            } catch (e) {
-                // Se todas as 4 rotas acima falharem, tenta o WebSocket direto da Microsoft
-                const wsUrl = await synthesizeEdgeFranciscaDirect(chunkText);
-                if (wsUrl) {
-                    ttsAudioCache.set(cacheKey, wsUrl);
-                    return wsUrl;
-                }
+            // 4. WebSocket Direto Microsoft Edge Antônio Neural (pt-BR-AntonioNeural)
+            const wsUrlBackup = await synthesizeEdgeAntonioDirect(chunkText);
+            if (requestId !== activeSpeechRequestId) return false;
+            if (wsUrlBackup) {
+                const ok = await playDirectStreamUrl(wsUrlBackup, 5000);
+                if (ok) return true;
             }
 
-            return null;
+            // 5. Stream Direto Ricardo / Masculino via StreamElements
+            const directMaleUrl = `https://api.streamelements.com/kappa/v2/speech?voice=Ricardo&text=${encoded}`;
+            const playedMale = await playDirectStreamUrl(directMaleUrl, 6000);
+            if (playedMale) return true;
+
+            return false;
         }
 
         // Gera o token de segurança exigido pelo serviço neural da Microsoft (Sec-MS-GEC) direto no navegador
@@ -1490,19 +1576,17 @@
             const S_TO_NS = 1e9;
             let ticks = (Date.now() / 1000) + WIN_EPOCH;
             ticks -= ticks % 300;
-            ticks *= S_TO_NS / 100;
+            ticks *= (S_TO_NS / 100);
             const strToHash = `${ticks.toFixed(0)}6A5AA1D4EAFF4E9FB37E23D68491D6F4`;
-            const data = new TextEncoder().encode(strToHash);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-            return Array.from(new Uint8Array(hashBuffer))
-                .map(b => b.toString(16).padStart(2, '0'))
-                .join('')
-                .toUpperCase();
+            const msgBuffer = new TextEncoder().encode(strToHash);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
         }
 
-        // WebSocket Oficial Microsoft Edge ReadAloud (Voz Humana pt-BR-FranciscaNeural)
-        async function synthesizeEdgeFranciscaDirect(textChunk) {
-            const cacheKey = "edge_ws_francisca_" + textChunk;
+        // WebSocket Oficial Microsoft Edge ReadAloud (Voz Masculina Humana pt-BR-AntonioNeural)
+        async function synthesizeEdgeAntonioDirect(textChunk) {
+            const cacheKey = "edge_ws_antonio_" + textChunk;
             if (ttsAudioCache.has(cacheKey)) return ttsAudioCache.get(cacheKey);
 
             try {
@@ -1538,7 +1622,7 @@
                             .replace(/</g, '&lt;')
                             .replace(/>/g, '&gt;');
 
-                        const ssmlMsg = `X-RequestId:${reqId}\r\nContent-Type:application/ssml+xml\r\nX-Timestamp:${new Date().toISOString()}Z\r\nPath:ssml\r\n\r\n<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='pt-BR'><voice name='pt-BR-FranciscaNeural'><prosody pitch='+2Hz' rate='+2%'>${cleanText}</prosody></voice></speak>`;
+                        const ssmlMsg = `X-RequestId:${reqId}\r\nContent-Type:application/ssml+xml\r\nX-Timestamp:${new Date().toISOString()}Z\r\nPath:ssml\r\n\r\n<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='pt-BR'><voice name='pt-BR-AntonioNeural'><prosody pitch='+0Hz' rate='+2%'>${cleanText}</prosody></voice></speak>`;
                         ws.send(ssmlMsg);
                     };
 
@@ -1556,77 +1640,69 @@
                                 }
                             }
                         } else if (event.data instanceof ArrayBuffer) {
-                            const view = new DataView(event.data);
-                            const headerLen = view.getUint16(0);
+                            const view = new Uint8Array(event.data);
+                            const headerLen = (view[0] << 8) | view[1];
                             if (event.data.byteLength > headerLen + 2) {
-                                const mp3Bytes = event.data.slice(headerLen + 2);
-                                audioParts.push(mp3Bytes);
+                                const mp3Slice = event.data.slice(headerLen + 2);
+                                audioParts.push(mp3Slice);
                             }
                         }
                     };
 
-                    ws.onerror = () => { clearTimeout(timer); finish(null); };
-                    ws.onclose = () => { clearTimeout(timer); finish(null); };
+                    ws.onerror = () => {
+                        clearTimeout(timer);
+                        finish(null);
+                    };
                 });
             } catch (e) {
                 return null;
             }
         }
 
-        // Escolhe a melhor voz feminina disponível no navegador (apenas em último caso se o usuário estiver sem internet)
-        function pickBestBrowserFemaleVoice() {
-            if (!('speechSynthesis' in window)) return null;
-            const voices = cachedBrowserVoices.length ? cachedBrowserVoices : window.speechSynthesis.getVoices();
-            const ptVoices = voices.filter(v =>
-                v.lang.toLowerCase().includes('pt-br') ||
-                v.lang.toLowerCase().includes('pt_br') ||
-                v.lang.toLowerCase().startsWith('pt')
-            );
-            if (!ptVoices.length) return null;
-
-            const priorities = ['francisca', 'thalita', 'natural', 'luciana', 'vitória', 'vitoria', 'heloisa', 'fernanda', 'maria'];
-            for (const kw of priorities) {
-                const match = ptVoices.find(v => v.name.toLowerCase().includes(kw));
-                if (match) return match;
-            }
-            return ptVoices[0];
-        }
-
-        // Toca um URL no sharedAudioPlayer (já destravado no clique!)
-        function playUrlOnSharedPlayer(url, playbackRate = 1.0) {
-            return new Promise((resolve) => {
-                try {
-                    sharedAudioPlayer.pause();
-                    sharedAudioPlayer.src = url;
-                    sharedAudioPlayer.playbackRate = playbackRate;
-                    sharedAudioPlayer.onended = () => resolve(true);
-                    sharedAudioPlayer.onerror = () => resolve(false);
-                    const playPromise = sharedAudioPlayer.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(() => resolve(false));
-                    }
-                } catch (e) {
-                    resolve(false);
-                }
-            });
-        }
-
-        // FUNÇÃO PRINCIPAL DE NARRAÇÃO HUMANA (Sem Google Tradutor Robótico!)
+        // FUNÇÃO PRINCIPAL DE NARRAÇÃO HUMANA MASCULINA (Com Chave Groq Fixa + Vozes Masculinas Neurais!)
         async function speakText(text, onEndCallback = null) {
             state.lastSpokenText = text;
             unlockAudioOnUserGesture();
             stopAllAudio();
             const requestId = activeSpeechRequestId;
 
-            setSpeakingUI(true, "Gerando voz humana...");
+            setSpeakingUI(true, "Preparando voz...");
 
-            // 1º: Se tiver chave ElevenLabs Gratuita configurada, usa a voz humana Charlotte
+            // 1º: Servidor de Voz Groq API com sua Chave Fixa (gsk_...) em frases curtas para resposta imediata
+            if (getActiveGroqKey()) {
+                const groqChunks = splitTextIntoSentences(text, 200);
+                let groqSuccess = true;
+                for (let i = 0; i < groqChunks.length; i++) {
+                    if (requestId !== activeSpeechRequestId) return;
+                    const groqUrl = await fetchGroqVoiceUrl(groqChunks[i]);
+                    if (requestId !== activeSpeechRequestId) return;
+                    if (groqUrl) {
+                        setSpeakingUI(true, "Narrando...");
+                        const played = await playDirectStreamUrl(groqUrl, 7000);
+                        if (!played) {
+                            groqSuccess = false;
+                            break;
+                        }
+                    } else {
+                        groqSuccess = false;
+                        break;
+                    }
+                }
+                if (groqSuccess) {
+                    if (requestId === activeSpeechRequestId) {
+                        setSpeakingUI(false);
+                        if (onEndCallback) onEndCallback();
+                    }
+                    return;
+                }
+            }
+
+            // 2º: Se tiver chave ElevenLabs configurada, usa a voz masculina Brian
             if (getActiveElevenLabsKey()) {
                 const elUrl = await fetchElevenLabsVoiceUrl(text);
                 if (requestId !== activeSpeechRequestId) return;
                 if (elUrl) {
-                    setSpeakingUI(true, "Narrando...");
-                    const played = await playUrlOnSharedPlayer(elUrl, 1.0);
+                    const played = await playDirectStreamUrl(elUrl, 7000);
                     if (played) {
                         if (requestId === activeSpeechRequestId) {
                             setSpeakingUI(false);
@@ -1637,29 +1713,11 @@
                 }
             }
 
-            // 1B: Se tiver chave gratuita VoiceRSS.org configurada, usa a voz feminina Marcia
-            if (getActiveVoiceRssKey()) {
-                const vrssUrl = await fetchVoiceRssUrl(text);
-                if (requestId !== activeSpeechRequestId) return;
-                if (vrssUrl) {
-                    setSpeakingUI(true, "Narrando...");
-                    const played = await playUrlOnSharedPlayer(vrssUrl, 1.0);
-                    if (played) {
-                        if (requestId === activeSpeechRequestId) {
-                            setSpeakingUI(false);
-                            if (onEndCallback) onEndCallback();
-                        }
-                        return;
-                    }
-                }
-            }
-
-            // 2º: Se estiver rodando no Gemini ou tiver chave Gemini, usa a voz neural Aoede
-            const aoedeUrl = await fetchGeminiAoedeVoiceUrl(text);
+            // 3º: Voz Masculina Natural Gemini 2.5 Flash TTS (Orus)
+            const maleGeminiUrl = await fetchGeminiMaleVoiceUrl(text);
             if (requestId !== activeSpeechRequestId) return;
-            if (aoedeUrl) {
-                setSpeakingUI(true, "Narrando...");
-                const played = await playUrlOnSharedPlayer(aoedeUrl, 1.0);
+            if (maleGeminiUrl) {
+                const played = await playDirectStreamUrl(maleGeminiUrl, 7000);
                 if (played) {
                     if (requestId === activeSpeechRequestId) {
                         setSpeakingUI(false);
@@ -1669,88 +1727,30 @@
                 }
             }
 
-            // 3º: Se o navegador for o Microsoft Edge / Windows com a voz Francisca Natural nativa instalada, usa instantaneamente
-            const voices = ('speechSynthesis' in window) ? (cachedBrowserVoices.length ? cachedBrowserVoices : window.speechSynthesis.getVoices()) : [];
-            const nativeNaturalFrancisca = voices.find(v =>
-                (v.lang.toLowerCase().includes('pt')) &&
-                (v.name.toLowerCase().includes('francisca') || v.name.toLowerCase().includes('thalita')) &&
-                v.name.toLowerCase().includes('natural')
-            );
-
-            if (nativeNaturalFrancisca) {
-                setSpeakingUI(true, "Narrando...");
-                window.speechSynthesis.cancel();
-                const u = new SpeechSynthesisUtterance(text);
-                u.lang = 'pt-BR';
-                u.voice = nativeNaturalFrancisca;
-                u.rate = 1.0;
-                u.pitch = 1.03;
-                u.onend = () => {
-                    if (requestId === activeSpeechRequestId) {
-                        setSpeakingUI(false);
-                        if (onEndCallback) onEndCallback();
-                    }
-                };
-                u.onerror = () => {
-                    if (requestId === activeSpeechRequestId) setSpeakingUI(false);
-                };
-                window.speechSynthesis.speak(u);
-                return;
-            }
-
-            // 4º: Voz Humana Microsoft Francisca Neural em Nuvem (Desbloqueada via CORS para GitHub Pages e Guia Anônima)
-            const chunks = splitTextIntoSentences(text, 220);
-            const chunkPromises = chunks.map(c => fetchFranciscaNeuralMp3(c));
-            let allChunksPlayed = true;
-
-            for (let i = 0; i < chunks.length; i++) {
+            // 4º: Se tiver chave gratuita VoiceRSS configurada (Voz Masculina Dinis / Cristiano)
+            const vrssKey = getActiveVoiceRssKey();
+            if (vrssKey) {
+                const vrssUrl = `https://api.voicerss.org/?key=${encodeURIComponent(vrssKey)}&hl=pt-br&v=Dinis&c=MP3&f=48khz_16bit_stereo&src=${encodeURIComponent(text)}`;
+                const playedVrss = await playDirectStreamUrl(vrssUrl, 7000);
                 if (requestId !== activeSpeechRequestId) return;
-                const cloudUrl = await chunkPromises[i];
-                if (requestId !== activeSpeechRequestId) return;
-
-                if (cloudUrl) {
-                    setSpeakingUI(true, "Narrando...");
-                    const playedThisChunk = await playUrlOnSharedPlayer(cloudUrl, 1.0);
-                    if (!playedThisChunk) {
-                        allChunksPlayed = false;
-                        break;
-                    }
-                } else {
-                    allChunksPlayed = false;
-                    break;
-                }
-            }
-
-            if (allChunksPlayed) {
-                if (requestId === activeSpeechRequestId) {
+                if (playedVrss) {
                     setSpeakingUI(false);
                     if (onEndCallback) onEndCallback();
+                    return;
                 }
-                return;
             }
 
-            // 5º: Apenas se o aparelho estiver 100% offline (sem internet)
-            if ('speechSynthesis' in window && requestId === activeSpeechRequestId) {
-                setSpeakingUI(true, "Narrando (Modo Offline)...");
-                window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'pt-BR';
-                const bestVoice = pickBestBrowserFemaleVoice();
-                if (bestVoice) utterance.voice = bestVoice;
-                utterance.rate = 1.0;
-                utterance.pitch = 1.05;
-                utterance.onend = () => {
-                    if (requestId === activeSpeechRequestId) {
-                        setSpeakingUI(false);
-                        if (onEndCallback) onEndCallback();
-                    }
-                };
-                utterance.onerror = () => {
-                    if (requestId === activeSpeechRequestId) setSpeakingUI(false);
-                };
-                window.speechSynthesis.speak(utterance);
-            } else {
+            // 5º: Vozes Masculinas Neurais Reais via Stream Direto (Antônio Neural PT-BR / OpenAI Onyx / Echo / Ash)
+            const chunks = splitTextIntoSentences(text, 220);
+            for (let i = 0; i < chunks.length; i++) {
+                if (requestId !== activeSpeechRequestId) return;
+                const ok = await playNeuralChunkGuaranteed(chunks[i], requestId);
+                if (!ok) break;
+            }
+
+            if (requestId === activeSpeechRequestId) {
                 setSpeakingUI(false);
+                if (onEndCallback) onEndCallback();
             }
         }
 
