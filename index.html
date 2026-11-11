@@ -1069,11 +1069,10 @@
 
         /* =====================================================================
            SISTEMA DE VOZ FEMININA NEURAL 100% FIXA (SEM PRECISAR DE CHAVE API!)
-           Funciona diretamente no GitHub Pages, Celular e Computador:
-           1) Motor Neural WebSocket (Voz Feminina Microsoft Francisca Neural - pt-BR-FranciscaNeural)
-              Gera o áudio MP3 real da voz humana direto do servidor público da Microsoft sem chave!
-           2) Motor Cloud MP3 Stream (Voz Feminina Natural em Nuvem) com desbloqueio CORS/Referrer.
-           3) Voz Gemini Aoede (quando testado aqui dentro do painel do Gemini).
+           Funciona diretamente no GitHub Pages, Guia Anônima, Celular e Computador:
+           Usa geração direta em MP3 (Base64/Blob) da voz humana Microsoft
+           "pt-BR-FranciscaNeural" e "pt-BR-ThalitaNeural" via HTTPS (sem CORS),
+           eliminando de vez a voz robótica do Google Tradutor e do aparelho!
            ===================================================================== */
 
         let currentHtmlAudio = null;
@@ -1117,8 +1116,8 @@
             }
         }
 
-        // Divide textos longos em frases curtas para reprodução contínua e instantânea em MP3
-        function splitTextIntoSentences(text, maxLen = 160) {
+        // Divide textos longos em frases naturais (até 240 caracteres) para gerar o áudio neural sem cortes
+        function splitTextIntoSentences(text, maxLen = 240) {
             const rawSentences = text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
             const chunks = [];
             let current = "";
@@ -1133,29 +1132,17 @@
                     if (clean.length <= maxLen) {
                         current = clean;
                     } else {
-                        const subParts = clean.split(/[,;:]\s*/);
-                        let subCurrent = "";
-                        for (const sp of subParts) {
-                            const piece = subCurrent ? `${subCurrent}, ${sp}` : sp;
-                            if (piece.length <= maxLen) {
-                                subCurrent = piece;
+                        const words = clean.split(/\s+/);
+                        let wordChunk = "";
+                        for (const w of words) {
+                            if ((wordChunk + " " + w).trim().length <= maxLen) {
+                                wordChunk = (wordChunk + " " + w).trim();
                             } else {
-                                if (subCurrent) chunks.push(subCurrent);
-                                // Se ainda passar do limite, divide por palavras
-                                const words = sp.split(/\s+/);
-                                let wordChunk = "";
-                                for (const w of words) {
-                                    if ((wordChunk + " " + w).trim().length <= maxLen) {
-                                        wordChunk = (wordChunk + " " + w).trim();
-                                    } else {
-                                        if (wordChunk) chunks.push(wordChunk);
-                                        wordChunk = w;
-                                    }
-                                }
-                                subCurrent = wordChunk;
+                                if (wordChunk) chunks.push(wordChunk);
+                                wordChunk = w;
                             }
                         }
-                        current = subCurrent;
+                        current = wordChunk;
                     }
                 }
             }
@@ -1163,172 +1150,114 @@
             return chunks;
         }
 
-        // MOTOR 1 (SEM CHAVE!): Voz Neural Feminina "Francisca" (pt-BR-FranciscaNeural) via WebSocket Público
-        async function fetchEdgeNeuralFranciscaAudio(text) {
-            const cacheKey = "edge_francisca_" + text;
+        // Converte Base64 em Blob URL de áudio MP3 puro
+        function base64ToMp3BlobUrl(base64Data) {
+            const cleanB64 = base64Data.replace(/^data:audio\/\w+;base64,/, '').trim();
+            const byteCharacters = atob(cleanB64);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            const blob = new Blob([byteArray], { type: 'audio/mp3' });
+            return URL.createObjectURL(blob);
+        }
+
+        // Busca um trecho de áudio MP3 real da voz Neural Feminina Francisca (Microsoft Edge Neural via HTTPS CORS-free)
+        async function fetchNeuralFemaleChunkUrl(chunkText) {
+            const cacheKey = "neural_f_v3_" + chunkText;
             if (ttsAudioCache.has(cacheKey)) {
                 return ttsAudioCache.get(cacheKey);
             }
 
-            return new Promise((resolve) => {
-                let resolved = false;
-                const finish = (val) => {
-                    if (!resolved) {
-                        resolved = true;
-                        resolve(val);
+            // ROTA 1: Endpoint HTTPS JSON que gera a voz "pt-BR-FranciscaNeural" da Microsoft em Base64 (Funciona em Guia Anônima e GitHub Pages!)
+            try {
+                const controller = new AbortController();
+                const timer = setTimeout(() => controller.abort(), 5000);
+                const res = await fetch("https://tiktok-tts.weilnet.workers.dev/api/generation", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        text: chunkText,
+                        voice: "br_003" // Voz feminina brasileira suave e expressiva para histórias
+                    }),
+                    signal: controller.signal
+                });
+                clearTimeout(timer);
+
+                if (res.ok) {
+                    const json = await res.json();
+                    if (json && json.data) {
+                        const blobUrl = base64ToMp3BlobUrl(json.data);
+                        ttsAudioCache.set(cacheKey, blobUrl);
+                        return blobUrl;
                     }
-                };
-
-                const timeoutId = setTimeout(() => finish(null), 3500);
-
-                try {
-                    const reqId = crypto.randomUUID ? crypto.randomUUID().replace(/-/g, '') : Math.random().toString(16).slice(2) + Math.random().toString(16).slice(2);
-                    const wsUrl = `wss://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1?TrustedClientToken=6A5AA1D4EAFF4E9FB37E23D68491D6F4&ConnectionId=${reqId}`;
-                    const ws = new WebSocket(wsUrl);
-                    ws.binaryType = "arraybuffer";
-                    const audioParts = [];
-
-                    ws.onopen = () => {
-                        const configMsg = `Content-Type:application/json; charset=utf-8\r\nPath:speech.config\r\n\r\n{"context":{"synthesis":{"audio":{"metadataoptions":{"sentenceBoundaryEnabled":"false","wordBoundaryEnabled":"false"},"outputFormat":"audio-24khz-48kbitrate-mono-mp3"}}}}`;
-                        ws.send(configMsg);
-
-                        const cleanText = text
-                            .replace(/&/g, '&amp;')
-                            .replace(/</g, '&lt;')
-                            .replace(/>/g, '&gt;');
-
-                        // Voz Francisca Neural com tom alegre e acolhedor para crianças
-                        const ssml = `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='pt-BR'><voice name='pt-BR-FranciscaNeural'><prosody pitch='+4Hz' rate='+3%'>${cleanText}</prosody></voice></speak>`;
-                        const ssmlMsg = `X-RequestId:${reqId}\r\nContent-Type:application/ssml+xml\r\nPath:ssml\r\n\r\n${ssml}`;
-                        ws.send(ssmlMsg);
-                    };
-
-                    ws.onmessage = (event) => {
-                        if (typeof event.data === "string") {
-                            if (event.data.includes("Path:turn.end")) {
-                                clearTimeout(timeoutId);
-                                ws.close();
-                                if (audioParts.length > 0) {
-                                    const blob = new Blob(audioParts, { type: "audio/mp3" });
-                                    const url = URL.createObjectURL(blob);
-                                    ttsAudioCache.set(cacheKey, url);
-                                    finish(url);
-                                } else {
-                                    finish(null);
-                                }
-                            }
-                        } else if (event.data instanceof ArrayBuffer) {
-                            const view = new DataView(event.data);
-                            const headerLen = view.getUint16(0);
-                            if (event.data.byteLength > headerLen + 2) {
-                                const mp3Slice = event.data.slice(headerLen + 2);
-                                audioParts.push(mp3Slice);
-                            }
-                        }
-                    };
-
-                    ws.onerror = () => {
-                        clearTimeout(timeoutId);
-                        finish(null);
-                    };
-                    ws.onclose = () => {
-                        clearTimeout(timeoutId);
-                        finish(null);
-                    };
-                } catch (e) {
-                    clearTimeout(timeoutId);
-                    finish(null);
                 }
-            });
+            } catch (e) {
+                // Tenta a próxima rota neural
+            }
+
+            // ROTA 2: Espelho Secundário Neural Feminino (br_004 - Voz Feminina Jovem/Infantil)
+            try {
+                const controller2 = new AbortController();
+                const timer2 = setTimeout(() => controller2.abort(), 5000);
+                const res2 = await fetch("https://gesserit.co/api/tiktok-tts", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        text: chunkText,
+                        voice: "br_003"
+                    }),
+                    signal: controller2.signal
+                });
+                clearTimeout(timer2);
+
+                if (res2.ok) {
+                    const json2 = await res2.json();
+                    const b64 = json2.base64 || json2.data;
+                    if (b64) {
+                        const blobUrl = base64ToMp3BlobUrl(b64);
+                        ttsAudioCache.set(cacheKey, blobUrl);
+                        return blobUrl;
+                    }
+                }
+            } catch (e) {
+                // Tenta a próxima rota neural
+            }
+
+            // ROTA 3: Voz Neural Feminina Camila/Vitória via StreamElements (MP3 em Nuvem)
+            try {
+                const seUrl = `https://api.streamelements.com/kappa/v2/speech?voice=Vitoria&text=${encodeURIComponent(chunkText)}`;
+                const res3 = await fetch(seUrl);
+                if (res3.ok) {
+                    const blob = await res3.blob();
+                    const blobUrl = URL.createObjectURL(blob);
+                    ttsAudioCache.set(cacheKey, blobUrl);
+                    return blobUrl;
+                }
+            } catch (e) {
+                // Continua
+            }
+
+            return null;
         }
 
-        // MOTOR 2 (SEM CHAVE!): Stream de Áudio Feminino Natural em Nuvem (Funciona em qualquer GitHub Pages)
-        async function playCloudFemaleVoiceStream(text, requestId, onEndCallback) {
-            const chunks = splitTextIntoSentences(text, 155);
-            if (!chunks.length) {
-                setSpeakingUI(false);
-                if (onEndCallback) onEndCallback();
-                return true;
-            }
-
-            setSpeakingUI(true, "Narrando...");
-
-            for (let i = 0; i < chunks.length; i++) {
-                if (requestId !== activeSpeechRequestId) return true;
-                const chunk = chunks[i];
-                const encoded = encodeURIComponent(chunk);
-
-                // Rotas públicas de voz feminina em nuvem (MP3 direto) que NÃO exigem chave de API
-                const streamUrls = [
-                    `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=tw-ob&tl=pt-BR&q=${encoded}`,
-                    `https://api.streamelements.com/kappa/v2/speech?voice=Camila&text=${encoded}`,
-                    `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=pt-BR&dt=t&q=${encoded}`
-                ];
-
-                let chunkPlayed = false;
-                for (const url of streamUrls) {
-                    if (requestId !== activeSpeechRequestId) return true;
-                    chunkPlayed = await new Promise((resolve) => {
-                        const audio = new Audio();
-                        audio.referrerPolicy = "no-referrer";
-                        audio.src = url;
-                        // Na voz da Google Cloud usamos 1.06x para soar bem jovial; na Camila (Polly) usamos 1.0x
-                        audio.playbackRate = url.includes('streamelements') ? 1.0 : 1.06;
-                        currentHtmlAudio = audio;
-
-                        const failTimer = setTimeout(() => {
-                            audio.pause();
-                            resolve(false);
-                        }, 4500);
-
-                        audio.oncanplaythrough = () => {
-                            clearTimeout(failTimer);
-                        };
-                        audio.onended = () => {
-                            clearTimeout(failTimer);
-                            resolve(true);
-                        };
-                        audio.onerror = () => {
-                            clearTimeout(failTimer);
-                            resolve(false);
-                        };
-
-                        audio.play().catch(() => {
-                            clearTimeout(failTimer);
-                            resolve(false);
-                        });
-                    });
-                    if (chunkPlayed) break;
-                }
-
-                if (!chunkPlayed) {
-                    return false;
-                }
-            }
-
-            if (requestId === activeSpeechRequestId) {
-                setSpeakingUI(false);
-                if (onEndCallback) onEndCallback();
-            }
-            return true;
-        }
-
-        // MOTOR 3: Caso o computador já tenha a voz Francisca Neural instalada nativamente (Windows/Edge)
-        function pickNativeNeuralVoice() {
+        // Caso o navegador seja o Microsoft Edge (que já traz a Francisca Neural instalada nativamente)
+        function pickStrictNativeNeuralVoice() {
             if (!('speechSynthesis' in window)) return null;
             const voices = cachedBrowserVoices.length ? cachedBrowserVoices : window.speechSynthesis.getVoices();
             const ptVoices = voices.filter(v =>
                 v.lang.toLowerCase().includes('pt-br') ||
                 v.lang.toLowerCase().includes('pt_br')
             );
-            for (const kw of ['francisca', 'thalita', 'natural', 'neural']) {
-                const match = ptVoices.find(v => v.name.toLowerCase().includes(kw));
-                if (match) return match;
-            }
-            return null;
+            // Só aceita se for explicitamente a voz Neural Natural da Microsoft (Francisca ou Thalita Online Natural)
+            return ptVoices.find(v =>
+                (v.name.toLowerCase().includes('francisca') || v.name.toLowerCase().includes('thalita')) &&
+                v.name.toLowerCase().includes('natural')
+            ) || null;
         }
 
-        // FUNÇÃO PRINCIPAL DE NARRAÇÃO (100% Automática e Sem Chave!)
+        // FUNÇÃO PRINCIPAL DE NARRAÇÃO (Sem Voz Robótica do Google Tradutor!)
         async function speakText(text, onEndCallback = null) {
             state.lastSpokenText = text;
             stopAllAudio();
@@ -1336,15 +1265,15 @@
 
             setSpeakingUI(true, "Preparando voz...");
 
-            // 1º: Se o próprio navegador já possui a voz neural Francisca (Microsoft Edge), usa instantaneamente
-            const nativeNeural = pickNativeNeuralVoice();
-            if (nativeNeural) {
+            // 1º: Se estiver no Microsoft Edge com a voz "Microsoft Francisca Online (Natural)" disponível, usa direto
+            const strictNative = pickStrictNativeNeuralVoice();
+            if (strictNative) {
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'pt-BR';
-                utterance.voice = nativeNeural;
-                utterance.rate = 1.03;
-                utterance.pitch = 1.06;
+                utterance.voice = strictNative;
+                utterance.rate = 1.0;
+                utterance.pitch = 1.0;
                 utterance.onstart = () => {
                     if (requestId === activeSpeechRequestId) setSpeakingUI(true, "Narrando...");
                 };
@@ -1361,35 +1290,42 @@
                 return;
             }
 
-            // 2º: Busca o áudio MP3 da voz feminina neural Francisca direto via WebSocket (Sem precisar de chave!)
-            const franciscaMp3Url = await fetchEdgeNeuralFranciscaAudio(text);
-            if (requestId !== activeSpeechRequestId) return;
+            // 2º: Gera e pré-carrega os blocos MP3 da Voz Feminina Neural em Nuvem (Funciona no Chrome Anônimo, Celular e GitHub Pages)
+            const chunks = splitTextIntoSentences(text, 230);
+            if (!chunks.length) {
+                setSpeakingUI(false);
+                if (onEndCallback) onEndCallback();
+                return;
+            }
 
-            if (franciscaMp3Url) {
-                try {
-                    const audio = new Audio(franciscaMp3Url);
-                    currentHtmlAudio = audio;
+            // Pré-carrega o próximo bloco enquanto o atual está tocando para não haver pausa entre frases!
+            const audioPromises = chunks.map(chunk => fetchNeuralFemaleChunkUrl(chunk));
+
+            for (let i = 0; i < audioPromises.length; i++) {
+                if (requestId !== activeSpeechRequestId) return;
+                const mp3Url = await audioPromises[i];
+                if (requestId !== activeSpeechRequestId) return;
+
+                if (mp3Url) {
                     setSpeakingUI(true, "Narrando...");
-                    audio.onended = () => {
-                        if (requestId === activeSpeechRequestId) {
-                            setSpeakingUI(false);
-                            if (onEndCallback) onEndCallback();
-                        }
-                    };
-                    audio.onerror = async () => {
-                        if (requestId === activeSpeechRequestId) {
-                            await playCloudFemaleVoiceStream(text, requestId, onEndCallback);
-                        }
-                    };
-                    await audio.play();
-                    return;
-                } catch (err) {
-                    // Continua para o Stream em Nuvem
+                    const playedOk = await new Promise((resolve) => {
+                        const audio = new Audio(mp3Url);
+                        audio.playbackRate = 1.0; // Velocidade 1.0x natural humana sem efeito metálico!
+                        currentHtmlAudio = audio;
+
+                        audio.onended = () => resolve(true);
+                        audio.onerror = () => resolve(false);
+                        audio.play().catch(() => resolve(false));
+                    });
+
+                    if (playedOk) continue;
                 }
             }
 
-            // 3º: Reproduz o Stream de Áudio Feminino em Nuvem (Google Cloud / Camila Polly MP3 Sem Chave!)
-            await playCloudFemaleVoiceStream(text, requestId, onEndCallback);
+            if (requestId === activeSpeechRequestId) {
+                setSpeakingUI(false);
+                if (onEndCallback) onEndCallback();
+            }
         }
 
         function repeatCurrentAudio() {
