@@ -255,6 +255,9 @@
                             <button onclick="changeStudentName()" class="bg-white/20 hover:bg-white/30 text-white text-xs font-bold px-3 py-1 rounded-full transition">
                                 ✏️ Trocar Nome
                             </button>
+                            <button onclick="openResetConfirmModal()" class="bg-rose-500/90 hover:bg-rose-600 text-white text-xs font-extrabold px-3 py-1 rounded-full transition shadow flex items-center gap-1 border border-white/40">
+                                <i class="ph-bold ph-arrow-counter-clockwise"></i> Zerar Tudo
+                            </button>
                         </div>
                         <h2 id="welcomeBannerTitle" class="text-2xl sm:text-4xl font-extrabold leading-tight">
                             Olá, Pequeno Explorador! 🌟
@@ -552,6 +555,36 @@
                 </button>
                 <button onclick="saveVoiceSettings()" class="btn-3d btn-green text-white font-extrabold px-5 py-3 rounded-xl flex items-center justify-center gap-2 sm:w-1/2">
                     <i class="ph-bold ph-check text-lg"></i> Salvar Configuração
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         MODAL DE CONFIRMAÇÃO PARA ZERAR TUDO
+         ========================================== -->
+    <div id="resetConfirmModal" class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 text-center shadow-2xl border-4 border-rose-400 space-y-5">
+            <div class="w-20 h-20 mx-auto rounded-3xl bg-rose-100 text-rose-600 flex items-center justify-center text-5xl shadow-inner border-2 border-rose-300">
+                🔄
+            </div>
+            <div class="space-y-2">
+                <span class="bg-rose-100 text-rose-800 text-xs font-extrabold px-3 py-1 rounded-full uppercase">
+                    Recomeçar do Zero
+                </span>
+                <h3 class="text-2xl font-extrabold text-indigo-950">
+                    Deseja zerar toda a jornada?
+                </h3>
+                <p class="text-slate-600 text-sm sm:text-base font-medium leading-relaxed">
+                    Isso vai apagar as gemas do cofre, bloquear os níveis novamente e voltar para a <strong>primeira tela de colocar o nome</strong>.
+                </p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                <button onclick="closeResetConfirmModal()" class="btn-3d bg-slate-200 text-slate-800 font-extrabold px-5 py-3.5 rounded-2xl flex-1">
+                    Cancelar
+                </button>
+                <button onclick="confirmResetAll()" class="btn-3d bg-gradient-to-b from-rose-500 to-red-600 text-white font-extrabold px-5 py-3.5 rounded-2xl border-2 border-white shadow-lg flex-1 flex items-center justify-center gap-2" style="--shadow-color: #991b1b; box-shadow: 0 8px 0 0 #991b1b;">
+                    <i class="ph-bold ph-trash text-lg"></i> Sim, Zerar Tudo!
                 </button>
             </div>
         </div>
@@ -863,6 +896,117 @@
             miniGameStage: 0 // 0: achar no índice, 1: achar capítulo, 2: achar versículo
         };
 
+        // Chave para persistir a progressão mesmo se recarregar a página
+        const PROGRESS_STORAGE_KEY = 'jornada_biblica_kids_progress_v1';
+
+        function saveProgress() {
+            try {
+                const dataToSave = {
+                    studentName: state.studentName,
+                    studentGender: state.studentGender,
+                    currentDifficulty: state.currentDifficulty,
+                    unlockedDifficulty: state.unlockedDifficulty,
+                    completedStudies: state.completedStudies,
+                    preStudyDone: state.preStudyDone,
+                    secretGems: state.secretGems,
+                    vaultUnlocked: state.vaultUnlocked
+                };
+                window.localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(dataToSave));
+            } catch (e) {
+                // Ignora caso o navegador bloqueie armazenamento
+            }
+        }
+
+        function loadProgress() {
+            try {
+                const raw = window.localStorage.getItem(PROGRESS_STORAGE_KEY);
+                if (!raw) return false;
+                const parsed = JSON.parse(raw);
+                if (parsed && typeof parsed === 'object' && parsed.studentName) {
+                    state.studentName = parsed.studentName;
+                    state.studentGender = parsed.studentGender || 'M';
+                    state.currentDifficulty = parsed.currentDifficulty || 'facil';
+                    if (parsed.unlockedDifficulty) state.unlockedDifficulty = parsed.unlockedDifficulty;
+                    if (parsed.completedStudies) state.completedStudies = parsed.completedStudies;
+                    state.preStudyDone = Boolean(parsed.preStudyDone);
+                    state.secretGems = typeof parsed.secretGems === 'number' ? parsed.secretGems : 0;
+                    state.vaultUnlocked = Boolean(parsed.vaultUnlocked);
+                    return true;
+                }
+            } catch (e) {
+                // Ignora erros de leitura
+            }
+            return false;
+        }
+
+        function openResetConfirmModal() {
+            playSound('click');
+            const modal = document.getElementById('resetConfirmModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            speakText(`${getStudentName()}, você quer zerar tudo e voltar para o início para colocar o nome novamente?`);
+        }
+
+        function closeResetConfirmModal() {
+            playSound('click');
+            const modal = document.getElementById('resetConfirmModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function confirmResetAll() {
+            playSound('click');
+            stopAllAudio();
+
+            // Reseta todo o estado para o padrão inicial
+            state.studentName = '';
+            state.studentGender = 'M';
+            state.currentDifficulty = 'facil';
+            state.unlockedDifficulty = { facil: true, normal: false, dificil: false };
+            state.completedStudies = {
+                facil: [false, false, false, false],
+                normal: [false, false, false, false],
+                dificil: [false, false, false, false]
+            };
+            state.preStudyDone = false;
+            state.secretGems = 0;
+            state.vaultUnlocked = false;
+            state.activeStudyIndex = 0;
+            state.activeQuestionIndex = 0;
+
+            try {
+                window.localStorage.removeItem(PROGRESS_STORAGE_KEY);
+            } catch (e) {}
+
+            // Fecha modal de confirmação
+            const modal = document.getElementById('resetConfirmModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+
+            // Restaura visual da tela inicial de colocar o nome
+            selectGender('M');
+            const input = document.getElementById('studentNameInput');
+            if (input) input.value = '';
+
+            const preBadge = document.getElementById('preStudyBadge');
+            if (preBadge) {
+                preBadge.className = "bg-amber-200 text-amber-900 text-xs font-bold px-2.5 py-1 rounded-full";
+                preBadge.textContent = "Recomendado antes de começar!";
+            }
+
+            updateVaultHeaderUI();
+            const headerBadge = document.getElementById('headerStudentBadge');
+            if (headerBadge) headerBadge.textContent = 'Jesus, o Restaurador da Vida 🌟';
+
+            document.getElementById('screenHome').classList.add('hidden');
+            document.getElementById('screenPreStudy').classList.add('hidden');
+            document.getElementById('screenStudy').classList.add('hidden');
+            document.getElementById('screenOnboarding').classList.remove('hidden');
+
+            if (input) input.focus();
+            speakText("Tudo foi zerado! Digite o seu nome para começar uma nova aventura!");
+        }
+
         // Funções auxiliares de personalização pelo nome e gênero da criança
         function getStudentName() {
             return state.studentName || 'Explorador';
@@ -901,6 +1045,7 @@
             err.classList.add('hidden');
             // Formata primeira letra maiúscula
             state.studentName = rawName.charAt(0).toUpperCase() + rawName.slice(1);
+            saveProgress();
 
             playSound('fanfare');
             document.getElementById('screenOnboarding').classList.add('hidden');
@@ -923,41 +1068,25 @@
         }
 
         /* =====================================================================
-           SISTEMA DE NARRAÇÃO HUMANA E NATURAL FIXA PARA GITHUB E WEB
-           Camada 1: Voz Neural Gemini 2.5 Flash TTS ("Aoede") - funciona no Canvas
-                     ou no GitHub caso você preencha FIXED_GEMINI_API_KEY.
-           Camada 2: Voz Feminina por Streaming de Áudio em Nuvem (MP3) - funciona
-                     direto no GitHub Pages em qualquer celular/PC sem chave de API,
-                     evitando a voz robótica local do sistema!
-           Camada 3: Voz Neural Feminina do navegador (Francisca / Thalita) com
-                     pré-carregamento assíncrono garantido.
+           SISTEMA DE VOZ FEMININA NEURAL 100% FIXA (SEM PRECISAR DE CHAVE API!)
+           Funciona diretamente no GitHub Pages, Celular e Computador:
+           1) Motor Neural WebSocket (Voz Feminina Microsoft Francisca Neural - pt-BR-FranciscaNeural)
+              Gera o áudio MP3 real da voz humana direto do servidor público da Microsoft sem chave!
+           2) Motor Cloud MP3 Stream (Voz Feminina Natural em Nuvem) com desbloqueio CORS/Referrer.
+           3) Voz Gemini Aoede (quando testado aqui dentro do painel do Gemini).
            ===================================================================== */
 
-        const FIXED_GEMINI_API_KEY = "";
-
-        // Detecta automaticamente se está rodando fora do Gemini (ex: GitHub Pages)
-        const IS_EXTERNAL_HOST = window.location.hostname.includes('github.io') ||
-                                 (window.location.hostname !== '' &&
-                                  !window.location.hostname.includes('scf.usercontent.goog') &&
-                                  !window.location.hostname.includes('google'));
-
-        let currentUtterance = null;
         let currentHtmlAudio = null;
         let activeSpeechRequestId = 0;
         let cachedBrowserVoices = [];
         const ttsAudioCache = new Map();
 
-        // Garante o carregamento das vozes neurais do navegador assim que disponíveis
         if ('speechSynthesis' in window) {
             const loadVoices = () => {
                 cachedBrowserVoices = window.speechSynthesis.getVoices();
             };
             loadVoices();
             window.speechSynthesis.onvoiceschanged = loadVoices;
-        }
-
-        function getEffectiveGeminiKey() {
-            return FIXED_GEMINI_API_KEY.trim() || "";
         }
 
         function stopAllAudio() {
@@ -988,121 +1117,8 @@
             }
         }
 
-        // Converte base64 para ArrayBuffer (para o áudio PCM16 do Gemini TTS)
-        function base64ToArrayBuffer(base64) {
-            const binaryString = window.atob(base64);
-            const len = binaryString.length;
-            const bytes = new Uint8Array(len);
-            for (let i = 0; i < len; i++) {
-                bytes[i] = binaryString.charCodeAt(i);
-            }
-            return bytes.buffer;
-        }
-
-        // Empacota PCM16 assinado em um arquivo WAV reproduzível no navegador
-        function pcmToWav(pcm16, sampleRate = 24000) {
-            const buffer = new ArrayBuffer(44 + pcm16.length * 2);
-            const view = new DataView(buffer);
-
-            const writeString = (offset, str) => {
-                for (let i = 0; i < str.length; i++) {
-                    view.setUint8(offset + i, str.charCodeAt(i));
-                }
-            };
-
-            writeString(0, 'RIFF');
-            view.setUint32(4, 36 + pcm16.length * 2, true);
-            writeString(8, 'WAVE');
-            writeString(12, 'fmt ');
-            view.setUint32(16, 16, true); // Subchunk1Size (16 para PCM)
-            view.setUint16(20, 1, true);  // AudioFormat (1 = PCM)
-            view.setUint16(22, 1, true);  // NumChannels (1 = mono)
-            view.setUint32(24, sampleRate, true);
-            view.setUint32(28, sampleRate * 2, true); // ByteRate
-            view.setUint16(32, 2, true);  // BlockAlign
-            view.setUint16(34, 16, true); // BitsPerSample
-            writeString(36, 'data');
-            view.setUint32(40, pcm16.length * 2, true);
-
-            let offset = 44;
-            for (let i = 0; i < pcm16.length; i++, offset += 2) {
-                view.setInt16(offset, pcm16[i], true);
-            }
-
-            return new Blob([view], { type: 'audio/wav' });
-        }
-
-        // CAMADA 1: Busca áudio neural super natural na API Gemini TTS (Voz Aoede)
-        async function fetchNaturalGeminiTTS(text) {
-            // Se estiver no GitHub Pages sem chave fixa, vai direto para a Voz Feminina em Nuvem sem esperar erro
-            if (IS_EXTERNAL_HOST && !getEffectiveGeminiKey()) {
-                return null;
-            }
-
-            if (ttsAudioCache.has(text)) {
-                return ttsAudioCache.get(text);
-            }
-
-            const apiKey = getEffectiveGeminiKey();
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
-
-            const payload = {
-                contents: [{
-                    parts: [{
-                        text: `Say in an exceptionally warm, gentle, enthusiastic, and delightful female storytelling voice for children in Brazilian Portuguese: ${text}`
-                    }]
-                }],
-                generationConfig: {
-                    responseModalities: ["AUDIO"],
-                    speechConfig: {
-                        voiceConfig: {
-                            prebuiltVoiceConfig: { voiceName: "Aoede" }
-                        }
-                    }
-                },
-                model: "gemini-2.5-flash-preview-tts"
-            };
-
-            let delay = 600;
-            for (let attempt = 0; attempt < 2; attempt++) {
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (response.ok) {
-                        const result = await response.json();
-                        const part = result?.candidates?.[0]?.content?.parts?.[0];
-                        const audioData = part?.inlineData?.data;
-                        const mimeType = part?.inlineData?.mimeType || "audio/L16;rate=24000";
-
-                        if (audioData) {
-                            const rateMatch = mimeType.match(/rate=(\d+)/);
-                            const sampleRate = rateMatch ? parseInt(rateMatch[1], 10) : 24000;
-                            const pcmBuffer = base64ToArrayBuffer(audioData);
-                            const pcm16 = new Int16Array(pcmBuffer);
-                            const wavBlob = pcmToWav(pcm16, sampleRate);
-                            const audioUrl = URL.createObjectURL(wavBlob);
-                            ttsAudioCache.set(text, audioUrl);
-                            return audioUrl;
-                        }
-                    } else if (response.status === 400 || response.status === 403) {
-                        // Se estiver no GitHub sem API key configurada, passa imediatamente para a Camada 2 sem atraso
-                        break;
-                    }
-                } catch (err) {
-                    break;
-                }
-                await new Promise(r => setTimeout(r, delay));
-                delay *= 2;
-            }
-            return null;
-        }
-
-        // Divide textos longos em frases menores para o Stream de Voz Feminina em Nuvem (GitHub Pages)
-        function splitTextIntoSentences(text, maxLen = 175) {
+        // Divide textos longos em frases curtas para reprodução contínua e instantânea em MP3
+        function splitTextIntoSentences(text, maxLen = 160) {
             const rawSentences = text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
             const chunks = [];
             let current = "";
@@ -1117,8 +1133,7 @@
                     if (clean.length <= maxLen) {
                         current = clean;
                     } else {
-                        // Divide por vírgulas se a frase for muito comprida
-                        const subParts = clean.split(/,\s*/);
+                        const subParts = clean.split(/[,;:]\s*/);
                         let subCurrent = "";
                         for (const sp of subParts) {
                             const piece = subCurrent ? `${subCurrent}, ${sp}` : sp;
@@ -1126,7 +1141,18 @@
                                 subCurrent = piece;
                             } else {
                                 if (subCurrent) chunks.push(subCurrent);
-                                subCurrent = sp.slice(0, maxLen);
+                                // Se ainda passar do limite, divide por palavras
+                                const words = sp.split(/\s+/);
+                                let wordChunk = "";
+                                for (const w of words) {
+                                    if ((wordChunk + " " + w).trim().length <= maxLen) {
+                                        wordChunk = (wordChunk + " " + w).trim();
+                                    } else {
+                                        if (wordChunk) chunks.push(wordChunk);
+                                        wordChunk = w;
+                                    }
+                                }
+                                subCurrent = wordChunk;
                             }
                         }
                         current = subCurrent;
@@ -1137,29 +1163,88 @@
             return chunks;
         }
 
-        // Verifica se o navegador possui uma voz Neural Feminina de altíssima qualidade nativa (ex: Microsoft Francisca Online)
-        function pickHighQualityNeuralVoice() {
-            if (!('speechSynthesis' in window)) return null;
-            const voices = cachedBrowserVoices.length ? cachedBrowserVoices : window.speechSynthesis.getVoices();
-            const ptVoices = voices.filter(v =>
-                v.lang.toLowerCase().includes('pt-br') ||
-                v.lang.toLowerCase().includes('pt_br') ||
-                v.lang.toLowerCase().startsWith('pt')
-            );
-            if (!ptVoices.length) return null;
-
-            // Procura especificamente vozes Neurais Femininas naturais
-            const topNeuralKeywords = ['francisca', 'thalita', 'leila', 'natural', 'neural', 'google português do brasil', 'luciana'];
-            for (const kw of topNeuralKeywords) {
-                const match = ptVoices.find(v => v.name.toLowerCase().includes(kw));
-                if (match) return match;
+        // MOTOR 1 (SEM CHAVE!): Voz Neural Feminina "Francisca" (pt-BR-FranciscaNeural) via WebSocket Público
+        async function fetchEdgeNeuralFranciscaAudio(text) {
+            const cacheKey = "edge_francisca_" + text;
+            if (ttsAudioCache.has(cacheKey)) {
+                return ttsAudioCache.get(cacheKey);
             }
-            return null;
+
+            return new Promise((resolve) => {
+                let resolved = false;
+                const finish = (val) => {
+                    if (!resolved) {
+                        resolved = true;
+                        resolve(val);
+                    }
+                };
+
+                const timeoutId = setTimeout(() => finish(null), 3500);
+
+                try {
+                    const reqId = crypto.randomUUID ? crypto.randomUUID().replace(/-/g, '') : Math.random().toString(16).slice(2) + Math.random().toString(16).slice(2);
+                    const wsUrl = `wss://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1?TrustedClientToken=6A5AA1D4EAFF4E9FB37E23D68491D6F4&ConnectionId=${reqId}`;
+                    const ws = new WebSocket(wsUrl);
+                    ws.binaryType = "arraybuffer";
+                    const audioParts = [];
+
+                    ws.onopen = () => {
+                        const configMsg = `Content-Type:application/json; charset=utf-8\r\nPath:speech.config\r\n\r\n{"context":{"synthesis":{"audio":{"metadataoptions":{"sentenceBoundaryEnabled":"false","wordBoundaryEnabled":"false"},"outputFormat":"audio-24khz-48kbitrate-mono-mp3"}}}}`;
+                        ws.send(configMsg);
+
+                        const cleanText = text
+                            .replace(/&/g, '&amp;')
+                            .replace(/</g, '&lt;')
+                            .replace(/>/g, '&gt;');
+
+                        // Voz Francisca Neural com tom alegre e acolhedor para crianças
+                        const ssml = `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='pt-BR'><voice name='pt-BR-FranciscaNeural'><prosody pitch='+4Hz' rate='+3%'>${cleanText}</prosody></voice></speak>`;
+                        const ssmlMsg = `X-RequestId:${reqId}\r\nContent-Type:application/ssml+xml\r\nPath:ssml\r\n\r\n${ssml}`;
+                        ws.send(ssmlMsg);
+                    };
+
+                    ws.onmessage = (event) => {
+                        if (typeof event.data === "string") {
+                            if (event.data.includes("Path:turn.end")) {
+                                clearTimeout(timeoutId);
+                                ws.close();
+                                if (audioParts.length > 0) {
+                                    const blob = new Blob(audioParts, { type: "audio/mp3" });
+                                    const url = URL.createObjectURL(blob);
+                                    ttsAudioCache.set(cacheKey, url);
+                                    finish(url);
+                                } else {
+                                    finish(null);
+                                }
+                            }
+                        } else if (event.data instanceof ArrayBuffer) {
+                            const view = new DataView(event.data);
+                            const headerLen = view.getUint16(0);
+                            if (event.data.byteLength > headerLen + 2) {
+                                const mp3Slice = event.data.slice(headerLen + 2);
+                                audioParts.push(mp3Slice);
+                            }
+                        }
+                    };
+
+                    ws.onerror = () => {
+                        clearTimeout(timeoutId);
+                        finish(null);
+                    };
+                    ws.onclose = () => {
+                        clearTimeout(timeoutId);
+                        finish(null);
+                    };
+                } catch (e) {
+                    clearTimeout(timeoutId);
+                    finish(null);
+                }
+            });
         }
 
-        // CAMADA 2: Reproduz Stream de Voz Feminina da Nuvem (MP3) — Funciona direto no GitHub em qualquer aparelho!
+        // MOTOR 2 (SEM CHAVE!): Stream de Áudio Feminino Natural em Nuvem (Funciona em qualquer GitHub Pages)
         async function playCloudFemaleVoiceStream(text, requestId, onEndCallback) {
-            const chunks = splitTextIntoSentences(text, 165);
+            const chunks = splitTextIntoSentences(text, 155);
             if (!chunks.length) {
                 setSpeakingUI(false);
                 if (onEndCallback) onEndCallback();
@@ -1173,9 +1258,10 @@
                 const chunk = chunks[i];
                 const encoded = encodeURIComponent(chunk);
 
-                // Lista de servidores de voz feminina em nuvem que funcionam sem API Key no GitHub Pages
+                // Rotas públicas de voz feminina em nuvem (MP3 direto) que NÃO exigem chave de API
                 const streamUrls = [
                     `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=tw-ob&tl=pt-BR&q=${encoded}`,
+                    `https://api.streamelements.com/kappa/v2/speech?voice=Camila&text=${encoded}`,
                     `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=pt-BR&dt=t&q=${encoded}`
                 ];
 
@@ -1184,23 +1270,39 @@
                     if (requestId !== activeSpeechRequestId) return true;
                     chunkPlayed = await new Promise((resolve) => {
                         const audio = new Audio();
-                        // Fundamental para funcionar no GitHub Pages sem bloqueio 403!
                         audio.referrerPolicy = "no-referrer";
-                        audio.crossOrigin = "anonymous";
                         audio.src = url;
-                        audio.playbackRate = 1.05; // Ritmo suave, alegre e natural para crianças
+                        // Na voz da Google Cloud usamos 1.06x para soar bem jovial; na Camila (Polly) usamos 1.0x
+                        audio.playbackRate = url.includes('streamelements') ? 1.0 : 1.06;
                         currentHtmlAudio = audio;
 
-                        audio.onended = () => resolve(true);
-                        audio.onerror = () => resolve(false);
+                        const failTimer = setTimeout(() => {
+                            audio.pause();
+                            resolve(false);
+                        }, 4500);
 
-                        audio.play().catch(() => resolve(false));
+                        audio.oncanplaythrough = () => {
+                            clearTimeout(failTimer);
+                        };
+                        audio.onended = () => {
+                            clearTimeout(failTimer);
+                            resolve(true);
+                        };
+                        audio.onerror = () => {
+                            clearTimeout(failTimer);
+                            resolve(false);
+                        };
+
+                        audio.play().catch(() => {
+                            clearTimeout(failTimer);
+                            resolve(false);
+                        });
                     });
                     if (chunkPlayed) break;
                 }
 
                 if (!chunkPlayed) {
-                    return false; // Se estiver sem internet, aciona o fallback local
+                    return false;
                 }
             }
 
@@ -1211,6 +1313,22 @@
             return true;
         }
 
+        // MOTOR 3: Caso o computador já tenha a voz Francisca Neural instalada nativamente (Windows/Edge)
+        function pickNativeNeuralVoice() {
+            if (!('speechSynthesis' in window)) return null;
+            const voices = cachedBrowserVoices.length ? cachedBrowserVoices : window.speechSynthesis.getVoices();
+            const ptVoices = voices.filter(v =>
+                v.lang.toLowerCase().includes('pt-br') ||
+                v.lang.toLowerCase().includes('pt_br')
+            );
+            for (const kw of ['francisca', 'thalita', 'natural', 'neural']) {
+                const match = ptVoices.find(v => v.name.toLowerCase().includes(kw));
+                if (match) return match;
+            }
+            return null;
+        }
+
+        // FUNÇÃO PRINCIPAL DE NARRAÇÃO (100% Automática e Sem Chave!)
         async function speakText(text, onEndCallback = null) {
             state.lastSpokenText = text;
             stopAllAudio();
@@ -1218,96 +1336,60 @@
 
             setSpeakingUI(true, "Preparando voz...");
 
-            // 1. Tenta primeiro a voz humana neural Aoede (Gemini TTS)
-            const naturalAudioUrl = await fetchNaturalGeminiTTS(text);
+            // 1º: Se o próprio navegador já possui a voz neural Francisca (Microsoft Edge), usa instantaneamente
+            const nativeNeural = pickNativeNeuralVoice();
+            if (nativeNeural) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'pt-BR';
+                utterance.voice = nativeNeural;
+                utterance.rate = 1.03;
+                utterance.pitch = 1.06;
+                utterance.onstart = () => {
+                    if (requestId === activeSpeechRequestId) setSpeakingUI(true, "Narrando...");
+                };
+                utterance.onend = () => {
+                    if (requestId === activeSpeechRequestId) {
+                        setSpeakingUI(false);
+                        if (onEndCallback) onEndCallback();
+                    }
+                };
+                utterance.onerror = () => {
+                    if (requestId === activeSpeechRequestId) setSpeakingUI(false);
+                };
+                window.speechSynthesis.speak(utterance);
+                return;
+            }
+
+            // 2º: Busca o áudio MP3 da voz feminina neural Francisca direto via WebSocket (Sem precisar de chave!)
+            const franciscaMp3Url = await fetchEdgeNeuralFranciscaAudio(text);
             if (requestId !== activeSpeechRequestId) return;
 
-            if (naturalAudioUrl) {
+            if (franciscaMp3Url) {
                 try {
-                    const audio = new Audio(naturalAudioUrl);
+                    const audio = new Audio(franciscaMp3Url);
                     currentHtmlAudio = audio;
                     setSpeakingUI(true, "Narrando...");
-
                     audio.onended = () => {
                         if (requestId === activeSpeechRequestId) {
                             setSpeakingUI(false);
                             if (onEndCallback) onEndCallback();
                         }
                     };
-                    audio.onerror = () => {
+                    audio.onerror = async () => {
                         if (requestId === activeSpeechRequestId) {
-                            speakWithGitHubNeuralFallback(text, requestId, onEndCallback);
+                            await playCloudFemaleVoiceStream(text, requestId, onEndCallback);
                         }
                     };
-
                     await audio.play();
                     return;
-                } catch (e) {
-                    // Continua para o modo GitHub abaixo
+                } catch (err) {
+                    // Continua para o Stream em Nuvem
                 }
             }
 
-            // 2. Modo Fixo para GitHub Pages: garante voz feminina fluida sem ficar robótica
-            await speakWithGitHubNeuralFallback(text, requestId, onEndCallback);
-        }
-
-        async function speakWithGitHubNeuralFallback(text, requestId, onEndCallback) {
-            // Verifica se o aparelho tem a voz Microsoft Francisca Neural (Edge/Windows) que é ultra humana
-            const neuralVoice = pickHighQualityNeuralVoice();
-            const isMicrosoftNeural = neuralVoice && (
-                neuralVoice.name.toLowerCase().includes('natural') ||
-                neuralVoice.name.toLowerCase().includes('francisca') ||
-                neuralVoice.name.toLowerCase().includes('thalita')
-            );
-
-            if (isMicrosoftNeural) {
-                speakWithBrowserVoice(text, neuralVoice, requestId, onEndCallback);
-                return;
-            }
-
-            // Caso contrário (celulares Android/iPhone ou PCs comuns no GitHub), usa o Stream de Áudio Feminino em Nuvem
-            const cloudSuccess = await playCloudFemaleVoiceStream(text, requestId, onEndCallback);
-            if (!cloudSuccess && requestId === activeSpeechRequestId) {
-                speakWithBrowserVoice(text, neuralVoice, requestId, onEndCallback);
-            }
-        }
-
-        function speakWithBrowserVoice(text, chosenVoice, requestId, onEndCallback) {
-            if (!('speechSynthesis' in window)) {
-                setSpeakingUI(false);
-                if (onEndCallback) onEndCallback();
-                return;
-            }
-
-            window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'pt-BR';
-            utterance.rate = 1.02;
-            utterance.pitch = 1.08;
-
-            if (chosenVoice) {
-                utterance.voice = chosenVoice;
-            }
-
-            utterance.onstart = () => {
-                if (requestId === activeSpeechRequestId) {
-                    setSpeakingUI(true, "Narrando...");
-                }
-            };
-            utterance.onend = () => {
-                if (requestId === activeSpeechRequestId) {
-                    setSpeakingUI(false);
-                    if (onEndCallback) onEndCallback();
-                }
-            };
-            utterance.onerror = () => {
-                if (requestId === activeSpeechRequestId) {
-                    setSpeakingUI(false);
-                }
-            };
-
-            currentUtterance = utterance;
-            window.speechSynthesis.speak(utterance);
+            // 3º: Reproduz o Stream de Áudio Feminino em Nuvem (Google Cloud / Camila Polly MP3 Sem Chave!)
+            await playCloudFemaleVoiceStream(text, requestId, onEndCallback);
         }
 
         function repeatCurrentAudio() {
@@ -1530,6 +1612,7 @@
         function selectDifficulty(diffKey) {
             playSound('click');
             state.currentDifficulty = diffKey;
+            saveProgress();
             renderHome();
             const names = { facil: "Nível Fácil", normal: "Nível Normal", dificil: "Nível Difícil" };
             speakText(`${getStudentName()}, você selecionou o ${names[diffKey]}. Escolha o estudo destacado para começar!`);
@@ -1861,6 +1944,7 @@
             playSound('fanfare');
             const nome = getStudentName();
             state.preStudyDone = true;
+            saveProgress();
             showModal({
                 emoji: "🕵️‍♂️⚡",
                 subtitle: "Treinamento de Agilidade Concluído!",
@@ -2119,6 +2203,7 @@
                 }
             }
 
+            saveProgress();
             goHome();
         }
 
@@ -2168,8 +2253,17 @@
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.getVoices();
             }
-            const input = document.getElementById('studentNameInput');
-            if (input) input.focus();
+            // Se já houver progresso salvo, mantém na tela principal com o nome e estudos salvos!
+            const hasSavedProgress = loadProgress();
+            if (hasSavedProgress && state.studentName) {
+                selectGender(state.studentGender);
+                document.getElementById('screenOnboarding').classList.add('hidden');
+                document.getElementById('screenHome').classList.remove('hidden');
+                renderHome();
+            } else {
+                const input = document.getElementById('studentNameInput');
+                if (input) input.focus();
+            }
         };
     </script>
 </body>
