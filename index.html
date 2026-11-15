@@ -3,112 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Permite carregar o stream de Voz Feminina em Nuvem direto no GitHub Pages sem bloqueio -->
     <meta name="referrer" content="no-referrer">
     <title>Jornada Bíblica Kids - Jesus, o Restaurador da Vida!</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Fredoka para leitura infantil clara e acolhedora -->
+    <!-- Google Fonts: Fredoka para um visual super infantil, amigável e legível -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Tone.js para efeitos sonoros lúdicos sem depender de arquivos externos -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
-    <!-- Phosphor Icons -->
+    <!-- Phosphor Icons para ícones lúdicos -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
         body {
             font-family: 'Fredoka', sans-serif;
-            background: linear-gradient(135deg, #e0f2fe 0%, #fef9c3 50%, #fce7f3 100%);
+            background: linear-gradient(135deg, #e0f2fe 0%, #fef3c7 50%, #fce7f3 100%);
             min-height: 100vh;
             user-select: none;
             overflow-x: hidden;
         }
 
-        /* Botões Estilo 3D Cartoon */
+        /* Botões Super Destacados Estilo 3D Cartoon */
         .btn-3d {
             transition: all 0.15s ease;
             position: relative;
             top: 0;
         }
         .btn-3d:active:not(:disabled) {
-            top: 5px;
+            top: 6px;
             box-shadow: 0 2px 0 0 var(--shadow-color) !important;
         }
 
         .btn-yellow {
             --shadow-color: #b45309;
             background: linear-gradient(to bottom, #fde047, #f59e0b);
-            box-shadow: 0 7px 0 0 #b45309, 0 10px 18px rgba(0,0,0,0.14);
+            box-shadow: 0 8px 0 0 #b45309, 0 12px 20px rgba(0,0,0,0.15);
             border: 3px solid #fff;
         }
 
         .btn-green {
             --shadow-color: #15803d;
             background: linear-gradient(to bottom, #4ade80, #16a34a);
-            box-shadow: 0 7px 0 0 #15803d, 0 10px 18px rgba(0,0,0,0.14);
+            box-shadow: 0 8px 0 0 #15803d, 0 12px 20px rgba(0,0,0,0.15);
             border: 3px solid #fff;
         }
 
         .btn-blue {
             --shadow-color: #1d4ed8;
             background: linear-gradient(to bottom, #60a5fa, #2563eb);
-            box-shadow: 0 7px 0 0 #1d4ed8, 0 10px 18px rgba(0,0,0,0.14);
+            box-shadow: 0 8px 0 0 #1d4ed8, 0 12px 20px rgba(0,0,0,0.15);
             border: 3px solid #fff;
         }
 
         .btn-purple {
             --shadow-color: #6d28d9;
             background: linear-gradient(to bottom, #c084fc, #7c3aed);
-            box-shadow: 0 7px 0 0 #6d28d9, 0 10px 18px rgba(0,0,0,0.14);
+            box-shadow: 0 8px 0 0 #6d28d9, 0 12px 20px rgba(0,0,0,0.15);
             border: 3px solid #fff;
         }
 
         .btn-orange {
             --shadow-color: #c2410c;
             background: linear-gradient(to bottom, #fb923c, #ea580c);
-            box-shadow: 0 7px 0 0 #c2410c, 0 10px 18px rgba(0,0,0,0.14);
+            box-shadow: 0 8px 0 0 #c2410c, 0 12px 20px rgba(0,0,0,0.15);
             border: 3px solid #fff;
         }
 
         .btn-option {
             --shadow-color: #cbd5e1;
             background: #ffffff;
-            box-shadow: 0 6px 0 0 #94a3b8, 0 8px 14px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 0 0 #94a3b8, 0 10px 15px rgba(0,0,0,0.08);
             border: 4px solid #3b82f6;
             transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .btn-option:hover:not(:disabled) {
-            transform: scale(1.015);
+            transform: scale(1.02);
             background: #eff6ff;
             border-color: #2563eb;
         }
         .btn-option:active:not(:disabled) {
-            top: 5px;
+            top: 6px;
             box-shadow: 0 2px 0 0 #94a3b8 !important;
         }
 
+        /* Animação de pulso para destacar onde clicar */
         @keyframes pulse-ring {
-            0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7), 0 7px 0 0 #b45309; }
-            70% { transform: scale(1.025); box-shadow: 0 0 0 14px rgba(245, 158, 11, 0), 0 7px 0 0 #b45309; }
-            100% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0), 0 7px 0 0 #b45309; }
+            0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7), 0 8px 0 0 #b45309; }
+            70% { transform: scale(1.03); box-shadow: 0 0 0 15px rgba(245, 158, 11, 0), 0 8px 0 0 #b45309; }
+            100% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0), 0 8px 0 0 #b45309; }
         }
         .highlight-action {
             animation: pulse-ring 2s infinite;
         }
 
-        @keyframes float-gentle {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-6px); }
+        /* Animação da Gema voando para o cofre */
+        @keyframes float-gem {
+            0% { transform: scale(0) rotate(0deg); opacity: 0; }
+            50% { transform: scale(1.3) rotate(180deg); opacity: 1; }
+            100% { transform: scale(1) rotate(360deg); opacity: 1; }
         }
-        .animate-float {
-            animation: float-gentle 3s ease-in-out infinite;
+        .gem-pop {
+            animation: float-gem 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
 
+        @keyframes shake-vault {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            20% { transform: rotate(-10deg) scale(1.1); }
+            40% { transform: rotate(10deg) scale(1.1); }
+            60% { transform: rotate(-8deg) scale(1.05); }
+            80% { transform: rotate(8deg) scale(1.05); }
+        }
+        .vault-shake {
+            animation: shake-vault 0.6s ease-in-out;
+        }
+
+        /* Indicador de falando */
         @keyframes sound-wave {
-            0%, 100% { height: 7px; }
-            50% { height: 22px; }
+            0%, 100% { height: 8px; }
+            50% { height: 24px; }
         }
         .wave-bar {
-            width: 4px;
+            width: 5px;
             background-color: #fff;
             border-radius: 9999px;
             display: inline-block;
@@ -119,51 +135,42 @@
         .wave-bar:nth-child(3) { animation-delay: 0.4s; }
     </style>
 </head>
-<body class="text-slate-800 pb-20">
+<body class="text-slate-800 pb-16">
 
-    <!-- =====================================================================
-         BARRA SUPERIOR: LOGO, PÉROLAS DO REINO (VISÍVEL) E LOJA DA ARMADURA
-         ===================================================================== -->
-    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-4 border-amber-300 shadow-md px-3 sm:px-4 py-2.5">
-        <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+    <!-- BARRA DE TOPO: COFRE SECRETO E STATUS DE VOZ -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b-4 border-amber-300 shadow-md px-4 py-3">
+        <div class="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-3">
             <!-- Logo / Título -->
-            <div class="flex items-center gap-2.5 cursor-pointer" onclick="goHome()">
-                <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white text-2xl shadow-md border-2 border-white shrink-0">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="goHome()">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white text-2xl shadow-md border-2 border-white">
                     📖
                 </div>
                 <div>
-                    <h1 class="text-lg sm:text-2xl font-extrabold text-indigo-950 leading-none">Exploradores da Bíblia</h1>
-                    <p id="headerStudentBadge" class="text-xs font-bold text-amber-600 mt-0.5">Jesus, o Restaurador da Vida 🌟</p>
+                    <h1 class="text-xl sm:text-2xl font-bold text-indigo-950 leading-none">Exploradores da Bíblia</h1>
+                    <p id="headerStudentBadge" class="text-xs sm:text-sm font-medium text-amber-600">Jesus, o Restaurador da Vida 🌟</p>
                 </div>
             </div>
 
-            <!-- Controles Direita: Indicador de Voz + Pérolas do Reino + Botão Armadura -->
-            <div class="flex items-center gap-2">
-                <!-- Indicador de Narração Ativa -->
-                <div id="speakingIndicator" class="hidden items-center gap-1.5 bg-indigo-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow">
-                    <div class="flex items-center h-5">
+            <!-- Status de Narração + Cofre Secreto -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Botão Parar/Ouvir Voz -->
+                <div id="speakingIndicator" class="hidden items-center gap-2 bg-indigo-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow">
+                    <div class="flex items-center h-6">
                         <span class="wave-bar"></span>
                         <span class="wave-bar"></span>
                         <span class="wave-bar"></span>
                     </div>
-                    <span class="hidden sm:inline">Narrando...</span>
+                    <span>Narrando...</span>
                 </div>
 
-                <!-- Saldo Sempre Visível: Pérolas do Reino -->
-                <div class="bg-gradient-to-r from-amber-100 to-yellow-100 border-2 border-amber-400 px-3 py-1.5 rounded-2xl shadow-sm flex items-center gap-2">
-                    <span class="text-2xl">🦪</span>
-                    <div class="text-left leading-tight">
-                        <div class="text-[10px] uppercase tracking-wider text-amber-800 font-extrabold">Pérolas do Reino</div>
-                        <div id="pearlsCountText" class="text-base sm:text-lg font-extrabold text-indigo-950">0 Pérolas</div>
-                    </div>
-                </div>
-
-                <!-- Botão Abrir Loja da Armadura de Deus -->
-                <button onclick="openArmorShop()" id="armorHeaderBtn" class="btn-3d bg-gradient-to-r from-indigo-700 to-blue-800 text-white px-3 sm:px-4 py-2 rounded-2xl border-2 border-amber-300 shadow-lg flex items-center gap-2 hover:scale-105 transition">
-                    <span class="text-xl">🛡️</span>
-                    <div class="text-left leading-tight">
-                        <div class="text-[10px] uppercase text-amber-300 font-extrabold">Armadura</div>
-                        <div id="armorProgressHeader" class="text-xs sm:text-sm font-extrabold">0/6 Peças</div>
+                <!-- Cofre Secreto de Gemas (Quantidade Oculta até o fim do Difícil!) -->
+                <button onclick="inspectVault()" id="vaultHeaderBtn" class="btn-3d bg-gradient-to-r from-slate-800 to-indigo-950 text-white px-4 py-2 rounded-2xl border-2 border-amber-400 shadow-lg flex items-center gap-2.5 hover:scale-105 transition">
+                    <div id="vaultIconHeader" class="text-2xl">🔒</div>
+                    <div class="text-left">
+                        <div class="text-[11px] uppercase tracking-wider text-amber-300 font-bold leading-none">Cofre Secreto</div>
+                        <div id="vaultStatusText" class="text-sm font-extrabold text-white flex items-center gap-1">
+                            <span>💎 ??? Gemas</span>
+                        </div>
                     </div>
                 </button>
             </div>
@@ -171,170 +178,188 @@
     </header>
 
     <!-- CONTAINER PRINCIPAL -->
-    <main class="max-w-5xl mx-auto px-4 pt-6">
+    <main class="max-w-4xl mx-auto px-4 pt-6">
 
-        <!-- =================================================================
-             TELA 0: CADASTRO DO NOME, GÊNERO E FOTO DO ROSTO DA CRIANÇA
-             ================================================================= -->
-        <section id="screenOnboarding" class="max-w-xl mx-auto mt-2">
-            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-amber-400 text-center space-y-5">
-                <div class="space-y-1">
+        <!-- ==========================================
+             TELA 0: CADASTRO DO NOME DO ESTUDANTE
+             ========================================== -->
+        <section id="screenOnboarding" class="max-w-xl mx-auto mt-4">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-amber-400 text-center space-y-6">
+                <div class="w-24 h-24 mx-auto rounded-3xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-5xl shadow-lg border-4 border-white">
+                    🌟
+                </div>
+
+                <div class="space-y-2">
                     <span class="bg-indigo-100 text-indigo-800 text-xs font-extrabold px-3 py-1 rounded-full uppercase">
-                        Estudo Bíblico Infantil • Jesus, o Restaurador da Vida
+                        Estudo Base: Jesus, o Restaurador da Vida
                     </span>
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-indigo-950">
-                        Vamos preparar o seu Perfil! 🌟
+                        Qual é o seu nome?
                     </h2>
-                    <p class="text-slate-600 text-sm font-medium">
-                        Digite seu nome e, se quiser, coloque uma foto do seu rosto para vestir a <strong>Armadura de Deus</strong>!
+                    <p class="text-slate-600 text-sm sm:text-base font-medium">
+                        Digite seu nome abaixo para que toda a aventura e a voz neural conversem diretamente com você!
                     </p>
                 </div>
 
-                <!-- Upload Circular da Foto do Rosto -->
-                <div class="flex flex-col items-center gap-2">
-                    <label for="studentPhotoInput" class="cursor-pointer group relative">
-                        <div id="onboardingPhotoPreview" class="w-28 h-28 rounded-full bg-gradient-to-br from-sky-100 to-amber-100 border-4 border-amber-400 shadow-lg flex items-center justify-center overflow-hidden relative">
-                            <span id="onboardingDefaultEmoji" class="text-5xl">👦</span>
-                            <img id="onboardingPhotoImg" src="" alt="Foto do Explorador" class="hidden w-full h-full object-cover" />
-                        </div>
-                        <div class="absolute -bottom-1 -right-1 bg-indigo-600 text-white w-9 h-9 rounded-full flex items-center justify-center border-2 border-white shadow group-hover:scale-110 transition">
-                            <i class="ph-bold ph-camera text-lg"></i>
-                        </div>
-                    </label>
-                    <input id="studentPhotoInput" type="file" accept="image/*" class="hidden" onchange="handlePhotoUpload(event)" />
-                    <label for="studentPhotoInput" class="text-xs font-extrabold text-indigo-600 hover:text-indigo-800 cursor-pointer underline">
-                        📸 Toque aqui para enviar ou tirar foto do seu rosto (opcional)
-                    </label>
-                </div>
-
-                <!-- Escolha Explorador / Exploradora -->
-                <div class="space-y-1.5">
+                <!-- Escolha Menino / Menina para concordância natural nos elogios -->
+                <div class="space-y-2">
                     <label class="text-xs font-extrabold uppercase text-slate-500 block">Você é:</label>
                     <div class="grid grid-cols-2 gap-3 max-w-xs mx-auto">
-                        <button type="button" id="genderBtnM" onclick="selectGender('M')" class="btn-3d bg-blue-100 border-4 border-blue-500 text-blue-950 font-extrabold py-2.5 px-3 rounded-2xl flex items-center justify-center gap-2 text-sm sm:text-base">
-                            <span class="text-xl">👦</span> <span>Um Explorador</span>
+                        <button type="button" id="genderBtnM" onclick="selectGender('M')" class="btn-3d bg-blue-100 border-4 border-blue-500 text-blue-950 font-extrabold py-3 px-4 rounded-2xl flex items-center justify-center gap-2 text-base">
+                            <span class="text-2xl">👦</span> <span>Um Explorador</span>
                         </button>
-                        <button type="button" id="genderBtnF" onclick="selectGender('F')" class="btn-3d bg-pink-50 border-4 border-slate-200 text-slate-600 font-extrabold py-2.5 px-3 rounded-2xl flex items-center justify-center gap-2 text-sm sm:text-base">
-                            <span class="text-xl">👧</span> <span>Uma Exploradora</span>
+                        <button type="button" id="genderBtnF" onclick="selectGender('F')" class="btn-3d bg-pink-50 border-4 border-slate-200 text-slate-600 font-extrabold py-3 px-4 rounded-2xl flex items-center justify-center gap-2 text-base">
+                            <span class="text-2xl">👧</span> <span>Uma Exploradora</span>
                         </button>
                     </div>
                 </div>
 
                 <!-- Campo de Nome -->
-                <div class="space-y-1.5 text-left">
+                <div class="space-y-2 text-left">
                     <label for="studentNameInput" class="text-sm font-extrabold text-indigo-950 block pl-1">
-                        ✏️ Digite o seu nome:
+                        ✏️ Digite seu primeiro nome aqui:
                     </label>
                     <input
                         id="studentNameInput"
                         type="text"
-                        maxlength="28"
+                        maxlength="25"
                         placeholder="Ex: Lucas, Sofia, Davi..."
-                        onkeydown="if(event.key === 'Enter') proceedToPrayerStep()"
-                        class="w-full text-center text-xl sm:text-2xl font-extrabold text-indigo-950 bg-amber-50 border-4 border-amber-300 focus:border-indigo-500 focus:bg-white rounded-2xl py-3.5 px-4 outline-none transition shadow-inner"
+                        onkeydown="if(event.key === 'Enter') startWithStudentName()"
+                        class="w-full text-center text-xl sm:text-2xl font-extrabold text-indigo-950 bg-amber-50 border-4 border-amber-300 focus:border-indigo-500 focus:bg-white rounded-2xl py-4 px-4 outline-none transition shadow-inner"
                     />
                     <p id="nameErrorMsg" class="hidden text-center text-rose-600 text-sm font-extrabold">
-                        ⚠️ Por favor, digite o seu nome antes de continuar!
+                        ⚠️ Por favor, digite o seu nome antes de começar!
                     </p>
                 </div>
 
-                <button onclick="proceedToPrayerStep()" class="btn-3d btn-green text-white font-extrabold py-4 px-8 rounded-2xl text-xl w-full flex items-center justify-center gap-3 highlight-action">
-                    <span>Continuar</span>
+                <button onclick="startWithStudentName()" class="btn-3d btn-green text-white font-extrabold py-4 px-8 rounded-2xl text-xl w-full flex items-center justify-center gap-3 highlight-action">
+                    <span>Começar Minha Aventura!</span>
                     <i class="ph-bold ph-arrow-right text-2xl"></i>
                 </button>
             </div>
         </section>
 
-        <!-- =================================================================
-             TELA 0.5: MOMENTO DE ORAÇÃO RÁPIDA ANTES DO ESTUDO
-             ================================================================= -->
-        <section id="screenPrayer" class="hidden max-w-xl mx-auto mt-4">
-            <div class="bg-gradient-to-b from-indigo-50 via-white to-sky-50 rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-indigo-400 text-center space-y-6">
-                <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-tr from-indigo-500 to-sky-400 flex items-center justify-center text-5xl text-white shadow-lg border-4 border-white animate-float">
-                    🙏
-                </div>
+        <!-- ==========================================
+             TELA 1: PAINEL INICIAL (HOME)
+             ========================================== -->
+        <section id="screenHome" class="hidden space-y-8">
 
-                <div class="space-y-2">
-                    <span class="bg-indigo-100 text-indigo-800 text-xs font-extrabold px-3 py-1 rounded-full uppercase">
-                        Momento Especial com Deus
-                    </span>
-                    <h2 id="prayerTitle" class="text-2xl sm:text-3xl font-extrabold text-indigo-950">
-                        Vamos falar com Deus antes de estudar?
-                    </h2>
-                    <p class="text-slate-600 text-sm sm:text-base font-medium">
-                        Feche os olhinhos por um instante e faça esta oração junto comigo:
-                    </p>
-                </div>
-
-                <!-- Cartão da Oração Guiada -->
-                <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-5 text-indigo-950 text-lg sm:text-xl font-semibold leading-relaxed italic shadow-inner">
-                    “Querido Deus, muito obrigado pela minha vida e pela Bíblia Sagrada. Por favor, fica bem pertinho de mim durante todo este estudo, me dá sabedoria para aprender sobre Jesus, o Restaurador da Vida. Em nome de Jesus, amém!”
-                </div>
-
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <button onclick="narratePrayer()" class="btn-3d btn-blue text-white font-bold py-3.5 px-5 rounded-2xl flex items-center justify-center gap-2 sm:w-1/3">
-                        <i class="ph-fill ph-speaker-high text-xl"></i> Ouvir Oração
-                    </button>
-                    <button onclick="finishPrayerAndGoHome()" class="btn-3d btn-green text-white font-extrabold py-4 px-6 rounded-2xl text-xl flex-1 flex items-center justify-center gap-2 highlight-action">
-                        <span>🙏 Amém! Começar Aventura</span>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- =================================================================
-             TELA 1: PAINEL PRINCIPAL (JORNADA EM 4 ETAPAS + ARMADURA DE DEUS)
-             ================================================================= -->
-        <section id="screenHome" class="hidden space-y-7">
-
-            <!-- Banner Superior Personalizado + Card Miniatura da Armadura -->
-            <div class="bg-gradient-to-r from-indigo-700 via-blue-600 to-sky-500 rounded-3xl p-5 sm:p-7 text-white shadow-xl border-4 border-white">
-                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div class="space-y-2.5 text-center md:text-left flex-1">
+            <!-- Banner de Boas-Vindas -->
+            <div class="bg-gradient-to-r from-indigo-600 via-blue-600 to-sky-500 rounded-3xl p-6 sm:p-8 text-white shadow-xl border-4 border-white relative overflow-hidden">
+                <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="space-y-2 text-center md:text-left">
                         <div class="flex flex-wrap items-center justify-center md:justify-start gap-2">
-                            <span class="bg-amber-400 text-indigo-950 font-extrabold px-3 py-1 rounded-full text-xs uppercase tracking-wider shadow">
-                                ✨ Jornada Bíblica Kids
+                            <span class="inline-block bg-amber-400 text-indigo-950 font-extrabold px-3 py-1 rounded-full text-xs uppercase tracking-wider shadow">
+                                ✨ Aventura Pedagógica Narrada
                             </span>
-                            <button onclick="changeStudentProfile()" class="bg-white/20 hover:bg-white/30 text-white text-xs font-bold px-3 py-1 rounded-full transition">
-                                ✏️ Editar Nome/Foto
+                            <button onclick="changeStudentName()" class="bg-white/20 hover:bg-white/30 text-white text-xs font-bold px-3 py-1 rounded-full transition">
+                                ✏️ Trocar Nome
                             </button>
-                            <button onclick="openResetConfirmModal()" class="bg-rose-500/90 hover:bg-rose-600 text-white text-xs font-extrabold px-3 py-1 rounded-full transition shadow flex items-center gap-1">
+                            <button onclick="openResetConfirmModal()" class="bg-rose-500/90 hover:bg-rose-600 text-white text-xs font-extrabold px-3 py-1 rounded-full transition shadow flex items-center gap-1 border border-white/40">
                                 <i class="ph-bold ph-arrow-counter-clockwise"></i> Zerar Tudo
                             </button>
                         </div>
                         <h2 id="welcomeBannerTitle" class="text-2xl sm:text-4xl font-extrabold leading-tight">
-                            Olá, Explorador! 🌟
+                            Olá, Pequeno Explorador! 🌟
                         </h2>
-                        <p id="welcomeBannerSubtitle" class="text-sky-100 text-sm sm:text-base max-w-xl">
-                            Complete os estudos, junte <strong>Pérolas do Reino 🦪</strong> para vestir a <strong>Armadura de Deus</strong> e avance até conhecer os <strong>20 Estudos de Jesus, o Restaurador da Vida</strong>!
+                        <p id="welcomeBannerSubtitle" class="text-sky-100 text-base sm:text-lg max-w-xl">
+                            Aprenda sobre <strong>Deus, o Criador</strong> e sobre <strong>Jesus, o Restaurador da Vida</strong>, ache versículos super rápido e guarde gemas no seu <strong>Cofre Secreto</strong> até se tornar um <strong>Explorador da Bíblia Expert</strong>!
                         </p>
-                        <div class="flex flex-wrap justify-center md:justify-start gap-2.5 pt-1">
-                            <button onclick="narrateWelcome()" class="btn-3d btn-yellow text-indigo-950 font-extrabold px-4 py-2.5 rounded-2xl flex items-center gap-2 text-sm sm:text-base">
-                                <i class="ph-fill ph-speaker-high text-xl"></i> Ouvir Guia
-                            </button>
-                            <button onclick="openArmorShop()" class="btn-3d btn-purple text-white font-extrabold px-4 py-2.5 rounded-2xl flex items-center gap-2 text-sm sm:text-base">
-                                <i class="ph-fill ph-shield-star text-xl"></i> Ver Minha Armadura (<span id="bannerArmorCount">0/6</span>)
-                            </button>
-                            <button id="homeCertificateBtn" onclick="openFinalCelebrationModal()" class="hidden btn-3d btn-green text-white font-extrabold px-4 py-2.5 rounded-2xl flex items-center gap-2 text-sm sm:text-base">
-                                <i class="ph-fill ph-certificate text-xl"></i> Meu Certificado 🏆
-                            </button>
-                        </div>
                     </div>
-
-                    <!-- Miniatura Visual do Avatar com Foto + Armadura -->
-                    <div onclick="openArmorShop()" class="cursor-pointer bg-white/15 backdrop-blur-sm border-2 border-amber-300 rounded-3xl p-4 text-center shrink-0 hover:scale-105 transition w-44">
-                        <div id="miniManequinContainer" class="w-24 h-28 mx-auto relative flex items-center justify-center">
-                            <!-- Renderizado via SVG dinâmico -->
-                        </div>
-                        <div class="text-xs font-extrabold text-amber-300 mt-1 uppercase">Seu Personagem</div>
-                        <div class="text-[11px] text-white/90">Toque para equipar</div>
-                    </div>
+                    <button onclick="narrateWelcome()" class="btn-3d btn-yellow text-indigo-950 font-extrabold px-6 py-4 rounded-2xl flex items-center gap-3 text-lg shrink-0 highlight-action">
+                        <i class="ph-fill ph-speaker-high text-2xl"></i>
+                        <span>Ouvir Boas-Vindas</span>
+                    </button>
                 </div>
             </div>
 
-            <!-- SELETOR DAS 4 ETAPAS PROGRESSIVAS:
-                 1. Fácil -> 2. Normal -> 3. Manuseio da Bíblia -> 4. Difícil (20 Estudos na Íntegra) -->
+            <!-- CARTÃO ESPECIAL: PRÉ-ESTUDO (DETETIVE DA BÍBLIA - 9 ANOS) -->
+            <div class="bg-gradient-to-br from-amber-100 via-yellow-50 to-orange-100 rounded-3xl p-6 border-4 border-amber-400 shadow-xl relative">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="flex items-start gap-4">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-amber-400 border-4 border-white shadow-md flex items-center justify-center text-4xl shrink-0">
+                            🕵️‍♂️
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="bg-orange-600 text-white text-xs font-extrabold px-3 py-1 rounded-full uppercase">
+                                    Passo Zero • Treinamento Especial
+                                </span>
+                                <span id="preStudyBadge" class="bg-amber-200 text-amber-900 text-xs font-bold px-2.5 py-1 rounded-full">
+                                    Recomendado antes de começar!
+                                </span>
+                            </div>
+                            <h3 class="text-2xl font-extrabold text-amber-950">
+                                Pré-Estudo: Super Agilidade Bíblica! ⚡
+                            </h3>
+                            <p class="text-amber-900/90 text-sm sm:text-base">
+                                Aprenda o segredo dos <strong>3 Passos Mágicos</strong>: achar o Livro no <strong>Índice</strong>, ver o número da <strong>Página</strong>, achar o <strong>Capítulo</strong> grandão e o <strong>Versículo</strong> pequenininho!
+                            </p>
+                        </div>
+                    </div>
+
+                    <button onclick="openPreStudy()" class="btn-3d btn-orange text-white font-extrabold px-7 py-4 rounded-2xl text-lg flex items-center gap-3 shrink-0 w-full md:w-auto justify-center">
+                        <i class="ph-fill ph-compass text-2xl"></i>
+                        <span>Treinar Agilidade!</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- SELETOR DE NÍVEIS (FÁCIL, NORMAL, DIFÍCIL) -->
             <div class="space-y-3">
-                <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center justify-between">
                     <h3 class="text-xl sm:text-2xl font-extrabold text-indigo-950 flex items-center gap-2">
-                        <span>🗺️</span> Escolha a Etap
+                        <span>🎯</span> 1. Escolha o seu Nível de Desafio:
+                    </h3>
+                    <span class="text-xs sm:text-sm font-bold text-slate-600 bg-white px-3 py-1 rounded-full border">
+                        Conclua um nível para liberar o próximo!
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="difficultyContainer">
+                    <!-- Renderizado via JS -->
+                </div>
+            </div>
+
+            <!-- TRILHA DE ESTUDOS PROGRESSIVOS (1, 2, 3, 4) -->
+            <div class="space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <h3 class="text-xl sm:text-2xl font-extrabold text-indigo-950 flex items-center gap-2">
+                        <span>🗺️</span> 2. Trilha de Estudos (<span id="currentLevelLabel" class="text-blue-600">Nível Fácil</span>):
+                    </h3>
+                    <p class="text-sm text-slate-600 font-medium">
+                        Complete o Estudo 1 para destravar o 2, depois o 3 e o 4!
+                    </p>
+                </div>
+
+                <div id="studiesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- Renderizado via JS -->
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ==========================================
+             TELA 2: PRÉ-ESTUDO LÚDICO (AGILIDADE BÍBLICA)
+             ========================================== -->
+        <section id="screenPreStudy" class="hidden space-y-6">
+            <!-- Topo com botão voltar -->
+            <div class="flex items-center justify-between bg-white p-4 rounded-2xl shadow border-2 border-amber-200">
+                <button onclick="goHome()" class="btn-3d bg-slate-200 text-slate-800 font-bold px-4 py-2 rounded-xl flex items-center gap-2">
+                    <i class="ph-bold ph-arrow-left"></i> Voltar ao Mapa
+                </button>
+                <div class="text-center">
+                    <span class="text-xs font-extrabold uppercase text-orange-600 block">Treinamento para Crianças (9+ anos)</span>
+                    <h2 class="text-lg sm:text-xl font-extrabold text-indigo-950">🕵️‍♂️ Detetive da Bíblia: Super Agilidade</h2>
+                </div>
+                <button onclick="repeatCurrentAudio()" class="btn-3d btn-yellow text-indigo-950 font-bold px-4 py-2 rounded-xl flex items-center gap-2">
+                    <i class="ph-fill ph-speaker-high text-xl"></i> Ouvir Dica
+                </button>
+            </div>
+
+            <!-- Indicador das 3 Etapas do Treino + Mini Jogo -->
+            <div class="grid grid-cols-4 gap-2 text-center text-xs sm:text-sm font-bold">
+                <div id="stepTab1" class="p-3 rounded-xl bg-amber-500 text-white shadow">1. O Índice e Página</div>
+                <div id="stepTab2" class="p-3 rounded-xl bg-white text-slate-500 border">2. O Capítulo Grande</div>
+                <div id="stepTab3" class="p-3 rounded-xl bg-white text-slate-500 border">3. O Versículo Pequeno</div>
+                <div id="stepTab4" class="p-3 rounded-xl bg-white text-slate-500 border">4. Desafio Relâmpago!</div
