@@ -153,6 +153,12 @@
                         <div id="armorProgressHeader" class="text-xs sm:text-sm font-extrabold">0/6 Peças</div>
                     </div>
                 </button>
+
+                <!-- Botão Configurar Voz Neural (Cartesia / Unreal Speech) -->
+                <button onclick="openVoiceModal()" title="Configurar Voz Neural" class="btn-3d bg-amber-400 hover:bg-amber-300 text-indigo-950 px-3 py-2 rounded-2xl border-2 border-white shadow flex items-center gap-1.5 text-xs font-extrabold">
+                    <span class="text-lg">🎙️</span>
+                    <span class="hidden md:inline">Voz Neural</span>
+                </button>
             </div>
         </div>
     </header>
@@ -579,12 +585,58 @@
         </div>
     </div>
 
+    <!-- MODAL 4: CONFIGURAÇÃO DE VOZ NEURAL (CARTESIA & UNREAL SPEECH THIAGO) -->
+    <div id="modalVoice" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 border-4 border-indigo-400 shadow-2xl space-y-4 my-auto">
+            <div class="flex items-center justify-between border-b-2 border-slate-100 pb-3">
+                <div class="flex items-center gap-2">
+                    <span class="text-3xl">🎙️</span>
+                    <div>
+                        <h3 class="text-lg sm:text-xl font-extrabold text-indigo-950">Voz Neural em Português</h3>
+                        <p class="text-xs text-slate-500 font-bold">Cartesia + Unreal Speech (Thiago) + Cache IndexedDB</p>
+                    </div>
+                </div>
+                <button onclick="closeVoiceModal()" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-rose-100 text-slate-700 font-extrabold">✕</button>
+            </div>
+
+            <div class="bg-indigo-50 border-2 border-indigo-200 rounded-2xl p-3 text-xs text-indigo-950 font-medium space-y-1">
+                <div>✨ <strong>Status Atual:</strong> <span id="voiceEngineStatus" class="font-extrabold text-emerald-700">Voz Neural Ativa</span></div>
+                <p>Você pode colar suas chaves no topo do <code>&lt;script&gt;</code> ou diretamente nos campos abaixo:</p>
+            </div>
+
+            <div class="space-y-3 text-left">
+                <div>
+                    <label class="text-xs font-extrabold text-indigo-950 block mb-1">1. Primary Token (Cartesia API Key - Voz PT-BR):</label>
+                    <input id="inputPrimaryToken" type="password" placeholder="Cole sua chave da Cartesia aqui..." class="w-full bg-slate-50 border-2 border-slate-300 focus:border-indigo-500 rounded-xl px-3 py-2 text-sm font-bold outline-none" />
+                </div>
+                <div>
+                    <label class="text-xs font-extrabold text-indigo-950 block mb-1">2. Backup Token (Unreal Speech API Key - Voz Thiago):</label>
+                    <input id="inputBackupToken" type="password" placeholder="Cole sua chave da Unreal Speech aqui..." class="w-full bg-slate-50 border-2 border-slate-300 focus:border-indigo-500 rounded-xl px-3 py-2 text-sm font-bold outline-none" />
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2 justify-between pt-2">
+                <button onclick="clearAudioCache()" class="btn-3d bg-rose-100 text-rose-800 text-xs font-extrabold px-3 py-2.5 rounded-xl">
+                    🗑️ Limpar Cache IndexedDB
+                </button>
+                <div class="flex gap-2">
+                    <button onclick="testNeuralVoice()" class="btn-3d btn-blue text-white text-xs font-extrabold px-4 py-2.5 rounded-xl">
+                        🔊 Testar Voz
+                    </button>
+                    <button onclick="saveVoiceTokensFromUI()" class="btn-3d btn-green text-white text-xs font-extrabold px-4 py-2.5 rounded-xl">
+                        💾 Salvar Chaves
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         /* =====================================================================
            CONFIGURAÇÃO DE VOZ NEURAL NO TOPO DO SCRIPT (CARTESIA & UNREAL SPEECH)
            ===================================================================== */
         const VOICE_API_CONFIG = {
-            primaryToken: "sk_car_ZtAageixA2p38sjPh3WYwt", // Insira aqui a chave da Cartesia (Voz Neural PT-BR)
+            primaryToken: "sk_car_dYHj2mqyfNvt3eJ1XkDZKC", // Insira aqui a chave da Cartesia (Voz Neural PT-BR)
             backupToken: "g2SLhWDySZWzAxOkt8guBT91h0JQhtHKDoACNQeTzJJikyIsX6464S"   // Insira aqui a chave da Unreal Speech (Voz Thiago)
         };
 
@@ -1126,13 +1178,293 @@
             } catch {}
         }
 
+        function clearAudioCache() {
+            if (!dbAudio) return;
+            try {
+                const tx = dbAudio.transaction("tts_cache", "readwrite");
+                tx.objectStore("tts_cache").clear();
+                playTone("success");
+                speakText("Cache de voz neural atualizado com sucesso!");
+            } catch {}
+        }
+
+        // Converte áudio PCM16 (24kHz) da Voz Neural para arquivo WAV reproduzível e salvável no IndexedDB
+        function base64ToPCM16WavBlob(base64Data, sampleRate = 24000) {
+            const binaryStr = atob(base64Data);
+            const len = binaryStr.length;
+            const pcmBytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                pcmBytes[i] = binaryStr.charCodeAt(i);
+            }
+            const wavHeader = new ArrayBuffer(44);
+            const view = new DataView(wavHeader);
+            const writeStr = (offset, str) => {
+                for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
+            };
+            writeStr(0, "RIFF");
+            view.setUint32(4, 36 + pcmBytes.byteLength, true);
+            writeStr(8, "WAVE");
+            writeStr(12, "fmt ");
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true); // PCM
+            view.setUint16(22, 1, true); // Mono
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, sampleRate * 2, true);
+            view.setUint16(32, 2, true);
+            view.setUint16(34, 16, true);
+            writeStr(36, "data");
+            view.setUint32(40, pcmBytes.byteLength, true);
+
+            return new Blob([wavHeader, pcmBytes], { type: "audio/wav" });
+        }
+
         let currentAudioEl = null;
+        let currentSpeakRequestId = 0;
 
         function stopSpeaking() {
+            currentSpeakRequestId++;
             if (currentAudioEl) {
                 currentAudioEl.pause();
                 currentAudioEl = null;
             }
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+            const ind = document.getElementById('speakingIndicator');
+            if (ind) ind.classList.add('hidden');
+        }
+
+        function getActiveTokens() {
+            let savedPrimary = "";
+            let savedBackup = "";
+            try {
+                savedPrimary = localStorage.getItem("JB_PRIMARY_TOKEN") || "";
+                savedBackup = localStorage.getItem("JB_BACKUP_TOKEN") || "";
+            } catch {}
+            return {
+                primary: (VOICE_API_CONFIG.primaryToken || savedPrimary || "").trim(),
+                backup: (VOICE_API_CONFIG.backupToken || savedBackup || "").trim()
+            };
+        }
+
+        async function speakText(text) {
+            if (!text) return;
+            stopSpeaking();
+            const myReqId = ++currentSpeakRequestId;
+
+            const ind = document.getElementById('speakingIndicator');
+            if (ind) {
+                ind.classList.remove('hidden');
+                ind.classList.add('flex');
+            }
+
+            const cacheKey = "neural_ptbr_v2_" + text.trim();
+            const cachedBlob = await getCachedAudio(cacheKey);
+            if (myReqId !== currentSpeakRequestId) return;
+
+            if (cachedBlob && cachedBlob.size > 100) {
+                playAudioBlob(cachedBlob, myReqId);
+                return;
+            }
+
+            const tokens = getActiveTokens();
+
+            // 1. Plataforma Principal: Cartesia Neural TTS (Formato WAV PCM_S16LE oficial sem erro 400)
+            if (tokens.primary !== "") {
+                try {
+                    const res = await fetch("https://api.cartesia.ai/tts/bytes", {
+                        method: "POST",
+                        headers: {
+                            "Cartesia-Version": "2024-06-10",
+                            "X-API-Key": tokens.primary,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            model_id: "sonic-multilingual",
+                            transcript: text,
+                            voice: {
+                                mode: "id",
+                                id: "700d1ee3-a641-4018-ba6e-899dcadc9e2b"
+                            },
+                            output_format: {
+                                container: "wav",
+                                encoding: "pcm_s16le",
+                                sample_rate: 44100
+                            },
+                            language: "pt"
+                        })
+                    });
+                    if (res.ok) {
+                        const blob = await res.blob();
+                        if (blob.size > 100) {
+                            saveCachedAudio(cacheKey, blob);
+                            if (myReqId === currentSpeakRequestId) playAudioBlob(blob, myReqId);
+                            return;
+                        }
+                    }
+                } catch (err) {
+                    console.warn("Aviso Cartesia:", err);
+                }
+            }
+
+            // 2. Plataforma Backup: Unreal Speech - Voz Thiago (Suporte v8 e v7 /stream e /speech)
+            if (tokens.backup !== "") {
+                const endpoints = [
+                    "https://api.v8.unrealspeech.com/stream",
+                    "https://api.v7.unrealspeech.com/stream"
+                ];
+                for (const url of endpoints) {
+                    try {
+                        const res = await fetch(url, {
+                            method: "POST",
+                            headers: {
+                                "Authorization": `Bearer ${tokens.backup}`,
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                Text: text,
+                                VoiceId: "Thiago",
+                                Bitrate: "192k",
+                                Speed: "0",
+                                Pitch: "1.0",
+                                Codec: "libmp3lame"
+                            })
+                        });
+                        if (res.ok) {
+                            const rawBlob = await res.blob();
+                            const mp3Blob = new Blob([rawBlob], { type: "audio/mpeg" });
+                            if (mp3Blob.size > 100) {
+                                saveCachedAudio(cacheKey, mp3Blob);
+                                if (myReqId === currentSpeakRequestId) playAudioBlob(mp3Blob, myReqId);
+                                return;
+                            }
+                        }
+                    } catch (err) {
+                        console.warn("Aviso Unreal Speech:", err);
+                    }
+                }
+            }
+
+            // 3. Voz Neural Integrada (Gemini 2.5 Flash TTS) com Cache IndexedDB
+            // Garante voz 100% humana e calorosa mesmo quando primaryToken e backupToken estão vazios!
+            try {
+                const apiKey = "";
+                const ttsUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+                const payload = {
+                    contents: [{
+                        parts: [{
+                            text: `Fale em português do Brasil com entonação muito calorosa, amigável, expressiva e natural para uma criança: ${text}`
+                        }]
+                    }],
+                    generationConfig: {
+                        responseModalities: ["AUDIO"],
+                        speechConfig: {
+                            voiceConfig: {
+                                prebuiltVoiceConfig: { voiceName: "Puck" }
+                            }
+                        }
+                    }
+                };
+                const res = await fetch(ttsUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    const part = data?.candidates?.[0]?.content?.parts?.[0];
+                    const b64Audio = part?.inlineData?.data;
+                    const mime = part?.inlineData?.mimeType || "audio/L16;rate=24000";
+                    if (b64Audio) {
+                        const rateMatch = mime.match(/rate=(\d+)/);
+                        const rate = rateMatch ? parseInt(rateMatch[1], 10) : 24000;
+                        const wavBlob = base64ToPCM16WavBlob(b64Audio, rate);
+                        saveCachedAudio(cacheKey, wavBlob);
+                        if (myReqId === currentSpeakRequestId) playAudioBlob(wavBlob, myReqId);
+                        return;
+                    }
+                }
+            } catch (err) {
+                console.warn("Aviso TTS Neural Integrado:", err);
+            }
+
+            // 4. Último recurso caso o dispositivo esteja totalmente sem internet
+            if (myReqId !== currentSpeakRequestId) return;
+            if ('speechSynthesis' in window) {
+                const utter = new SpeechSynthesisUtterance(text);
+                utter.lang = "pt-BR";
+                const voices = window.speechSynthesis.getVoices();
+                const bestVoice = voices.find(v => v.lang.includes("pt") && (v.name.includes("Natural") || v.name.includes("Francisca") || v.name.includes("Antonio") || v.name.includes("Google")))
+                               || voices.find(v => v.lang.includes("pt"));
+                if (bestVoice) utter.voice = bestVoice;
+                utter.rate = 1.0;
+                utter.onend = () => { if (ind) ind.classList.add('hidden'); };
+                utter.onerror = () => { if (ind) ind.classList.add('hidden'); };
+                window.speechSynthesis.speak(utter);
+            } else if (ind) {
+                ind.classList.add('hidden');
+            }
+        }
+
+        function playAudioBlob(blob, reqId) {
+            if (reqId && reqId !== currentSpeakRequestId) return;
+            const url = URL.createObjectURL(blob);
+            const audio = new Audio(url);
+            currentAudioEl = audio;
+            const ind = document.getElementById('speakingIndicator');
+            audio.onended = () => {
+                if (ind) ind.classList.add('hidden');
+                URL.revokeObjectURL(url);
+            };
+            audio.onerror = () => {
+                if (ind) ind.classList.add('hidden');
+                URL.revokeObjectURL(url);
+            };
+            audio.play().catch(() => {
+                if (ind) ind.classList.add('hidden');
+            });
+        }
+
+        function openVoiceModal() {
+            const tokens = getActiveTokens();
+            document.getElementById('inputPrimaryToken').value = tokens.primary;
+            document.getElementById('inputBackupToken').value = tokens.backup;
+            const status = document.getElementById('voiceEngineStatus');
+            if (tokens.primary) {
+                status.innerText = "Cartesia Neural (Primary Token Ativo)";
+            } else if (tokens.backup) {
+                status.innerText = "Unreal Speech Thiago (Backup Token Ativo)";
+            } else {
+                status.innerText = "Voz Neural Humana Integrada (Pronta para uso!)";
+            }
+            document.getElementById('modalVoice').classList.remove('hidden');
+        }
+
+        function closeVoiceModal() {
+            document.getElementById('modalVoice').classList.add('hidden');
+        }
+
+        function saveVoiceTokensFromUI() {
+            const p = document.getElementById('inputPrimaryToken').value.trim();
+            const b = document.getElementById('inputBackupToken').value.trim();
+            VOICE_API_CONFIG.primaryToken = p;
+            VOICE_API_CONFIG.backupToken = b;
+            try {
+                localStorage.setItem("JB_PRIMARY_TOKEN", p);
+                localStorage.setItem("JB_BACKUP_TOKEN", b);
+            } catch {}
+            playTone("success");
+            closeVoiceModal();
+            speakText("Configuração de voz neural salva com sucesso!");
+        }
+
+        function testNeuralVoice() {
+            const p = document.getElementById('inputPrimaryToken').value.trim();
+            const b = document.getElementById('inputBackupToken').value.trim();
+            VOICE_API_CONFIG.primaryToken = p;
+            VOICE_API_CONFIG.backupToken = b;
+            speakText(`Olá ${userData.name || "Explorador da Bíblia"}! Esta é a voz neural em português contando as histórias de Jesus, o Restaurador da Vida!`);
+        }
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
             }
