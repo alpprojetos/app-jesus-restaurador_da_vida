@@ -132,7 +132,7 @@
                         <span class="wave-bar"></span>
                         <span class="wave-bar"></span>
                     </div>
-                    <span class="hidden sm:inline">Narrando...</span>
+                    <span id="speakingStatusLabel" class="hidden sm:inline">Voz Neural...</span>
                     <button onclick="stopSpeaking()" class="ml-1 bg-white/20 hover:bg-white/30 rounded-full px-1.5 py-0.5 text-[10px]">Parar</button>
                 </div>
 
@@ -1351,16 +1351,17 @@
                 const apiKey = "";
                 const ttsUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
                 const payload = {
+                    model: "gemini-2.5-flash-preview-tts",
                     contents: [{
                         parts: [{
-                            text: `Fale em português do Brasil com entonação muito calorosa, amigável, expressiva e natural para uma criança: ${text}`
+                            text: `Say in a warm, cheerful, natural Brazilian Portuguese storytelling voice for a 9-year-old child: ${text}`
                         }]
                     }],
                     generationConfig: {
                         responseModalities: ["AUDIO"],
                         speechConfig: {
                             voiceConfig: {
-                                prebuiltVoiceConfig: { voiceName: "Puck" }
+                                prebuiltVoiceConfig: { voiceName: "Aoede" }
                             }
                         }
                     }
@@ -1388,7 +1389,30 @@
                 console.warn("Aviso TTS Neural Integrado:", err);
             }
 
-            // 4. Último recurso caso o dispositivo esteja totalmente sem internet
+            // 4. Fallback de Voz Fluida em Português (Stream MP3 por frases, evitando a voz robótica do sistema)
+            try {
+                if (myReqId !== currentSpeakRequestId) return;
+                const chunks = text.match(/[^.!?]+[.!?]*/g) || [text];
+                for (const rawChunk of chunks) {
+                    if (myReqId !== currentSpeakRequestId) return;
+                    const clean = rawChunk.trim().slice(0, 190);
+                    if (!clean) continue;
+                    const streamUrl = `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=tw-ob&tl=pt-BR&q=${encodeURIComponent(clean)}`;
+                    await new Promise((resolve, reject) => {
+                        const audio = new Audio(streamUrl);
+                        currentAudioEl = audio;
+                        audio.onended = resolve;
+                        audio.onerror = reject;
+                        audio.play().catch(reject);
+                    });
+                }
+                if (ind) ind.classList.add('hidden');
+                return;
+            } catch (err) {
+                console.warn("Aviso Stream PT-BR:", err);
+            }
+
+            // 5. Último recurso apenas se estiver 100% offline
             if (myReqId !== currentSpeakRequestId) return;
             if ('speechSynthesis' in window) {
                 const utter = new SpeechSynthesisUtterance(text);
@@ -1464,113 +1488,6 @@
             VOICE_API_CONFIG.primaryToken = p;
             VOICE_API_CONFIG.backupToken = b;
             speakText(`Olá ${userData.name || "Explorador da Bíblia"}! Esta é a voz neural em português contando as histórias de Jesus, o Restaurador da Vida!`);
-        }
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-            }
-            const ind = document.getElementById('speakingIndicator');
-            if (ind) ind.classList.add('hidden');
-        }
-
-        async function speakText(text) {
-            if (!text) return;
-            stopSpeaking();
-
-            const ind = document.getElementById('speakingIndicator');
-            if (ind) {
-                ind.classList.remove('hidden');
-                ind.classList.add('flex');
-            }
-
-            const cacheKey = "ptbr_v1_" + text.trim();
-            const cachedBlob = await getCachedAudio(cacheKey);
-            if (cachedBlob) {
-                playAudioBlob(cachedBlob);
-                return;
-            }
-
-            // 1. Tentar Cartesia Neural TTS se primaryToken estiver configurado
-            if (VOICE_API_CONFIG.primaryToken && VOICE_API_CONFIG.primaryToken.trim() !== "") {
-                try {
-                    const res = await fetch("https://api.cartesia.ai/tts/bytes", {
-                        method: "POST",
-                        headers: {
-                            "Cartesia-Version": "2024-06-10",
-                            "X-API-Key": VOICE_API_CONFIG.primaryToken.trim(),
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            model_id: "sonic-multilingual",
-                            transcript: text,
-                            voice: { mode: "id", id: "700d1ee3-a641-4018-ba6e-899dcadc9e2b" },
-                            output_format: { container: "mp3", encoding: "mp3", sample_rate: 44100 },
-                            language: "pt"
-                        })
-                    });
-                    if (res.ok) {
-                        const blob = await res.blob();
-                        saveCachedAudio(cacheKey, blob);
-                        playAudioBlob(blob);
-                        return;
-                    }
-                } catch {}
-            }
-
-            // 2. Tentar Unreal Speech (Voz Thiago) se backupToken estiver configurado
-            if (VOICE_API_CONFIG.backupToken && VOICE_API_CONFIG.backupToken.trim() !== "") {
-                try {
-                    const res = await fetch("https://api.v7.unrealspeech.com/stream", {
-                        method: "POST",
-                        headers: {
-                            "Authorization": `Bearer ${VOICE_API_CONFIG.backupToken.trim()}`,
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            Text: text,
-                            VoiceId: "Thiago",
-                            Bitrate: "192k",
-                            Speed: "0",
-                            Pitch: "1.0"
-                        })
-                    });
-                    if (res.ok) {
-                        const blob = await res.blob();
-                        saveCachedAudio(cacheKey, blob);
-                        playAudioBlob(blob);
-                        return;
-                    }
-                } catch {}
-            }
-
-            // 3. Fallback Automático: Voz Nativa em Português do Navegador
-            if ('speechSynthesis' in window) {
-                const utter = new SpeechSynthesisUtterance(text);
-                utter.lang = "pt-BR";
-                utter.rate = 0.98;
-                utter.onend = () => { if (ind) ind.classList.add('hidden'); };
-                utter.onerror = () => { if (ind) ind.classList.add('hidden'); };
-                window.speechSynthesis.speak(utter);
-            } else if (ind) {
-                ind.classList.add('hidden');
-            }
-        }
-
-        function playAudioBlob(blob) {
-            const url = URL.createObjectURL(blob);
-            const audio = new Audio(url);
-            currentAudioEl = audio;
-            const ind = document.getElementById('speakingIndicator');
-            audio.onended = () => {
-                if (ind) ind.classList.add('hidden');
-                URL.revokeObjectURL(url);
-            };
-            audio.onerror = () => {
-                if (ind) ind.classList.add('hidden');
-                URL.revokeObjectURL(url);
-            };
-            audio.play().catch(() => {
-                if (ind) ind.classList.add('hidden');
-            });
         }
 
         /* =====================================================================
